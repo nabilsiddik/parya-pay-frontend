@@ -1,7 +1,13 @@
-'use client'
 import axios from 'axios';
-import { Phone } from 'lucide-react';
+import { Mail, Phone } from 'lucide-react';
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import z from 'zod'
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
+import type { create } from 'domain';
+import { Input } from '../ui/input';
+import { Link } from 'react-router-dom';
 
 const UserIcon: React.FC = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -54,39 +60,83 @@ const GoogleIcon: React.FC = () => (
     </svg>
 );
 
+// Crate user zod schema
+export const createUserZodSchema = z.object({
+    name: z.string()
+        .min(2, { message: 'Name must be at least 2 characters long.' })
+        .max(50, { message: 'Name can not be more that 50 characters.' }),
+
+    email: z.string()
+        .email({ message: 'Email is invalid.' }),
+
+    password: z.string().
+        min(8, { message: 'Password minimum length is 8.' })
+        .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/, { message: 'Password must contain at least 1 uppercase letter, 1 lowercase letter, one special character and one number.' }),
+
+    confirmPassword: z.string().
+        min(8, { message: 'Password minimum length is 8.' })
+        .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/, { message: 'Password must contain at least 1 uppercase letter, 1 lowercase letter, one special character and one number.' }),
+
+    phone: z.string()
+        .regex(/^(?:\+88|88)?01[3-9]\d{8}$/, { message: 'Invalid Phone Number.' })
+}).refine((data) => data.password === data.confirmPassword, {
+    path: ['confirmPassword'],
+    message: 'Password do not match.'
+})
+
+
 // Main Component
 const SignUpForm: React.FC = () => {
     const [showPassword, setShowPassword] = useState<boolean>(false);
-    const [email, setEmail] = useState<string>('');
-    const [phone, setPhone] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-    const [fullName, setFullName] = useState<string>('');
+    const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
 
+    // React hook form
+    const form = useForm<z.infer<typeof createUserZodSchema>>({
+        resolver: zodResolver(createUserZodSchema),
+        defaultValues: {
+            name: '',
+            email: '',
+            phone: '',
+            password: '',
+            confirmPassword: ''
+        }
+    })
+
+    // Toogle password and confirm password
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
+    const toggleConfirmPasswordVisibility = () => {
+        setShowConfirmPassword(!showConfirmPassword);
+    };
+
     // Register New User
-    const handleUserRegistration = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        const userInfo = {
-            name: fullName,
-            email,
-            phone,
-            password
+    const handleUserRegistration = async (data: z.infer<typeof createUserZodSchema>) => {
+
+        if(data.password !== data.confirmPassword){
+            throw new Error('')
         }
+
+        const userInfo = {
+            name: data.name,
+            email: data.email,
+            phone: data.phone,
+            password: data.password
+        }
+
 
         // Create user in database
-        try {
-            const res = await axios.post(`${import.meta.env.VITE_API_URL}/user/register`, userInfo)
+        // try {
+        //     const res = await axios.post(`${import.meta.env.VITE_API_URL}/user/register`, userInfo)
 
-            if (res.data.success) {
-                console.log('success')
-            }
+        //     if (res.data.success) {
+        //         console.log('success')
+        //     }
 
-        } catch (error: any) {
-            console.log('Error while user registratoin', error)
-        }
+        // } catch (error: any) {
+        //     console.log('Error while user registratoin', error)
+        // }
     }
 
     return (
@@ -96,122 +146,147 @@ const SignUpForm: React.FC = () => {
                 <div className="w-full max-w-lg">
                     {/* Main Card */}
                     <div className="bg-white dark:bg-black border border-primary dark:border-gray-800 rounded-lg p-8 shadow-sm">
-                        {/* Form */}
-                        <form onSubmit={handleUserRegistration} className="space-y-6">
-                            {/* Full Name Input */}
-                            <div className="space-y-2">
-                                <label htmlFor="fullName" className="text-sm font-medium text-gray-900 dark:text-gray-100 block">
-                                    Full Name
-                                </label>
-                                <div className="relative">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
-                                        <UserIcon />
-                                    </div>
-                                    <input
-                                        id="fullName"
-                                        type="text"
-                                        value={fullName}
-                                        onChange={(e) => setFullName(e.target.value)}
-                                        placeholder="Enter your full name"
-                                        className="flex h-10 w-full rounded-md border border-gray-200 dark:border-gray-800 bg-white dark:bg-black px-3 py-2 pl-10 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-950 dark:focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50"
+                        <Form {...form}>
+                            {/* Form */}
+                            <form onSubmit={form.handleSubmit(handleUserRegistration)} className="space-y-6">
+                                {/* Full Name Input */}
+                                <div className="space-y-2">
+                                    <FormField
+                                        control={form.control}
+                                        name="name"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Name</FormLabel>
+                                                <FormControl>
+                                                    <div className='relative'>
+                                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+                                                            <UserIcon />
+                                                        </div>
+                                                        <Input className='flex h-10 w-full rounded-md border border-gray-200 dark:border-gray-800 bg-white dark:bg-black px-3 py-2 pl-10 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-950 dark:focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50' placeholder="Full Name" {...field} />
+                                                    </div>
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
                                     />
                                 </div>
-                            </div>
 
-                            {/* Email Input */}
-                            <div className="space-y-2">
-                                <label htmlFor="email" className="text-sm font-medium text-gray-900 dark:text-gray-100 block">
-                                    Email
-                                </label>
-                                <div className="relative">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
-                                        <MailIcon />
-                                    </div>
-                                    <input
-                                        id="email"
-                                        type="email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        placeholder="name@example.com"
-                                        className="flex h-10 w-full rounded-md border border-gray-200 dark:border-gray-800 bg-white dark:bg-black px-3 py-2 pl-10 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-950 dark:focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50"
+                                {/* Email Input */}
+                                <div className="space-y-2">
+                                    <FormField
+                                        control={form.control}
+                                        name="email"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Email</FormLabel>
+                                                <FormControl>
+                                                    <div className='relative'>
+                                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+                                                            <MailIcon />
+                                                        </div>
+                                                        <Input className='flex h-10 w-full rounded-md border border-gray-200 dark:border-gray-800 bg-white dark:bg-black px-3 py-2 pl-10 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-950 dark:focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50' placeholder="Valid Email" type='email' {...field} />
+                                                    </div>
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
                                     />
                                 </div>
-                            </div>
 
-                            {/* Phone Input */}
-                            <div className="space-y-2">
-                                <label htmlFor="phone" className="text-sm font-medium text-gray-900 dark:text-gray-100 block">
-                                    Email
-                                </label>
-                                <div className="relative">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
-                                        <Phone />
-                                    </div>
-                                    <input
-                                        id="phone"
-                                        type="tel"
-                                        value={phone}
-                                        onChange={(e) => setPhone(e.target.value)}
-                                        placeholder="01957......"
-                                        className="flex h-10 w-full rounded-md border border-gray-200 dark:border-gray-800 bg-white dark:bg-black px-3 py-2 pl-10 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-950 dark:focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50"
+                                {/* Phone Input */}
+                                <div className="space-y-2">
+                                    <FormField
+                                        control={form.control}
+                                        name="phone"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Phone</FormLabel>
+                                                <FormControl>
+                                                    <div className='relative'>
+                                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+                                                            <Phone />
+                                                        </div>
+                                                        <Input className='flex h-10 w-full rounded-md border border-gray-200 dark:border-gray-800 bg-white dark:bg-black px-3 py-2 pl-10 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-950 dark:focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50' placeholder="Valid Phone Number" {...field} />
+                                                    </div>
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
                                     />
                                 </div>
-                            </div>
 
-                            {/* Password Input */}
-                            <div className="space-y-2">
-                                <label htmlFor="password" className="text-sm font-medium text-gray-900 dark:text-gray-100 block">
-                                    Password
-                                </label>
-                                <div className="relative">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
-                                        <LockIcon />
-                                    </div>
-                                    <input
-                                        id="password"
-                                        type={showPassword ? "text" : "password"}
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        placeholder="Enter your password"
-                                        className="flex h-10 w-full rounded-md border border-gray-200 dark:border-gray-800 bg-white dark:bg-black px-3 py-2 pl-10 pr-10 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-950 dark:focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50"
+                                {/* Password Input */}
+                                <div className="space-y-2">
+                                    <FormField
+                                        control={form.control}
+                                        name="password"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Password</FormLabel>
+                                                <FormControl>
+                                                    <div className='relative'>
+                                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+                                                            <LockIcon />
+                                                        </div>
+                                                        <Input className='flex h-10 w-full rounded-md border border-gray-200 dark:border-gray-800 bg-white dark:bg-black px-3 py-2 pl-10 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-950 dark:focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50' placeholder="Password" type={showPassword ? 'text' : 'password'} {...field} />
+
+                                                        {/* toggle password  */}
+                                                        <button
+                                                            type="button"
+                                                            onClick={togglePasswordVisibility}
+                                                            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                                                        >
+                                                            {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+                                                        </button>
+                                                    </div>
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
                                     />
-                                    <button
-                                        type="button"
-                                        onClick={togglePasswordVisibility}
-                                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-                                    >
-                                        {showPassword ? <EyeOffIcon /> : <EyeIcon />}
-                                    </button>
                                 </div>
-                            </div>
 
-                            {/* Terms checkbox */}
-                            <div className="flex items-start space-x-3">
-                                {/* <input
-                                    id="terms"
-                                    type="checkbox"
-                                    className="h-4 w-4 rounded border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-gray-950 dark:focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black"
-                                /> */}
-                                {/* <label htmlFor="terms" className="text-sm text-gray-600 dark:text-gray-400 leading-5">
-                                    I agree to the{' '}
-                                    <a href="#" className="font-medium text-gray-900 dark:text-gray-100 underline underline-offset-4 hover:no-underline">
-                                        Terms of Service
-                                    </a>{' '}
-                                    and{' '}
-                                    <a href="#" className="font-medium text-gray-900 dark:text-gray-100 underline underline-offset-4 hover:no-underline">
-                                        Privacy Policy
-                                    </a>
-                                </label> */}
-                            </div>
+                                {/* Confirm Password Input */}
+                                <div className="space-y-2">
+                                    <FormField
+                                        control={form.control}
+                                        name="confirmPassword"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Confirm Password</FormLabel>
+                                                <FormControl>
+                                                    <div className='relative'>
+                                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+                                                            <LockIcon />
+                                                        </div>
+                                                        <Input className='flex h-10 w-full rounded-md border border-gray-200 dark:border-gray-800 bg-white dark:bg-black px-3 py-2 pl-10 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-950 dark:focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50' placeholder="Confirm Password" type={showConfirmPassword ? 'text' : 'password'} {...field} />
 
-                            {/* Create Account Button */}
-                            <button
-                                type="submit"
-                                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white dark:ring-offset-black transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 dark:focus-visible:ring-gray-300 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary dark:bg-gray-50 text-gray-50 dark:text-gray-900 hover:bg-primary dark:hover:bg-gray-50/90 h-10 px-4 py-2 w-full"
-                            >
-                                Create account
-                            </button>
-                        </form>
+                                                        {/* toggle password  */}
+                                                        <button
+                                                            type="button"
+                                                            onClick={toggleConfirmPasswordVisibility}
+                                                            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                                                        >
+                                                            {showConfirmPassword ? <EyeOffIcon /> : <EyeIcon />}
+                                                        </button>
+                                                    </div>
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+
+
+                                {/* Create Account Button */}
+                                <button
+                                    type="submit"
+                                    className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white dark:ring-offset-black transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 dark:focus-visible:ring-gray-300 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary dark:bg-gray-50 text-gray-50 dark:text-gray-900 hover:bg-primary dark:hover:bg-gray-50/90 h-10 px-4 py-2 w-full"
+                                >
+                                    Create account
+                                </button>
+                            </form>
+                        </Form>
 
                         {/* Divider */}
                         <div className="relative my-6">
@@ -241,9 +316,7 @@ const SignUpForm: React.FC = () => {
                         <div className="text-center mt-6">
                             <p className="text-sm text-gray-600 dark:text-gray-400">
                                 Already have an account?{' '}
-                                <a href="#" className="font-medium text-gray-900 dark:text-gray-100 underline underline-offset-4 hover:no-underline">
-                                    Sign in
-                                </a>
+                                <Link className='text-foreground underline' to='/login'>Sign in</Link>
                             </p>
                         </div>
                     </div>
