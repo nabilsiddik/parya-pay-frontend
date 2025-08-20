@@ -10,15 +10,41 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router';
 import { ModeToggle } from '@/components/ModeToggle';
+import { Button } from '@/components/ui/button';
+import { authApi, useGetCurrentUserQuery, useUserLogoutMutation } from '@/redux/features/auth/auth.api';
+import { toast } from 'sonner';
+import { useAppDispatch } from '@/redux/hook';
 
 // Standalone Navigation Header Component (Static Logged-In View)
 export default function Navbar() {
   const [activeTab, setActiveTab] = useState('Dashboard');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+  const [userLogout] = useUserLogoutMutation()
+  const { data } = useGetCurrentUserQuery(undefined)
+  const dispatch = useAppDispatch()
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const { name, email, role } = data?.data || {}
+
+  // Logout user
+  const handleLogout = async () => {
+    try {
+      const res = await userLogout(undefined).unwrap()
+      dispatch(authApi.util.resetApiState())
+
+      console.log('ac', res)
+
+      if (res?.success) {
+        toast.success('Successfully loged out.')
+      }
+    } catch (error: any) {
+      console.error(error)
+      toast.success(error?.data?.message)
+    }
+
+  }
 
   // A static user object for display purposes
   const user = {
@@ -63,6 +89,7 @@ export default function Navbar() {
     setIsUserDropdownOpen(!isUserDropdownOpen);
   };
 
+
   // Navigation items configuration
   const navItems = [
     { name: 'Dashboard', icon: Home, slug: '/dashboard' },
@@ -75,7 +102,7 @@ export default function Navbar() {
       <header className="relative">
         <div className="bg-primary border border-primary rounded-2xl shadow-2xl p-4 text-white dark:text-foreground dark:bg-gray-900 dark:border-none">
           <div className="container mx-auto">
-            <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center justify-between gap-4">
               {/* Logo and Desktop Navigation */}
               <div className="flex items-center space-x-2 sm:space-x-8">
                 <div className='flex items-center gap-1'>
@@ -92,10 +119,10 @@ export default function Navbar() {
                           key={item.name}
                           onClick={() => setActiveTab(item.name)}
                           className={`
-                        flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-300
+                        flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-300 cursor-pointer
                         ${activeTab === item.name
-                              ? 'bg-gray-800 text-white'
-                              : 'hover:text-white hover:bg-gray-900 dark:text-foreground'}
+                              ? 'bg-secondary text-white'
+                              : 'hover:text-white hover:bg-secondary dark:text-foreground'}
                       `}
                         >
                           <Icon size={18} />
@@ -122,21 +149,11 @@ export default function Navbar() {
               {/* Right side: Search, Notifications, and User Profile */}
               <div className="flex items-center space-x-2 sm:space-x-4">
 
-                <button className="sm:hidden p-2 rounded-xl bg-gray-900 border border-gray-700 hover:bg-gray-800 transition-all duration-300">
-                  <Search className="h-5 w-5 text-gray-400" />
-                </button>
-
-                <button className="
-                relative p-2 rounded-xl bg-white text-foreground border border-gray-700
-                hover:bg-gray-800 transition-all duration-300 group
-              ">
-                  <Bell className="h-5 w-5 text-gray-900 group-hover:text-white transition-colors" />
-                </button>
 
                 {/* User Profile Dropdown */}
                 <div className="relative" ref={dropdownRef}>
                   <div
-                    className="flex items-center space-x-1 sm:space-x-3 cursor-pointer hover:bg-gray-900 p-2 rounded-xl transition-all duration-300"
+                    className="flex items-center space-x-1 sm:space-x-3 cursor-pointer hover:bg-white p-2 rounded-xl transition-all duration-300"
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                     onClick={handleDropdownClick}
@@ -177,13 +194,22 @@ export default function Navbar() {
                           </div>
                           <div className="flex-1 min-w-0">
                             <p className="text-white font-medium truncate">
-                              {user.displayName || 'User'}
+                              {name || 'User'}
                             </p>
                             <p className="text-gray-400 text-sm truncate">
-                              {user.email}
+                              {email}
                             </p>
                           </div>
                         </div>
+
+                        {email ?
+                          <Button onClick={handleLogout} className='mt-5 w-full cursor-pointer'>Logout</Button>
+                          :
+                          <Link to='/login'>
+                            <Button className='mt-5 w-full cursor-pointer'>Login</Button>
+                          </Link>
+                        }
+
                       </div>
                     </div>
                   )}
