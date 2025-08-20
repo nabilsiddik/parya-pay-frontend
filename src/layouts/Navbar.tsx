@@ -112,9 +112,9 @@ export default function Navbar() {
                   className="lg:hidden p-2 rounded-xl bg-white border border-primary hover:bg-white transition-all duration-300"
                 >
                   <div className="w-5 h-5 flex flex-col justify-center items-center">
-                    <div className={`w-4 h-0.5 bg-primary transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-0.5' : ''}`}></div>
-                    <div className={`w-4 h-0.5 bg-primary  mt-1 transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`}></div>
-                    <div className={`w-4 h-0.5 bg-primary  mt-1 transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></div>
+                    <div className={`w-4 h-0.5 bg-primary dark:bg-gray-900 transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-0.5' : ''}`}></div>
+                    <div className={`w-4 h-0.5 bg-primary dark:bg-gray-900  mt-1 transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`}></div>
+                    <div className={`w-4 h-0.5 bg-primary dark:bg-gray-900  mt-1 transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></div>
                   </div>
                 </button>
               </div>
@@ -130,7 +130,7 @@ export default function Navbar() {
                 relative p-2 rounded-xl bg-white text-foreground border border-gray-700
                 hover:bg-gray-800 transition-all duration-300 group
               ">
-                  <Bell className="h-5 w-5 text-gray-400 group-hover:text-white transition-colors" />
+                  <Bell className="h-5 w-5 text-gray-900 group-hover:text-white transition-colors" />
                 </button>
 
                 {/* User Profile Dropdown */}
@@ -190,7 +190,7 @@ export default function Navbar() {
                 </div>
 
                 {/* mode toggler for theme switcher  */}
-                <ModeToggle/>
+                <ModeToggle />
               </div>
             </div>
 
@@ -201,22 +201,24 @@ export default function Navbar() {
                   {navItems.map((item) => {
                     const Icon = item.icon;
                     return (
-                      <button
-                        key={item.name}
-                        onClick={() => {
-                          setActiveTab(item.name);
-                          setIsMobileMenuOpen(false);
-                        }}
-                        className={`
+                      <Link to={item?.slug}>
+                        <button
+                          key={item.name}
+                          onClick={() => {
+                            setActiveTab(item.name);
+                            setIsMobileMenuOpen(false);
+                          }}
+                          className={`
                         flex items-center space-x-2 px-3 py-2 rounded-xl transition-all duration-300
                         ${activeTab === item.name
-                            ? 'bg-gray-800 text-white'
-                            : 'text-gray-400 hover:text-white hover:bg-gray-900'}
+                              ? 'bg-gray-800 text-white'
+                              : 'hover:text-white hover:bg-gray-900'}
                       `}
-                      >
-                        <Icon size={18} />
-                        <span className="font-medium">{item.name}</span>
-                      </button>
+                        >
+                          <Icon size={18} />
+                          <span className="font-medium">{item.name}</span>
+                        </button>
+                      </Link>
                     );
                   })}
                 </nav>
