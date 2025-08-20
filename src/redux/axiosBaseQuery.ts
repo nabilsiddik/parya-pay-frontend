@@ -4,10 +4,10 @@ import type { AxiosError, AxiosRequestConfig } from "axios";
 
 const axiosBaseQuery = (): BaseQueryFn<
     {
-        url: 'string',
-        method?: AxiosRequestConfig['method'],
-        data?: AxiosRequestConfig['data'],
-        params?: AxiosRequestConfig['params'],
+        url: string
+        method?: AxiosRequestConfig['method']
+        data?: AxiosRequestConfig['data']
+        params?: AxiosRequestConfig['params']
         headers?: AxiosRequestConfig['headers']
     },
     unknown,
@@ -16,7 +16,7 @@ const axiosBaseQuery = (): BaseQueryFn<
     try{
         const result = await axiosInstance({
             url,
-            method,
+            method: method || 'GET',
             data,
             params,
             headers

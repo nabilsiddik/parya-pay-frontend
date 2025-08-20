@@ -1,13 +1,13 @@
-import axios from 'axios';
-import { Mail, Phone } from 'lucide-react';
+import { Phone } from 'lucide-react';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
-import type { create } from 'domain';
 import { Input } from '../ui/input';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useUserSignUpMutation } from '@/redux/features/auth/auth.api';
+import { toast } from 'sonner';
 
 const UserIcon: React.FC = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -89,6 +89,8 @@ export const createUserZodSchema = z.object({
 const SignUpForm: React.FC = () => {
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+    const [userSignUp] = useUserSignUpMutation()
+    const navigate = useNavigate()
 
     // React hook form
     const form = useForm<z.infer<typeof createUserZodSchema>>({
@@ -113,11 +115,7 @@ const SignUpForm: React.FC = () => {
 
     // Register New User
     const handleUserRegistration = async (data: z.infer<typeof createUserZodSchema>) => {
-
-        if(data.password !== data.confirmPassword){
-            throw new Error('')
-        }
-
+        const toastId = toast.loading('Creating user...')
         const userInfo = {
             name: data.name,
             email: data.email,
@@ -125,18 +123,21 @@ const SignUpForm: React.FC = () => {
             password: data.password
         }
 
-
         // Create user in database
-        // try {
-        //     const res = await axios.post(`${import.meta.env.VITE_API_URL}/user/register`, userInfo)
+        try {
+            const res = await userSignUp(userInfo).unwrap()
 
-        //     if (res.data.success) {
-        //         console.log('success')
-        //     }
+            console.log('actual res', res)
 
-        // } catch (error: any) {
-        //     console.log('Error while user registratoin', error)
-        // }
+            if (res?.success) {
+                toast.success('User successfully registered.', {id: toastId})
+                navigate('/login')
+            } 
+
+        } catch (error: any) {
+            console.log( 'ac error',error)
+            toast.error(error?.data?.message, {id: toastId})
+        }
     }
 
     return (
