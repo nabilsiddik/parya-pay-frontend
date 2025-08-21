@@ -42,14 +42,11 @@ const AddMoney = () => {
         try {
             const res = await addMoney(addMoneyInfo).unwrap()
 
-            console.log('actual res', res)
-
             if (res?.success) {
                 toast.success('Add Money Successful.', { id: toastId })
             }
 
         } catch (error: any) {
-            console.log('ac error', error)
             toast.error(error?.data?.message, { id: toastId })
         }
     }
