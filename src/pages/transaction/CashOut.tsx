@@ -1,40 +1,55 @@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../components/ui/form';
-import {  useSendMoneyMutation } from "@/redux/features/transaction/transaction.api"
+import {  useCashOutMutation } from "@/redux/features/transaction/transaction.api"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { Phone, Wallet } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-
 import cashInIcon from '../../assets/images/cash-in.png'
+import z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+
+// cash out zod schema
+export const cashOutZodSchema = z.object({
+    agentPhoneNumber: z.string('Number must be a string')
+    .length(11)
+    .regex(/^01[3-9]\d{8}$/),
+    cashOutAmount: z.number('Balance must be a positive number')
+    .int('Amount should be integer number')
+    .positive('Amount should be positive Number')
+    .min(10, 'Minimum add balance amount is 10')
+    .max(50000, 'Maximum add balance amount is 50,000 at a time')
+})
 
 const CashOut = () => {
-  const [sendMoney] = useSendMoneyMutation()
+  const [cashOut] = useCashOutMutation()
 
   // React hook form
-  const form = useForm({
+  const form = useForm<z.infer<typeof cashOutZodSchema>>({
+    resolver: zodResolver(cashOutZodSchema),
     defaultValues: {
-      phone: '',
-      amount: ''
+      agentPhoneNumber: '',
+      cashOutAmount: 100
     }
   })
 
 
   // Add money to own wallet
-  const handleCashIn = async (data: any) => {
+  const handleCashOut = async (data: z.infer<typeof cashOutZodSchema>) => {
 
     const toastId = toast.loading('Loading...')
-    const cashInInfo = {
-      numberTo: data.phone,
-      amount: Number(data.amount)
+    const cashOutInfo = {
+      agentPhoneNumber: data.agentPhoneNumber,
+      cashOutAmount: Number(data.cashOutAmount)
     }
 
     // Create user in database
     try {
-      const res = await sendMoney(cashInInfo).unwrap()
+      const res = await cashOut(cashOutInfo).unwrap()
 
       if (res?.success) {
-        toast.success('Cash In Successful.', { id: toastId })
+        toast.success('Cash Out Successful.', { id: toastId })
       }
 
     } catch (error: any) {
@@ -53,23 +68,23 @@ const CashOut = () => {
       <div className='max-w-2xl mx-auto'>
         <Form {...form}>
           {/* Form */}
-          <form onSubmit={form.handleSubmit(handleCashIn)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(handleCashOut)} className="space-y-6">
 
             {/* Number to send money */}
             <div className="space-y-2">
               <FormField
                 control={form.control}
-                name="phone"
+                name="agentPhoneNumber"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className='text-lg'>Number</FormLabel>
+                    <FormLabel className='text-lg'>Agent Number</FormLabel>
                     <FormControl>
                       <div className='relative'>
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
                           <Phone />
                         </div>
                         <Input className='flex h-12 w-full rounded-md border border-gray-200 dark:border-gray-800 bg-white dark:bg-black px-3 py-2 pl-12 text-md text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-950 dark:focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50' placeholder="Enter Number To" {...field} />
-                      </div>
+                      </div> 
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -81,7 +96,7 @@ const CashOut = () => {
             <div className="space-y-2">
               <FormField
                 control={form.control}
-                name="amount"
+                name="cashOutAmount"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className='text-lg'>Amount</FormLabel>
@@ -90,7 +105,7 @@ const CashOut = () => {
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
                           <Wallet />
                         </div>
-                        <Input className='flex h-12 w-full rounded-md border border-gray-200 dark:border-gray-800 bg-white dark:bg-black px-3 py-2 pl-12 text-md text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-950 dark:focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50' placeholder="Enter Amount" {...field} />
+                        <Input className='flex h-12 w-full rounded-md border border-gray-200 dark:border-gray-800 bg-white dark:bg-black px-3 py-2 pl-12 text-md text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-950 dark:focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50' placeholder="Cash Out Amount" {...field} type='number' onChange={(e) => field.onChange(e.target.valueAsNumber)} />
                       </div>
                     </FormControl>
                     <FormMessage />

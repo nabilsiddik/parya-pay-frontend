@@ -4,7 +4,7 @@ import TransactionsSection from "@/modules/TransactionsSection"
 const Home = () => {
   return (
     <div className="container mx-auto px-5">
-      {/* <HeroSection/> */}
+      <HeroSection/>
       <TransactionsSection/>
     </div>
   )

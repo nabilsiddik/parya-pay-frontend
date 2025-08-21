@@ -91,7 +91,7 @@ export default function Navbar() {
 
   // Navigation items configuration
   const navItems = [
-    { name: 'Dashboard', icon: Home, slug: '/dashboard' },
+    { name: 'Dashboard', icon: Home, slug: '/admin' },
     { name: 'Login', icon: Users, slug: '/login' },
     { name: 'Sign Up', icon: Users, slug: '/signup' },
   ];

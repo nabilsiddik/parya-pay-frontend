@@ -4,25 +4,39 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { Phone, Wallet } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import addMoneyIcon from '../../assets/images/add-money.png'
 import { Button } from '@/components/ui/button';
-
 import sendMoneyIcon from '../../assets/images/send-money.png'
+import z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+
+// send money zod schema
+export const sendMoneyZodSchema = z.object({
+    numberTo: z.string('Number must be a string')
+    .length(11)
+    .regex(/^01[3-9]\d{8}$/),
+    amount: z.number('Balance must be a positive number')
+    .int('Amount should be integer number')
+    .positive('Amount should be positive Number')
+    .min(10, 'Minimum add balance amount is 10')
+    .max(50000, 'Maximum add balance amount is 50,000 at a time')
+})
 
 const SendMoney = () => {
   const [sendMoney] = useSendMoneyMutation()
 
   // React hook form
-  const form = useForm({
+  const form = useForm<z.infer<typeof sendMoneyZodSchema>>({
+    resolver: zodResolver(sendMoneyZodSchema),
     defaultValues: {
       numberTo: '',
-      amount: ''
+      amount: 100
     }
   })
 
 
   // Add money to own wallet
-  const handleSendMoney = async (data: any) => {
+  const handleSendMoney = async (data: z.infer<typeof sendMoneyZodSchema>) => {
 
     const toastId = toast.loading('Creating user...')
     const sendMoneyInfo = {
@@ -91,7 +105,7 @@ const SendMoney = () => {
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
                           <Wallet />
                         </div>
-                        <Input className='flex h-12 w-full rounded-md border border-gray-200 dark:border-gray-800 bg-white dark:bg-black px-3 py-2 pl-12 text-md text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-950 dark:focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50' placeholder="Enter Amount" {...field} />
+                        <Input className='flex h-12 w-full rounded-md border border-gray-200 dark:border-gray-800 bg-white dark:bg-black px-3 py-2 pl-12 text-md text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-950 dark:focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50' placeholder="Enter Amount" {...field} type='number' onChange={(e) => field.onChange(e.target.valueAsNumber)} />
                       </div>
                     </FormControl>
                     <FormMessage />

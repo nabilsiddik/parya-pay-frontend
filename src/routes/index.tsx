@@ -1,3 +1,5 @@
+import { Role } from "@/constants/role";
+import DashboardLayout from "@/layouts/DashboardLayout";
 import MainLayout from "@/layouts/MainLayout";
 import Login from "@/pages/auth/Login";
 import SignUp from "@/pages/auth/SignUp";
@@ -7,7 +9,12 @@ import CashIn from "@/pages/transaction/CashIn";
 import CashOut from "@/pages/transaction/CashOut";
 import SendMoney from "@/pages/transaction/SendMoney";
 import WithdrawMoney from "@/pages/transaction/WithdrawMoney";
-import { createBrowserRouter } from "react-router-dom";
+import type { TRole } from "@/types";
+import { generateRoutes } from "@/utils/generateRoutes";
+import withAuth from "@/utils/withAuth";
+import { createBrowserRouter, Navigate } from "react-router-dom";
+import { adminSidebarRoutes } from "./adminSidebarRoutes";
+
 
 const router = createBrowserRouter([
     {
@@ -47,6 +54,17 @@ const router = createBrowserRouter([
     {
         path: '/signup',
         Component: SignUp
+    }, 
+    {
+        path: '/admin',
+        Component: withAuth(DashboardLayout, Role.ADMIN as TRole),
+        children: [
+            {
+                index: true,
+                element: <Navigate to={'/admin/analytics'}/>
+            },
+            ...generateRoutes(adminSidebarRoutes)
+        ]
     }
 ])
 
