@@ -1,8 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import logo from '../assets/images/logo/logo.png'
 import {
-  Search,
-  Bell,
   ChevronDown,
   Home,
   Users,
@@ -14,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { authApi, useGetCurrentUserQuery, useUserLogoutMutation } from '@/redux/features/auth/auth.api';
 import { toast } from 'sonner';
 import { useAppDispatch } from '@/redux/hook';
+import { useGetSingleWalletQuery } from '@/redux/features/wallet/wallet.api';
 
 // Standalone Navigation Header Component (Static Logged-In View)
 export default function Navbar() {
@@ -22,19 +21,19 @@ export default function Navbar() {
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [userLogout] = useUserLogoutMutation()
   const { data } = useGetCurrentUserQuery(undefined)
+  const {data: userWallet} = useGetSingleWalletQuery(undefined)
   const dispatch = useAppDispatch()
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { name, email, role } = data?.data || {}
 
+
   // Logout user
   const handleLogout = async () => {
     try {
       const res = await userLogout(undefined).unwrap()
       dispatch(authApi.util.resetApiState())
-
-      console.log('ac', res)
 
       if (res?.success) {
         toast.success('Successfully loged out.')
@@ -148,7 +147,7 @@ export default function Navbar() {
 
               {/* Right side: Search, Notifications, and User Profile */}
               <div className="flex items-center space-x-2 sm:space-x-4">
-
+                <p className='font-medium'>{userWallet?.data?.balance} Taka</p>
 
                 {/* User Profile Dropdown */}
                 <div className="relative" ref={dropdownRef}>
