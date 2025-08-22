@@ -6,8 +6,11 @@ import { useSearchParams } from "react-router-dom"
 const AllTransactions = () => {
     const [searchParams] = useSearchParams()
     const selectedTransactionType = searchParams.get('type') || undefined
-    const {data: transactions, isLoading} = useGetAllTransactionsQuery({type: selectedTransactionType})
-    
+    const selectedLimit = searchParams.get('limit') || undefined
+    const selectedStatus = searchParams.get('status') || undefined
+
+    const {data: transactions, isLoading} = useGetAllTransactionsQuery({type: selectedTransactionType, limit: selectedLimit, status: selectedStatus})
+
     if(isLoading){
         return <DashboardLoader/>
     }

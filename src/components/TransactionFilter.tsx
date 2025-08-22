@@ -6,10 +6,13 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useSearchParams } from "react-router-dom"
+import { Input } from "./ui/input"
 
 const TransactionFilter = () => {
     const [searchParams, setSearchParams] = useSearchParams()
     const selectedTransactionType = searchParams.get('type') || undefined
+    const selectedLimit = searchParams.get('limit') || undefined
+    const selectedStatus = searchParams.get('status') || undefined
 
     // On transaction type change
     const handleTransactionTypeChange = (value: string) => {
@@ -18,12 +21,26 @@ const TransactionFilter = () => {
         setSearchParams(params)
     }
 
+    // On limit change
+    const handleLimitChange = (value: string) => {
+        const params = new URLSearchParams(searchParams)
+        params.set('limit', value)
+        setSearchParams(params)
+    }
+
+    // On status change
+    const handleStatusChange = (value: string) => {
+        const params = new URLSearchParams(searchParams)
+        params.set('status', value)
+        setSearchParams(params)
+    }
+
     return (
         <div className="flex items-center justify-between gap-3">
-            <div>
+            <div className="flex items-center gap-3">
                 <Select value={selectedTransactionType ? selectedTransactionType : ''} onValueChange={(value) => handleTransactionTypeChange(value)}>
-                    <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Transaction Type" />
+                    <SelectTrigger>
+                        <SelectValue placeholder="Type" />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="ADD_MONEY">ADD_MONEY</SelectItem>
@@ -31,6 +48,20 @@ const TransactionFilter = () => {
                         <SelectItem value="SEND_MONEY">SEND_MONEY</SelectItem>
                         <SelectItem value="CASH_IN">CASH_IN</SelectItem>
                         <SelectItem value="CASH_OUT">CASH_OUT</SelectItem>
+                    </SelectContent>
+                </Select>
+
+                <Input value={selectedLimit ? selectedLimit : ''} type='number' onChange={(e) => handleLimitChange(e.target.value)} placeholder="Row Limit"/>
+
+                <Select value={selectedStatus ? selectedStatus : ''} onValueChange={(value) => handleStatusChange(value)}>
+                    <SelectTrigger>
+                        <SelectValue placeholder="Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="PENDING">PENDING</SelectItem>
+                        <SelectItem value="COMPLETED">COMPLETED</SelectItem>
+                        <SelectItem value="CANCLED">CANCLED</SelectItem>
+                        <SelectItem value="REVERSED">REVERSED</SelectItem>
                     </SelectContent>
                 </Select>
             </div>
