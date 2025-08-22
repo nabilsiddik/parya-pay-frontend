@@ -1,8 +1,3 @@
-import { IoCloseSharp } from "react-icons/io5";
-import { PiArrowBendDoubleUpRightBold } from "react-icons/pi";
-import { AiOutlineReload } from "react-icons/ai";
-
-
 import * as React from "react"
 import {
   getCoreRowModel,
@@ -18,7 +13,7 @@ import type {
   SortingState,
   VisibilityState,
 } from "@tanstack/react-table"
-import { ArrowUpDown, CheckIcon, ChevronDown, MoreHorizontal } from "lucide-react"
+import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -174,7 +169,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ]
 
-export default function TransactionDataTable({ transactions }: any) {
+export default function UserDataTable({ users }: any) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -244,36 +239,35 @@ export default function TransactionDataTable({ transactions }: any) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Username</TableHead>
-              <TableHead>Amount</TableHead>
-              <TableHead>Charge</TableHead>
-              <TableHead>Type</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Date</TableHead>
-              <TableHead>Number From</TableHead>
-              <TableHead>Number To</TableHead>
-              <TableHead>Action</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Phone</TableHead>
+              <TableHead>Role</TableHead>
+              <TableHead>Verification Status</TableHead>
+              <TableHead>Active Status</TableHead>
+              <TableHead>Registered Date</TableHead>
+              <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
 
           <TableBody>
-            {transactions.map((transaction: any) => {
+            {users.length && users.map((user: any) => {
               return <TableRow>
                 <TableCell>
-                  {transaction.user}
+                  {user?.name}
                 </TableCell>
                 <TableCell>
-                  {transaction.amount} Taka
+                  {user?.email}
                 </TableCell>
                 <TableCell>
-                  {transaction.charge} Taka
+                  {user?.phone}
                 </TableCell>
                 <TableCell>
                   <Badge variant="outline" className="gap-1 px-2 py-1">
-                    {transaction.type}
+                    {user?.role}
                   </Badge>
                 </TableCell>
-                <TableCell>
+                {/* <TableCell>
                   <Badge variant="outline" className="gap-1 px-2 py-1">
                     {transaction.status === 'COMPLETED' ?
                       <CheckIcon className="text-emerald-500" size={12} aria-hidden="true" />
@@ -293,15 +287,19 @@ export default function TransactionDataTable({ transactions }: any) {
                     }
                     {transaction.status}
                   </Badge>
+                </TableCell> */}
+                <TableCell>
+                  <Badge variant="outline" className="gap-1 px-2 py-1">
+                    {user?.isVerified ? 'Verified' : 'Unverified'}
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="outline" className="gap-1 px-2 py-1">
+                    {user?.isActive ? 'Active' : 'Inactive'}
+                  </Badge>
                 </TableCell>
                 <TableCell>
                   Jun
-                </TableCell>
-                <TableCell>
-                  {transaction?.numberFrom ? transaction?.numberFrom : 'Unavailable'}
-                </TableCell>
-                <TableCell>
-                  {transaction?.numberTo ? transaction?.numberTo : 'Unavailable'}
                 </TableCell>
                 <TableCell>
                   <TableDataAction />

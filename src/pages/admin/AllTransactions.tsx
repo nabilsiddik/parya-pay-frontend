@@ -10,14 +10,9 @@ const AllTransactions = () => {
         return <DashboardLoader/>
     }
 
-    const tranObj = transactions.data[0]
-    const excluded = ['_id']
-    const tranDataHeadings = Object.keys(tranObj).filter(obj => !excluded.includes(obj))
-
-
   return (
     <div>
-        <TransactionDataTable transactionHeadings = {tranDataHeadings || []} transactions = {transactions.data}/>
+        <TransactionDataTable transactions = {transactions.data}/>
     </div>
   )
 }

@@ -174,7 +174,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ]
 
-export default function TransactionDataTable({ transactions }: any) {
+export default function AgentDataTable({ agents }: any) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -182,6 +182,9 @@ export default function TransactionDataTable({ transactions }: any) {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
+
+  console.log(agents)
+
 
   const table = useReactTable({
     data,
@@ -244,36 +247,35 @@ export default function TransactionDataTable({ transactions }: any) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Username</TableHead>
-              <TableHead>Amount</TableHead>
-              <TableHead>Charge</TableHead>
-              <TableHead>Type</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Date</TableHead>
-              <TableHead>Number From</TableHead>
-              <TableHead>Number To</TableHead>
-              <TableHead>Action</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Phone</TableHead>
+              <TableHead>Role</TableHead>
+              <TableHead>Verification Status</TableHead>
+              <TableHead>Active Status</TableHead>
+              <TableHead>Registered Date</TableHead>
+              <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
 
           <TableBody>
-            {transactions.map((transaction: any) => {
+            {agents.length && agents.map((user: any) => {
               return <TableRow>
                 <TableCell>
-                  {transaction.user}
+                  {user?.name}
                 </TableCell>
                 <TableCell>
-                  {transaction.amount} Taka
+                  {user?.email}
                 </TableCell>
                 <TableCell>
-                  {transaction.charge} Taka
+                  {user?.phone}
                 </TableCell>
                 <TableCell>
                   <Badge variant="outline" className="gap-1 px-2 py-1">
-                    {transaction.type}
+                    {user?.role}
                   </Badge>
                 </TableCell>
-                <TableCell>
+                {/* <TableCell>
                   <Badge variant="outline" className="gap-1 px-2 py-1">
                     {transaction.status === 'COMPLETED' ?
                       <CheckIcon className="text-emerald-500" size={12} aria-hidden="true" />
@@ -293,15 +295,19 @@ export default function TransactionDataTable({ transactions }: any) {
                     }
                     {transaction.status}
                   </Badge>
+                </TableCell> */}
+                <TableCell>
+                  <Badge variant="outline" className="gap-1 px-2 py-1">
+                    {user?.isVerified ? 'Verified' : 'Unverified'}
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="outline" className="gap-1 px-2 py-1">
+                    {user?.isActive ? 'Active' : 'Inactive'}
+                  </Badge>
                 </TableCell>
                 <TableCell>
                   Jun
-                </TableCell>
-                <TableCell>
-                  {transaction?.numberFrom ? transaction?.numberFrom : 'Unavailable'}
-                </TableCell>
-                <TableCell>
-                  {transaction?.numberTo ? transaction?.numberTo : 'Unavailable'}
                 </TableCell>
                 <TableCell>
                   <TableDataAction />
