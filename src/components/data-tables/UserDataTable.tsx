@@ -37,6 +37,7 @@ import {
 } from "@/components/ui/table"
 import { Badge } from "../ui/badge"
 import UserTableDataActions from "../UserTableDataActions"
+import formatDate from "@/utils/formatDate"
 
 const data: Payment[] = [
   {
@@ -299,7 +300,7 @@ export default function UserDataTable({ users }: any) {
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  Jun
+                  {formatDate(user?.createdAt)}
                 </TableCell>
                 <TableCell>
                   <UserTableDataActions userId = {user?._id} />

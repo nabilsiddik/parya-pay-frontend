@@ -3,9 +3,10 @@ import { baseApi } from "@/redux/baseApi";
 export const transactionApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getAllTransactions: builder.query({
-            query: () => ({
+            query: (params) => ({
                 url: '/transaction/',
                 method: 'GET',
+                params
             }),
             providesTags: ['TRANSACTION']
         }),

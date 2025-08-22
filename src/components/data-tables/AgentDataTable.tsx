@@ -42,6 +42,7 @@ import {
 } from "@/components/ui/table"
 import { Badge } from "../ui/badge"
 import TableDataAction from "../UserTableDataActions";
+import formatDate from "@/utils/formatDate";
 
 const data: Payment[] = [
   {
@@ -183,9 +184,6 @@ export default function AgentDataTable({ agents }: any) {
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
 
-  console.log(agents)
-
-
   const table = useReactTable({
     data,
     columns,
@@ -259,20 +257,20 @@ export default function AgentDataTable({ agents }: any) {
           </TableHeader>
 
           <TableBody>
-            {agents.length && agents.map((user: any) => {
+            {agents.length > 0 && agents.map((agent: any) => {
               return <TableRow>
                 <TableCell>
-                  {user?.name}
+                  {agent?.name}
                 </TableCell>
                 <TableCell>
-                  {user?.email}
+                  {agent?.email}
                 </TableCell>
                 <TableCell>
-                  {user?.phone}
+                  {agent?.phone}
                 </TableCell>
                 <TableCell>
                   <Badge variant="outline" className="gap-1 px-2 py-1">
-                    {user?.role}
+                    {agent?.role}
                   </Badge>
                 </TableCell>
                 {/* <TableCell>
@@ -298,19 +296,20 @@ export default function AgentDataTable({ agents }: any) {
                 </TableCell> */}
                 <TableCell>
                   <Badge variant="outline" className="gap-1 px-2 py-1">
-                    {user?.isVerified ? 'Verified' : 'Unverified'}
+                    {agent?.isVerified ? 'Verified' : 'Unverified'}
                   </Badge>
                 </TableCell>
                 <TableCell>
                   <Badge variant="outline" className="gap-1 px-2 py-1">
-                    {user?.isActive ? 'Active' : 'Inactive'}
+                    {agent?.isActive ? 'Active' : 'Inactive'}
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  Jun
+                  {formatDate(agent?.createdAt)}
                 </TableCell>
                 <TableCell>
-                  <TableDataAction />
+                  {/* <TableDataAction /> */}
+                  action
                 </TableCell>
               </TableRow>
             })}

@@ -2,7 +2,6 @@ import { IoCloseSharp } from "react-icons/io5";
 import { PiArrowBendDoubleUpRightBold } from "react-icons/pi";
 import { AiOutlineReload } from "react-icons/ai";
 
-
 import * as React from "react"
 import {
   getCoreRowModel,
@@ -18,20 +17,18 @@ import type {
   SortingState,
   VisibilityState,
 } from "@tanstack/react-table"
-import { ArrowUpDown, CheckIcon, ChevronDown, MoreHorizontal } from "lucide-react"
+import { ArrowUpDown, CheckIcon, MoreHorizontal } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
 import {
   Table,
   TableBody,
@@ -41,7 +38,8 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Badge } from "../ui/badge"
-import TableDataAction from "../UserTableDataActions";
+import formatDate from "@/utils/formatDate";
+import TransactionFilter from "../TransactionFilter";
 
 const data: Payment[] = [
   {
@@ -205,7 +203,7 @@ export default function TransactionDataTable({ transactions }: any) {
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
-        <Input
+        {/* <Input
           placeholder="Filter emails..."
           value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
@@ -238,7 +236,8 @@ export default function TransactionDataTable({ transactions }: any) {
                 )
               })}
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
+        <TransactionFilter/>
       </div>
       <div className="overflow-hidden rounded-md border">
         <Table>
@@ -257,8 +256,8 @@ export default function TransactionDataTable({ transactions }: any) {
           </TableHeader>
 
           <TableBody>
-            {transactions.map((transaction: any) => {
-              return <TableRow>
+            {transactions.length > 0 && transactions.map((transaction: any) => {
+              return <TableRow key={transaction?._id}>
                 <TableCell>
                   {transaction.user}
                 </TableCell>
@@ -295,7 +294,7 @@ export default function TransactionDataTable({ transactions }: any) {
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  Jun
+                  {formatDate(transaction?.createdAt)}
                 </TableCell>
                 <TableCell>
                   {transaction?.numberFrom ? transaction?.numberFrom : 'Unavailable'}
@@ -304,7 +303,8 @@ export default function TransactionDataTable({ transactions }: any) {
                   {transaction?.numberTo ? transaction?.numberTo : 'Unavailable'}
                 </TableCell>
                 <TableCell>
-                  <TableDataAction />
+                  {/* <TableDataAction /> */}
+                  action
                 </TableCell>
               </TableRow>
             })}
