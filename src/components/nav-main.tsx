@@ -1,6 +1,6 @@
 "use client"
 
-import { ChevronRight, type LucideIcon } from "lucide-react"
+import { ChevronRight, type LucideProps } from "lucide-react"
 
 import {
   Collapsible,
@@ -17,17 +17,20 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
+import type { ComponentType, ForwardRefExoticComponent, RefAttributes } from "react"
+import { Link } from "react-router-dom"
 
 export function NavMain({
   items,
 }: {
   items: {
     title: string
-    icon?: LucideIcon
+    icon?: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>
     isActive?: boolean
     items?: {
       title: string
-      url: string
+      url: string,
+      component: ComponentType
     }[]
   }[]
 }) {
@@ -55,9 +58,9 @@ export function NavMain({
                   {item.items?.map((subItem) => (
                     <SidebarMenuSubItem key={subItem.title}>
                       <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
+                        <Link to={subItem.url}>
                           <span>{subItem.title}</span>
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   ))}

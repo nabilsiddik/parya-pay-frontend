@@ -1,11 +1,10 @@
-import AllTransactions from "@/pages/admin/AllTransactions";
 import AllUsers from "@/pages/admin/AllUsers";
 import Analytics from "@/pages/admin/Analytics";
 import { SquareTerminal } from "lucide-react";
 
-export const adminSidebarRoutes = [
+export const userSidebarRoutes = [
     {
-        title: "Admin Dashboard",
+        title: "User Dashboard",
         icon: SquareTerminal,
         isActive: true,
         items: [
@@ -25,18 +24,6 @@ export const adminSidebarRoutes = [
                 title: "All Users",
                 url: "/admin/all-users",
                 component: AllUsers
-            }
-        ],
-    },
-    {
-        title: "Transaction",
-        icon: SquareTerminal,
-        isActive: true,
-        items: [
-            {
-                title: "All Transactions",
-                url: "/admin/all-transactions",
-                component: AllTransactions
             }
         ],
     },
