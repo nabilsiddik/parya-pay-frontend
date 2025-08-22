@@ -259,7 +259,7 @@ export default function TransactionDataTable({ transactions }: any) {
             {transactions.length > 0 && transactions.map((transaction: any) => {
               return <TableRow key={transaction?._id}>
                 <TableCell>
-                  {transaction.user}
+                  {transaction?.user?.name}
                 </TableCell>
                 <TableCell>
                   {transaction.amount} Taka

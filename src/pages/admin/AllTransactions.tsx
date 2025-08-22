@@ -8,8 +8,9 @@ const AllTransactions = () => {
     const selectedTransactionType = searchParams.get('type') || undefined
     const selectedLimit = searchParams.get('limit') || undefined
     const selectedStatus = searchParams.get('status') || undefined
+    const searchTerm = searchParams.get('searchTerm') || undefined
 
-    const {data: transactions, isLoading} = useGetAllTransactionsQuery({type: selectedTransactionType, limit: selectedLimit, status: selectedStatus})
+    const {data: transactions, isLoading} = useGetAllTransactionsQuery({type: selectedTransactionType, limit: selectedLimit, status: selectedStatus, searchTerm})
 
     if(isLoading){
         return <DashboardLoader/>

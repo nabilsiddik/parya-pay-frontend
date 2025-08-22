@@ -1,18 +1,21 @@
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from "@/components/ui/select"
 import { useSearchParams } from "react-router-dom"
 import { Input } from "./ui/input"
+import { useEffect, useState } from "react"
 
 const TransactionFilter = () => {
     const [searchParams, setSearchParams] = useSearchParams()
+    const [searchTerm, setSearchTerm] = useState<string>('')
     const selectedTransactionType = searchParams.get('type') || undefined
     const selectedLimit = searchParams.get('limit') || undefined
     const selectedStatus = searchParams.get('status') || undefined
+
 
     // On transaction type change
     const handleTransactionTypeChange = (value: string) => {
@@ -35,6 +38,12 @@ const TransactionFilter = () => {
         setSearchParams(params)
     }
 
+    useEffect(() => {
+        const params = new URLSearchParams(searchParams)
+        params.set('searchTerm', searchTerm)
+        setSearchParams(params)
+    }, [searchTerm])
+
     return (
         <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
@@ -51,7 +60,7 @@ const TransactionFilter = () => {
                     </SelectContent>
                 </Select>
 
-                <Input value={selectedLimit ? selectedLimit : ''} type='number' onChange={(e) => handleLimitChange(e.target.value)} placeholder="Row Limit"/>
+                <Input value={selectedLimit ? selectedLimit : ''} type='number' onChange={(e) => handleLimitChange(e.target.value)} placeholder="Row Limit" />
 
                 <Select value={selectedStatus ? selectedStatus : ''} onValueChange={(value) => handleStatusChange(value)}>
                     <SelectTrigger>
@@ -64,6 +73,8 @@ const TransactionFilter = () => {
                         <SelectItem value="REVERSED">REVERSED</SelectItem>
                     </SelectContent>
                 </Select>
+
+                <Input value={searchTerm ? searchTerm : ''} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search" />
             </div>
             <div></div>
         </div>
