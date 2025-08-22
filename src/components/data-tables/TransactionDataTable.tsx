@@ -41,7 +41,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Badge } from "../ui/badge"
-import TableDataAction from "../TableDataAction";
+import TableDataAction from "../UserTableDataActions";
 
 const data: Payment[] = [
   {

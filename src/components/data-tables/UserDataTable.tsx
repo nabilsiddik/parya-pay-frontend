@@ -36,7 +36,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Badge } from "../ui/badge"
-import TableDataAction from "../TableDataAction";
+import UserTableDataActions from "../UserTableDataActions"
 
 const data: Payment[] = [
   {
@@ -302,7 +302,7 @@ export default function UserDataTable({ users }: any) {
                   Jun
                 </TableCell>
                 <TableCell>
-                  <TableDataAction />
+                  <UserTableDataActions userId = {user?._id} />
                 </TableCell>
               </TableRow>
             })}

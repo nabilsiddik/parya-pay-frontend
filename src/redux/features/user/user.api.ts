@@ -6,7 +6,8 @@ export const userApi = baseApi.injectEndpoints({
             query: () => ({
                 url: '/user/',
                 method: 'GET',
-            })
+            }),
+            providesTags: ['USER']
         }),
         getAllAgents: builder.query({
             query: () => ({
@@ -14,7 +15,14 @@ export const userApi = baseApi.injectEndpoints({
                 method: 'GET',
             })
         }),
+        deleteUser: builder.mutation({
+            query: (userId) => ({
+                url: `/user/${userId}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['USER']
+        }),
     })
 })
 
-export const {useGetAllUsersQuery, useGetAllAgentsQuery} = userApi
+export const {useGetAllUsersQuery, useGetAllAgentsQuery, useDeleteUserMutation} = userApi
