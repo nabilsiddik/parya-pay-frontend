@@ -10,7 +10,7 @@ export const agentSidebarRoutes = [
         items: [
             {
                 title: "Analytics",
-                url: "/admin/analytics",
+                url: "/agent/analytics",
                 component: Analytics
             }
         ],
@@ -22,7 +22,7 @@ export const agentSidebarRoutes = [
         items: [
             {
                 title: "All Users",
-                url: "/admin/all-users",
+                url: "/agent/all-users",
                 component: AllUsers
             }
         ],

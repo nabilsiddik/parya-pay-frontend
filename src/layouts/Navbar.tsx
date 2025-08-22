@@ -21,7 +21,7 @@ export default function Navbar() {
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [userLogout] = useUserLogoutMutation()
   const { data } = useGetCurrentUserQuery(undefined)
-  const {data: userWallet} = useGetSingleWalletQuery(undefined)
+  const { data: userWallet } = useGetSingleWalletQuery(undefined)
   const dispatch = useAppDispatch()
 
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -88,10 +88,14 @@ export default function Navbar() {
     setIsUserDropdownOpen(!isUserDropdownOpen);
   };
 
+  console.log(role)
 
   // Navigation items configuration
   const navItems = [
-    { name: 'Dashboard', icon: Home, slug: '/admin' },
+    {
+      name: 'Dashboard', icon: Home,
+      slug: role === 'ADMIN' ? '/admin' : role === 'AGENT' ? '/agent' : role === 'USER' ? '/user': '/' 
+    },
     { name: 'Login', icon: Users, slug: '/login' },
     { name: 'Sign Up', icon: Users, slug: '/signup' },
   ];
@@ -104,10 +108,12 @@ export default function Navbar() {
             <div className="flex items-center justify-between gap-4">
               {/* Logo and Desktop Navigation */}
               <div className="flex items-center space-x-2 sm:space-x-8">
-                <div className='flex items-center gap-1'>
+                <Link to='/'>
+                  <div className='flex items-center gap-1'>
                   <img src={logo} className='w-[60px]' alt="payra pay logo" />
                   <h2 className='font-bold text-2xl mb-3'>Payra Pay</h2>
                 </div>
+                </Link>
 
                 <nav className="hidden lg:flex space-x-1">
                   {navItems.map((item, index) => {

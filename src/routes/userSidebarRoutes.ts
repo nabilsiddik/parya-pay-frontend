@@ -1,5 +1,6 @@
 import AllUsers from "@/pages/admin/AllUsers";
 import Analytics from "@/pages/admin/Analytics";
+import BecomeAgent from "@/pages/user/BecomeAgent";
 import { SquareTerminal } from "lucide-react";
 
 export const userSidebarRoutes = [
@@ -10,20 +11,32 @@ export const userSidebarRoutes = [
         items: [
             {
                 title: "Analytics",
-                url: "/admin/analytics",
+                url: "/user/analytics",
                 component: Analytics
             }
         ],
     },
     {
-        title: "Users",
+        title: "Transactions",
         icon: SquareTerminal,
         isActive: true,
         items: [
             {
-                title: "All Users",
-                url: "/admin/all-users",
+                title: "My Transactions",
+                url: "/user/all-users",
                 component: AllUsers
+            }
+        ],
+    },
+    {
+        title: "Applications",
+        icon: SquareTerminal,
+        isActive: true,
+        items: [
+            {
+                title: "Become Agent",
+                url: "/user/become-agent",
+                component: BecomeAgent
             }
         ],
     },

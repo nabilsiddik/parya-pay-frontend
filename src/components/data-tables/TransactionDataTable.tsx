@@ -181,6 +181,8 @@ export default function TransactionDataTable({ transactions }: any) {
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
 
+  console.log('tran', transactions)
+
   const table = useReactTable({
     data,
     columns,

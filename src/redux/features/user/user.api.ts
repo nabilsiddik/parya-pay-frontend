@@ -22,7 +22,15 @@ export const userApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ['USER']
         }),
+        becomeAgent: builder.mutation({
+            query: (data) => ({
+                url: `user/agents/become-agent`,
+                method: 'POST',
+                data
+            }),
+            invalidatesTags: ['AGENT_REQUEST']
+        }),
     })
 })
 
-export const {useGetAllUsersQuery, useGetAllAgentsQuery, useDeleteUserMutation} = userApi
+export const {useGetAllUsersQuery, useGetAllAgentsQuery, useDeleteUserMutation, useBecomeAgentMutation} = userApi
