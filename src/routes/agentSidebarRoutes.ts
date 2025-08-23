@@ -1,5 +1,7 @@
 import AllUsers from "@/pages/admin/AllUsers";
 import Analytics from "@/pages/admin/Analytics";
+import AddMoney from "@/pages/transaction/AddMoney";
+import CashIn from "@/pages/transaction/CashIn";
 import { SquareTerminal } from "lucide-react";
 
 export const agentSidebarRoutes = [
@@ -16,15 +18,20 @@ export const agentSidebarRoutes = [
         ],
     },
     {
-        title: "Users",
+        title: "Transactions",
         icon: SquareTerminal,
         isActive: true,
         items: [
             {
-                title: "All Users",
-                url: "/agent/all-users",
-                component: AllUsers
-            }
+                title: "Add Money",
+                url: "/agent/add-money",
+                component: AddMoney
+            },
+            {
+                title: "Cash In",
+                url: "/agent/cash-in",
+                component: CashIn
+            },
         ],
     },
 ]

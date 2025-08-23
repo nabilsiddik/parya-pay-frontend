@@ -36,10 +36,9 @@ const CashIn = () => {
 
   // Add money to own wallet
   const handleCashIn = async (data: z.infer<typeof cashInZodSchema>) => {
-
     const toastId = toast.loading('Loading...')
     const cashInInfo = {
-      numberTo: data.phone,
+      phone: data.phone,
       amount: Number(data.amount)
     }
 

@@ -1,5 +1,10 @@
 import AllUsers from "@/pages/admin/AllUsers";
 import Analytics from "@/pages/admin/Analytics";
+import AddMoney from "@/pages/transaction/AddMoney";
+import CashIn from "@/pages/transaction/CashIn";
+import CashOut from "@/pages/transaction/CashOut";
+import SendMoney from "@/pages/transaction/SendMoney";
+import WithdrawMoney from "@/pages/transaction/WithdrawMoney";
 import BecomeAgent from "@/pages/user/BecomeAgent";
 import { SquareTerminal } from "lucide-react";
 
@@ -25,6 +30,26 @@ export const userSidebarRoutes = [
                 title: "My Transactions",
                 url: "/user/all-users",
                 component: AllUsers
+            },
+            {
+                title: "Add Money",
+                url: "/user/add-money",
+                component: AddMoney
+            },
+            {
+                title: "Withdraw Money",
+                url: "/user/withdraw-money",
+                component: WithdrawMoney
+            },
+            {
+                title: "Send Money",
+                url: "/user/send-money",
+                component: SendMoney
+            },
+            {
+                title: "Cash Out",
+                url: "/user/cash-out",
+                component: CashOut
             }
         ],
     },

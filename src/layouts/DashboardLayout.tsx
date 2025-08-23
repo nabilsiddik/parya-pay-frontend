@@ -1,4 +1,5 @@
 import { AppSidebar } from "@/components/app-sidebar"
+import DashboardLoader from "@/components/DashboardLoader"
 import { ModeToggle } from "@/components/ModeToggle"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -6,9 +7,16 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { Role } from "@/constants/role"
+import { useGetCurrentUserQuery } from "@/redux/features/auth/auth.api"
+import { useGetSingleWalletQuery } from "@/redux/features/wallet/wallet.api"
 import { Outlet } from "react-router-dom"
 
 export default function DashboardLayout() {
+
+  const {data: user} = useGetCurrentUserQuery(undefined)
+  const {data: wallet} = useGetSingleWalletQuery(undefined)
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -23,7 +31,8 @@ export default function DashboardLayout() {
             <h1 className="font-bold text-2xl">Admin Dashboard</h1>
           </div>
 
-          <div>
+          <div className="flex items-center gap-3">
+            {user?.data?.role === Role.AGENT && <div className="font-medium">{`Balance ${wallet?.data?.balance} Taka`}</div>}
             <ModeToggle/>
           </div>
         </header>
