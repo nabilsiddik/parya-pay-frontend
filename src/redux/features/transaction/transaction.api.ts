@@ -10,14 +10,14 @@ export const transactionApi = baseApi.injectEndpoints({
             }),
             providesTags: ['TRANSACTION']
         }),
-        // getUserTransaction: builder.query({
-        //     query: (params) => ({
-        //         url: '/transaction/',
-        //         method: 'GET',
-        //         params
-        //     }),
-        //     providesTags: ['TRANSACTION']
-        // }),
+        getUserTransactionHistory: builder.query({
+            query: (params) => ({
+                url: '/transaction/history',
+                method: 'GET',
+                params
+            }),
+            providesTags: ['TRANSACTION']
+        }),
         addMoney: builder.mutation({
             query: (addMoneyInfo) => ({
                 url: '/transaction/add-money',
@@ -61,4 +61,4 @@ export const transactionApi = baseApi.injectEndpoints({
     })
 })
 
-export const {useAddMoneyMutation, useSendMoneyMutation, useWithdrawMoneyMutation, useCashInMutation, useCashOutMutation, useGetAllTransactionsQuery} = transactionApi
+export const {useAddMoneyMutation, useSendMoneyMutation, useWithdrawMoneyMutation, useCashInMutation, useCashOutMutation, useGetAllTransactionsQuery, useGetUserTransactionHistoryQuery} = transactionApi

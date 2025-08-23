@@ -6,6 +6,7 @@ import CashOut from "@/pages/transaction/CashOut";
 import SendMoney from "@/pages/transaction/SendMoney";
 import WithdrawMoney from "@/pages/transaction/WithdrawMoney";
 import BecomeAgent from "@/pages/user/BecomeAgent";
+import MyTransactions from "@/pages/user/MyTransactions";
 import { SquareTerminal } from "lucide-react";
 
 export const userSidebarRoutes = [
@@ -28,8 +29,8 @@ export const userSidebarRoutes = [
         items: [
             {
                 title: "My Transactions",
-                url: "/user/all-users",
-                component: AllUsers
+                url: "/user/my-transactions",
+                component: MyTransactions
             },
             {
                 title: "Add Money",

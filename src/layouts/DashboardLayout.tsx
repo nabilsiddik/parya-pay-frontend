@@ -32,7 +32,7 @@ export default function DashboardLayout() {
           </div>
 
           <div className="flex items-center gap-3">
-            {user?.data?.role === Role.AGENT && <div className="font-medium">{`Balance ${wallet?.data?.balance} Taka`}</div>}
+            {user?.data?.role === Role.AGENT || Role.USER && <div className="font-medium">{`Balance ${wallet?.data?.balance} Taka`}</div>}
             <ModeToggle/>
           </div>
         </header>

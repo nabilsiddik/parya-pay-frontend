@@ -74,7 +74,7 @@ const TransactionFilter = () => {
                     </SelectContent>
                 </Select>
 
-                <Input value={searchTerm ? searchTerm : ''} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search" />
+                <Input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search" />
             </div>
             <div></div>
         </div>
