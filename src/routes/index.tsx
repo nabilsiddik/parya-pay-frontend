@@ -16,6 +16,7 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import { adminSidebarRoutes } from "./adminSidebarRoutes";
 import { agentSidebarRoutes } from "./agentSidebarRoutes";
 import { userSidebarRoutes } from "./userSidebarRoutes";
+import About from "@/pages/About";
 
 
 const router = createBrowserRouter([
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
             {
                 index: true,
                 Component: Home
+            },
+            {
+                path: '/about',
+                Component: About
             },
             {
                 path: 'add-money',

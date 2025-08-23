@@ -15,7 +15,6 @@ import { toast } from "sonner"
 const UserDeleteConfimDialog = ({children, userId}: {children: React.ReactNode, userId: string}) => {
 
     const [deleteUser] = useDeleteUserMutation()
-    console.log('userid', userId)
 
     // Handle delete user
     const handleDeleteUser = async() => {

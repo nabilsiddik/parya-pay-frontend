@@ -10,7 +10,15 @@ export const agentRequestApi = baseApi.injectEndpoints({
             }),
             providesTags: ['AGENT_REQUEST']
         }),
+        handleAgentRequest: builder.mutation({
+            query: (requestData) => ({
+                url: `/agent-request/handle-request/${requestData?.agentRequestId}`,
+                method: 'PATCH',
+                body: requestData?.bodyData,
+            }),
+            invalidatesTags: ['AGENT_REQUEST']
+        }),
     })
 })
 
-export const {useAllAgentRequestQuery} = agentRequestApi
+export const {useAllAgentRequestQuery, useHandleAgentRequestMutation} = agentRequestApi

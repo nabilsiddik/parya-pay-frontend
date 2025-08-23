@@ -93,11 +93,12 @@ export default function Navbar() {
   // Navigation items configuration
   const navItems = [
     {
-      name: 'Dashboard', icon: Home,
+      name: 'Dashboard',
       slug: role === 'ADMIN' ? '/admin' : role === 'AGENT' ? '/agent' : role === 'USER' ? '/user': '/' 
     },
-    { name: 'Login', icon: Users, slug: '/login' },
-    { name: 'Sign Up', icon: Users, slug: '/signup' },
+    { name: 'About', slug: '/about' },
+    { name: 'Login', slug: '/login' },
+    { name: 'Sign Up', slug: '/signup' },
   ];
 
   return (
@@ -117,7 +118,6 @@ export default function Navbar() {
 
                 <nav className="hidden lg:flex space-x-1">
                   {navItems.map((item, index) => {
-                    const Icon = item.icon;
                     return (
                       <Link key={index} to={item.slug}>
                         <button
@@ -130,7 +130,6 @@ export default function Navbar() {
                               : 'hover:text-white hover:bg-secondary dark:text-foreground'}
                       `}
                         >
-                          <Icon size={18} />
                           <span className="font-medium">{item.name}</span>
                         </button>
                       </Link>
@@ -230,7 +229,6 @@ export default function Navbar() {
               <div className="lg:hidden mt-4 pt-4 border-t border-gray-800">
                 <nav className="grid grid-cols-2 gap-2">
                   {navItems.map((item) => {
-                    const Icon = item.icon;
                     return (
                       <Link to={item?.slug}>
                         <button
@@ -246,7 +244,6 @@ export default function Navbar() {
                               : 'hover:text-white hover:bg-gray-900'}
                       `}
                         >
-                          <Icon size={18} />
                           <span className="font-medium">{item.name}</span>
                         </button>
                       </Link>

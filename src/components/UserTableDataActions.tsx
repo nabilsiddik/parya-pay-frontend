@@ -11,9 +11,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import UserDeleteConfimDialog from "./dialogs/UserDeleteConfimDialog"
+import UserStatusUpdateDialog from "./dialogs/userStatusUpdateDialog"
 
 
 export default function UserTableDataActions({ userId }: { userId: string }) {
+  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -40,7 +42,16 @@ export default function UserTableDataActions({ userId }: { userId: string }) {
             <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
+        {/* update user status  */}
         <DropdownMenuSeparator />
+        <UserStatusUpdateDialog userId = {userId}>
+          <DropdownMenuItem className="w-full" onSelect={(e) => e.preventDefault()} variant="destructive">
+            <span>Update Status</span>
+            <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </UserStatusUpdateDialog>
+        <DropdownMenuSeparator />
+        {/* delete user  */}
         <UserDeleteConfimDialog userId = {userId}>
           <DropdownMenuItem className="w-full" onSelect={(e) => e.preventDefault()} variant="destructive">
             <span>Delete</span>

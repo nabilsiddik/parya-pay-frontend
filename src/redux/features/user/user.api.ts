@@ -30,7 +30,15 @@ export const userApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ['AGENT_REQUEST']
         }),
+        updateUserStatus: builder.mutation({
+            query: ({userId, status}) => ({
+                url: `/user/${userId}/status`,
+                method: 'PATCH',
+                data: {status}
+            }),
+            invalidatesTags: ['USER']
+        }),
     })
 })
 
-export const {useGetAllUsersQuery, useGetAllAgentsQuery, useDeleteUserMutation, useBecomeAgentMutation} = userApi
+export const {useGetAllUsersQuery, useGetAllAgentsQuery, useDeleteUserMutation, useBecomeAgentMutation, useUpdateUserStatusMutation} = userApi

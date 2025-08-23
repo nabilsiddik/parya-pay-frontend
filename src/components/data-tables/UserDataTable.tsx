@@ -296,14 +296,14 @@ export default function UserDataTable({ users }: any) {
                 </TableCell>
                 <TableCell>
                   <Badge variant="outline" className="gap-1 px-2 py-1">
-                    {user?.isActive ? 'Active' : 'Inactive'}
+                    {user?.status}
                   </Badge>
                 </TableCell>
                 <TableCell>
                   {formatDate(user?.createdAt)}
                 </TableCell>
                 <TableCell>
-                  <UserTableDataActions userId = {user?._id} />
+                  <UserTableDataActions userId={user?._id} />
                 </TableCell>
               </TableRow>
             })}

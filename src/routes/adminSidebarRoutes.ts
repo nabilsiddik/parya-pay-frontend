@@ -1,3 +1,4 @@
+import AllAgentRequests from "@/pages/admin/AllAgentRequests";
 import AllAgents from "@/pages/admin/AllAgents";
 import AllTransactions from "@/pages/admin/AllTransactions";
 import AllUsers from "@/pages/admin/AllUsers";
@@ -43,6 +44,18 @@ export const adminSidebarRoutes = [
                 title: "All Transactions",
                 url: "/admin/all-transactions",
                 component: AllTransactions
+            }
+        ],
+    },
+    {
+        title: "Agent Request",
+        icon: SquareTerminal,
+        isActive: true,
+        items: [
+            {
+                title: "All Request",
+                url: "/admin/agent-requests",
+                component: AllAgentRequests
             }
         ],
     },
