@@ -3,7 +3,6 @@ import {
     AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
-    AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
@@ -12,21 +11,17 @@ import {
 import {
     Select,
     SelectContent,
-    SelectGroup,
     SelectItem,
-    SelectLabel,
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { useDeleteUserMutation } from "@/redux/features/user/user.api"
+import { useHandleAgentRequestMutation } from "@/redux/features/agentRequest/agentRequest.api"
 import { useState } from "react"
 import { toast } from "sonner"
 
-const AgentRequestActionModal = ({ children, status, requestId }: { children: React.ReactNode, status: string, requestId: string }) => {
-    const [currentStatus, setCurrentStatus] = useState<string>(status)
-    const [handleAgentRequest] = useDeleteUserMutation()
-
-
+const AgentRequestActionModal = ({ children, status, requestId }: { children: React.ReactNode, status: any, requestId: string }) => {
+    const [currentStatus, setCurrentStatus] = useState<any>(status)
+    const [handleAgentRequest] = useHandleAgentRequestMutation()
 
     const handleActionChange = async (value: string) => {
         setCurrentStatus(value)
@@ -37,12 +32,7 @@ const AgentRequestActionModal = ({ children, status, requestId }: { children: Re
         console.log(currentStatus, requestId)
         
         try {
-            const res = await handleAgentRequest({
-                agentRequestId: requestId,
-                bodyData: {
-                    status: currentStatus
-                }
-            }).unwrap()
+            const res = await handleAgentRequest({requestId, status: currentStatus}).unwrap()
 
             if (res?.success) {
                 toast.success('Status Updated.')

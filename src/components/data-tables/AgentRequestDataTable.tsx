@@ -7,7 +7,6 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Badge } from "../ui/badge"
-import UserTableDataActions from "../UserTableDataActions"
 import formatDate from "@/utils/formatDate"
 import { Button } from "../ui/button"
 import AgentRequestActionModal from "./AgentRequestActionModal"
