@@ -1,4 +1,3 @@
-import Logo from '@/components/Logo'
 import aboutHeroBg from '../../assets/images/about/about-hero-bg.jpg'
 
 const AboutHeroSection = () => {

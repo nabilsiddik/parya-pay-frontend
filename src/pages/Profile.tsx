@@ -1,6 +1,5 @@
 import { Badge } from '@/components/ui/badge'
 import profile from '../assets/images/profile/nabil-siddik-web-developer.png'
-import boyPic from '../assets/images/profile/boy.png'
 import { useGetCurrentUserQuery } from '@/redux/features/auth/auth.api'
 import { Edit, EyeIcon, EyeOffIcon, LocationEditIcon, LockIcon, MailIcon, Phone, PhoneCall, User, UserIcon } from 'lucide-react'
 import { Label } from '@/components/ui/label'
@@ -274,7 +273,7 @@ const Profile = () => {
 
             {/* change password form  */}
             <Form {...updatePasswordForm}>
-              <form id='updatePasswordForm' className='flex items-center gap-8 flex-col xl:flex-row items-stretch' onSubmit={updatePasswordForm.handleSubmit(handleUpdatePassword)}>
+              <form id='updatePasswordForm' className='flex gap-8 flex-col xl:flex-row items-stretch' onSubmit={updatePasswordForm.handleSubmit(handleUpdatePassword)}>
                 <div className='xl:flex-2 flex flex-col gap-5'>
                   {/* current Password Input */}
                   <div className="space-y-2">

@@ -14,14 +14,8 @@ import {
 import { Badge } from "../ui/badge"
 import formatDate from "@/utils/formatDate";
 import TransactionFilter from "../TransactionFilter";
-import { useGetCurrentUserQuery } from "@/redux/features/auth/auth.api";
-import { Role } from "@/constants/role";
-
-
 
 export default function TransactionDataTable({ transactions }: any) {
-
-  const { data: logedInUser } = useGetCurrentUserQuery(undefined)
 
   return (
     <div className="w-full">

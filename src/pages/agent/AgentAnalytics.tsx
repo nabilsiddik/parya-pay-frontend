@@ -1,26 +1,16 @@
 import { Card } from "@/components/ui/card"
 import { useGetCurrentUserQuery } from "@/redux/features/auth/auth.api";
-import { useGetAllTransactionsQuery, useGetUserTransactionHistoryQuery } from "@/redux/features/transaction/transaction.api"
+import { useGetUserTransactionHistoryQuery } from "@/redux/features/transaction/transaction.api"
 import { useGetSingleWalletQuery } from "@/redux/features/wallet/wallet.api";
-import { TransactionTypes } from "@/types/transaction.types";
 import { Coins, UserIcon, WalletIcon } from "lucide-react"
 import { TbMoneybag } from "react-icons/tb";
 
 const AgentAnalytics = () => {
 
-    const { data: allTransactions } = useGetAllTransactionsQuery(undefined)
     const { data: userWallet } = useGetSingleWalletQuery(undefined)
     const { data: transactions } = useGetUserTransactionHistoryQuery(undefined)
     const { data: logedInUser } = useGetCurrentUserQuery(undefined)
 
-    const totalTransactedAmount = transactions?.data.transactions.reduce((sum: number, acc: any) => sum + acc.amount, 0)
-
-    const totalMoneyWithdraw = transactions?.data.transactions.reduce((sum: number, acc: any) => {
-        if (acc.type === TransactionTypes.WITHDRAW_MONEY || acc.type === TransactionTypes.CASH_OUT) {
-            return sum + acc.amount
-        }
-        return sum
-    }, 0)
 
     const totalCashIn = transactions?.data?.transactions
         ?.filter((tran: any) => tran.user._id === logedInUser?.data._id && tran.type === "CASH_IN")

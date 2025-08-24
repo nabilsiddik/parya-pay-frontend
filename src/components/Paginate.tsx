@@ -1,7 +1,6 @@
 import {
     Pagination,
     PaginationContent,
-    PaginationEllipsis,
     PaginationItem,
     PaginationLink,
     PaginationNext,
@@ -32,9 +31,6 @@ const Paginate = ({page, setPage, totalPage}: IPaginateProps) => {
                             return <PaginationLink key={item} isActive={page === item} className="cursor-pointer" onClick={() => setPage(item)}>{item}</PaginationLink>
                         })}
                     </PaginationItem>
-                    {/* <PaginationItem>
-                        <PaginationEllipsis />
-                    </PaginationItem> */}
                     <PaginationItem>
                         <PaginationNext onClick={() => setPage(page + 1)} className={`${page === totalPage ? 'pointer-events-none opacity-50' : 'cursor-pointer'}`}/>
                     </PaginationItem>

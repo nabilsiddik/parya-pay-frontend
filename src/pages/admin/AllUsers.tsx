@@ -8,7 +8,7 @@ import { useSearchParams } from "react-router-dom"
 
 const AllUsers = () => {
   const [page, setPage] = useState<number>(1)
-  const [limit, setLimit] = useState<number>(10)
+  const [limit] = useState<number>(10)
 
   const [searchParams] = useSearchParams()
   const selectedRole = searchParams.get('role') || undefined

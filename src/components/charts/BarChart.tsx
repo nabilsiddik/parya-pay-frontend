@@ -1,12 +1,10 @@
 
-import { TrendingUp } from "lucide-react"
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -31,13 +29,11 @@ interface IBarChartProps {
   chartData: any[],
   chartTitle?: string,
   chartDescription?: string,
-  footerTitle?: string,
-  footerDescription?: string,
   xAxisDataKey: string,
   barDataKey: string
 }
 
-export function ChartBarDefault({chartData, chartTitle, chartDescription, footerTitle, footerDescription, barDataKey, xAxisDataKey}: IBarChartProps) {
+export function ChartBarDefault({chartData, chartTitle, chartDescription, barDataKey, xAxisDataKey}: IBarChartProps) {
 
   return (
     <Card>
@@ -64,14 +60,6 @@ export function ChartBarDefault({chartData, chartTitle, chartDescription, footer
           </BarChart>
         </ChartContainer>
       </CardContent>
-      {/* <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 leading-none font-medium">
-          {footerTitle && footerTitle} <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="text-muted-foreground leading-none">
-          {footerDescription && footerDescription}
-        </div>
-      </CardFooter> */}
     </Card>
   )
 }

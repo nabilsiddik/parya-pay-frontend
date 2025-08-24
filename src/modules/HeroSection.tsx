@@ -22,9 +22,6 @@ interface Hero47Props {
 }
 
 const HeroSection = ({
-  heading = "Epic Blocks",
-  subheading = " built with shadcn/ui & Tailwind",
-  description = "Finely crafted components built with React, Tailwind and Shadcn UI. Developers can copy and paste these blocks directly into their project.",
   buttons = {
     primary: {
       text: "Get Started",

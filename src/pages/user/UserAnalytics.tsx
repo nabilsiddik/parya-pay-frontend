@@ -1,7 +1,6 @@
 import TransactionTypeCard from "@/components/TransactionTypeCard";
 import { Card } from "@/components/ui/card"
-import { useGetAllTransactionsQuery, useGetUserTransactionHistoryQuery } from "@/redux/features/transaction/transaction.api"
-import { useGetAllAgentsQuery, useGetAllUsersQuery } from "@/redux/features/user/user.api"
+import { useGetUserTransactionHistoryQuery } from "@/redux/features/transaction/transaction.api"
 import { useGetSingleWalletQuery } from "@/redux/features/wallet/wallet.api";
 import { TransactionTypes } from "@/types/transaction.types";
 import { Coins, UserIcon, WalletIcon } from "lucide-react"
@@ -14,7 +13,6 @@ import withdrawMoney from '../../assets/images/atm.png'
 
 const UserAnalytics = () => {
 
-    const { data: allTransactions } = useGetAllTransactionsQuery(undefined)
     const { data: userWallet } = useGetSingleWalletQuery(undefined)
     const { data: transactions } = useGetUserTransactionHistoryQuery(undefined)
 
@@ -27,15 +25,6 @@ const UserAnalytics = () => {
         }
         return sum
     }, 0)
-
-
-    console.log('total', totalMoneyWithdraw)
-
-    // Total transaction amount
-    const totalTransactionAmount = allTransactions?.data.reduce((sum: number, transaction: any) => sum + Number(transaction?.totalAmountWithCharge || 0), 0)
-
-    // Total Profit amount for payra pay
-    const totalProfitAmount = allTransactions?.data.reduce((sum: number, transaction: any) => sum + Number(transaction?.payraPayGot || 0), 0)
 
     const transactionTypes = [
         {

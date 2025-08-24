@@ -1,5 +1,3 @@
-import AllUsers from "@/pages/admin/AllUsers";
-import Analytics from "@/pages/admin/Analytics";
 import AgentAnalytics from "@/pages/agent/AgentAnalytics";
 import Profile from "@/pages/Profile";
 import AddMoney from "@/pages/transaction/AddMoney";

@@ -3,13 +3,12 @@ import {
     AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
-    AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { useDeleteUserMutation, useUpdateUserStatusMutation } from "@/redux/features/user/user.api"
+import { useUpdateUserStatusMutation } from "@/redux/features/user/user.api"
 import { toast } from "sonner"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import { useGetCurrentUserQuery } from "@/redux/features/auth/auth.api"

@@ -1,17 +1,11 @@
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
 import { Link } from "react-router-dom"
 
-interface ITransactionTypeProps{
-    id: number,
-    title: string,
-    link: string
-}
 
 const TransactionTypeCard = ({transactionType}: any) => {
     return (

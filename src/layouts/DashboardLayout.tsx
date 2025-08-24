@@ -1,5 +1,4 @@
 import { AppSidebar } from "@/components/app-sidebar"
-import DashboardLoader from "@/components/DashboardLoader"
 import { ModeToggle } from "@/components/ModeToggle"
 import { Separator } from "@/components/ui/separator"
 import {

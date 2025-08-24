@@ -2,8 +2,6 @@ import { useState, useRef, useEffect } from 'react';
 import logo from '../assets/images/logo/logo.png'
 import {
   ChevronDown,
-  Home,
-  Users,
   User
 } from 'lucide-react';
 import { Link } from 'react-router';

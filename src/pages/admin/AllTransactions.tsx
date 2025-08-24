@@ -13,7 +13,7 @@ const AllTransactions = () => {
     const searchTerm = searchParams.get('searchTerm') || undefined
 
     const [page, setPage] = useState<number>(1)
-    const [limit, setLimit] = useState<number>(10)
+    const [limit] = useState<number>(10)
 
     const {data: transactions, isLoading} = useGetAllTransactionsQuery({type: selectedTransactionType, limit: selectedLimit || limit, status: selectedStatus, searchTerm, page})
 
