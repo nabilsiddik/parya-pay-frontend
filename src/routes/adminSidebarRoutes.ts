@@ -3,6 +3,7 @@ import AllAgents from "@/pages/admin/AllAgents";
 import AllTransactions from "@/pages/admin/AllTransactions";
 import AllUsers from "@/pages/admin/AllUsers";
 import Analytics from "@/pages/admin/Analytics";
+import Profile from "@/pages/Profile";
 import { SquareTerminal } from "lucide-react";
 
 export const adminSidebarRoutes = [
@@ -15,6 +16,11 @@ export const adminSidebarRoutes = [
                 title: "Analytics",
                 url: "/admin/analytics",
                 component: Analytics
+            },
+            {
+                title: "Profile",
+                url: "/admin/profile",
+                component: Profile
             }
         ],
     },

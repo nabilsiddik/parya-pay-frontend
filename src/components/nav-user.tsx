@@ -26,26 +26,25 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { authApi, useUserLogoutMutation } from "@/redux/features/auth/auth.api"
+import { authApi, useGetCurrentUserQuery, useUserLogoutMutation } from "@/redux/features/auth/auth.api"
 import { toast } from "sonner"
 import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 
-export function NavUser({
-  user,
-}: any) {
+export function NavUser() {
   const { isMobile } = useSidebar()
   const [userLogout] = useUserLogoutMutation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const { data: logedInUser } = useGetCurrentUserQuery(undefined)
 
-      const {name, email} = user?.data || {}
+  const { name, email, role } = logedInUser?.data || {}
 
   console.log(name)
 
   // User logout
-  const handleUserLogout = async() => {
+  const handleUserLogout = async () => {
     try {
       const res = await userLogout(undefined).unwrap()
       dispatch(authApi.util.resetApiState())
@@ -100,20 +99,12 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <Link to='/profile'>
+              <Link to={`${role === 'ADMIN' ? '/admin' : role === 'AGENT' ? '/agent' : role === 'USER' ? '/user' : '/'}/profile`}>
                 <DropdownMenuItem>
-                <UserIcon />
-                Profile
-              </DropdownMenuItem>
+                  <UserIcon />
+                  Profile
+                </DropdownMenuItem>
               </Link>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
-              </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleUserLogout} className="cursor-pointer">

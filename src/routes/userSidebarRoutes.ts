@@ -21,7 +21,7 @@ export const userSidebarRoutes = [
             },
             {
                 title: "Profile",
-                url: "/user/profiile",
+                url: "/user/profile",
                 component: Profile
             }
         ],

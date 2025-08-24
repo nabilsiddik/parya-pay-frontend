@@ -36,7 +36,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={AdminSidebarMenu.navMain || []} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data} />
+        <NavUser />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
