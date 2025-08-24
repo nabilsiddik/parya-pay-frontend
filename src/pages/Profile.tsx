@@ -1,5 +1,6 @@
 import { Badge } from '@/components/ui/badge'
 import profile from '../assets/images/profile/nabil-siddik-web-developer.png'
+import boyPic from '../assets/images/profile/boy.png'
 import { useGetCurrentUserQuery } from '@/redux/features/auth/auth.api'
 import { Edit, EyeIcon, EyeOffIcon, LocationEditIcon, LockIcon, MailIcon, Phone, PhoneCall, User, UserIcon } from 'lucide-react'
 import { Label } from '@/components/ui/label'
@@ -54,7 +55,7 @@ const Profile = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
 
-  const [edit, setEdit] = useState<boolean>(true)
+  const [edit, setEdit] = useState<boolean>(false)
   const { data: logedInUser } = useGetCurrentUserQuery(undefined)
   const [updateUser] = useUpdateUserMutation()
   const [changePassword] = useChangePasswordMutation()
@@ -125,7 +126,7 @@ const Profile = () => {
   }
 
   // Update password
-  const handleUpdatePassword = async(data: z.infer<typeof updatePasswordZodSchema>) => {
+  const handleUpdatePassword = async (data: z.infer<typeof updatePasswordZodSchema>) => {
     const loadingId = toast.loading('Loading...')
     const passwordInfo = {
       currentPassword: data?.currentPassword,
@@ -265,6 +266,116 @@ const Profile = () => {
 
               <Button form='updateUserForm' className='mt-5 w-full lg:w-auto'>Update Profile</Button>
             </Form>
+
+            <div className='flex items-center justify-between mt-10'>
+              <h3 className=' text-2xl font-bold'>Change Password</h3>
+            </div>
+            <hr className='my-5' />
+
+            {/* change password form  */}
+            <Form {...updatePasswordForm}>
+              <form id='updatePasswordForm' className='flex items-center gap-8 flex-col xl:flex-row items-stretch' onSubmit={updatePasswordForm.handleSubmit(handleUpdatePassword)}>
+                <div className='xl:flex-2 flex flex-col gap-5'>
+                  {/* current Password Input */}
+                  <div className="space-y-2">
+                    <FormField
+                      control={updatePasswordForm.control}
+                      name="currentPassword"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Current Password</FormLabel>
+                          <FormControl>
+                            <div className='relative'>
+                              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+                                <LockIcon />
+                              </div>
+                              <Input className='flex h-10 w-full rounded-md border border-gray-200 dark:border-gray-800 bg-white  px-3 py-2 pl-10 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-950 dark:focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50' placeholder="Current Password" type={showCurrentPassword ? 'text' : 'password'} {...field} />
+
+                              {/* toggle password  */}
+                              <button
+                                type="button"
+                                onClick={toggleCurrentPasswordVisibility}
+                                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                              >
+                                {showCurrentPassword ? <EyeOffIcon /> : <EyeIcon />}
+                              </button>
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <div className='flex items-center gap-5'>
+                    {/* new password field  */}
+                    <div className="space-y-2 w-full">
+                      <FormField
+                        control={updatePasswordForm.control}
+                        name="newPassword"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>New Password</FormLabel>
+                            <FormControl>
+                              <div className='relative'>
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+                                  <LockIcon />
+                                </div>
+                                <Input className='flex h-10 w-full rounded-md border border-gray-200 dark:border-gray-800 bg-white  px-3 py-2 pl-10 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-950 dark:focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50' placeholder="New Password" type={showNewPassword ? 'text' : 'password'} {...field} />
+
+                                {/* toggle password  */}
+                                <button
+                                  type="button"
+                                  onClick={toggleNewPasswordVisibility}
+                                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                                >
+                                  {showNewPassword ? <EyeOffIcon /> : <EyeIcon />}
+                                </button>
+                              </div>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    {/* confirm password field  */}
+                    <div className="space-y-2 w-full">
+                      <FormField
+                        control={updatePasswordForm.control}
+                        name="confirmPassword"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Confirm Password</FormLabel>
+                            <FormControl>
+                              <div className='relative'>
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+                                  <LockIcon />
+                                </div>
+                                <Input className='flex h-10 w-full rounded-md border border-gray-200 dark:border-gray-800 bg-white  px-3 py-2 pl-10 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-950 dark:focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50' placeholder="Confirm Password" type={showConfirmPassword ? 'text' : 'password'} {...field} />
+
+                                {/* toggle password  */}
+                                <button
+                                  type="button"
+                                  onClick={toggleConfirmPasswordVisibility}
+                                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                                >
+                                  {showConfirmPassword ? <EyeOffIcon /> : <EyeIcon />}
+                                </button>
+                              </div>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+              </form>
+
+              <Button form='updatePasswordForm' type='submit' className='mt-5 w-full lg:w-auto'>Update Password</Button>
+            </Form>
           </div>
           :
           <div>
@@ -281,119 +392,17 @@ const Profile = () => {
                 <Label className='text-lg text-gray-300 mb-2'><PhoneCall /> Number</Label>
                 <p className='text-lg font-bold'>{logedInUser?.data?.phone}</p>
               </div>
+              {logedInUser?.data?.address &&
+                <div>
+                  <Label className='text-lg text-gray-300 mb-2'><User /> Address</Label>
+                  <p className='text-lg font-bold'>{logedInUser?.data?.address}</p>
+                </div>
+              }
             </div>
           </div>
         }
 
-        <div className='flex items-center justify-between mt-10'>
-          <h3 className=' text-2xl font-bold'>Change Password</h3>
-        </div>
-        <hr className='my-5' />
 
-        {/* change password form  */}
-        <Form {...updatePasswordForm}>
-          <form id='updatePasswordForm' className='flex items-center gap-8 flex-col xl:flex-row items-stretch' onSubmit={updatePasswordForm.handleSubmit(handleUpdatePassword)}>
-            <div className='xl:flex-2 flex flex-col gap-5'>
-              {/* current Password Input */}
-              <div className="space-y-2">
-                <FormField
-                  control={updatePasswordForm.control}
-                  name="currentPassword"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Current Password</FormLabel>
-                      <FormControl>
-                        <div className='relative'>
-                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
-                            <LockIcon />
-                          </div>
-                          <Input className='flex h-10 w-full rounded-md border border-gray-200 dark:border-gray-800 bg-white  px-3 py-2 pl-10 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-950 dark:focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50' placeholder="Current Password" type={showCurrentPassword ? 'text' : 'password'} {...field} />
-
-                          {/* toggle password  */}
-                          <button
-                            type="button"
-                            onClick={toggleCurrentPasswordVisibility}
-                            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-                          >
-                            {showCurrentPassword ? <EyeOffIcon /> : <EyeIcon />}
-                          </button>
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <div className='flex items-center gap-5'>
-                {/* new password field  */}
-                <div className="space-y-2 w-full">
-                  <FormField
-                    control={updatePasswordForm.control}
-                    name="newPassword"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>New Password</FormLabel>
-                        <FormControl>
-                          <div className='relative'>
-                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
-                              <LockIcon />
-                            </div>
-                            <Input className='flex h-10 w-full rounded-md border border-gray-200 dark:border-gray-800 bg-white  px-3 py-2 pl-10 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-950 dark:focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50' placeholder="New Password" type={showNewPassword ? 'text' : 'password'} {...field} />
-
-                            {/* toggle password  */}
-                            <button
-                              type="button"
-                              onClick={toggleNewPasswordVisibility}
-                              className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-                            >
-                              {showNewPassword ? <EyeOffIcon /> : <EyeIcon />}
-                            </button>
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                {/* confirm password field  */}
-                <div className="space-y-2 w-full">
-                  <FormField
-                    control={updatePasswordForm.control}
-                    name="confirmPassword"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Confirm Password</FormLabel>
-                        <FormControl>
-                          <div className='relative'>
-                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
-                              <LockIcon />
-                            </div>
-                            <Input className='flex h-10 w-full rounded-md border border-gray-200 dark:border-gray-800 bg-white  px-3 py-2 pl-10 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-950 dark:focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50' placeholder="Confirm Password" type={showConfirmPassword ? 'text' : 'password'} {...field} />
-
-                            {/* toggle password  */}
-                            <button
-                              type="button"
-                              onClick={toggleConfirmPasswordVisibility}
-                              className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-                            >
-                              {showConfirmPassword ? <EyeOffIcon /> : <EyeIcon />}
-                            </button>
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
-            </div>
-
-          </form>
-
-          <Button form='updatePasswordForm' type='submit' className='mt-5 w-full lg:w-auto'>Update Password</Button>
-        </Form>
 
 
       </div>

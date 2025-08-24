@@ -56,7 +56,7 @@ export default function TransactionDataTable({ transactions }: any) {
                   {transaction.amount} Taka
                 </TableCell>
                 <TableCell>
-                  {transaction.charge} Taka
+                  {transaction.charge? `${transaction.charge} Taka` : 'No Charge'}
                 </TableCell>
                 <TableCell>
                   <Badge variant="outline" className="gap-1 px-2 py-1">
@@ -88,10 +88,10 @@ export default function TransactionDataTable({ transactions }: any) {
                   {formatDate(transaction?.createdAt)}
                 </TableCell>
                 <TableCell>
-                  {transaction?.numberFrom ? transaction?.numberFrom : 'Unavailable'}
+                  {transaction?.numberFrom ? transaction?.numberFrom : 'Self'}
                 </TableCell>
                 <TableCell>
-                  {transaction?.numberTo ? transaction?.numberTo : 'Unavailable'}
+                  {transaction?.numberTo ? transaction?.numberTo : 'Self'}
                 </TableCell>
 
                 {/* {logedInUser?.data?.role !== Role.USER && logedInUser?.data?.role !== Role.AGENT &&

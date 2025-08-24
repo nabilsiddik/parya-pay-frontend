@@ -28,17 +28,16 @@ const chartConfig = {
 } satisfies ChartConfig
 
 interface IBarChartProps {
-  chartData: {
-    type: string,
-    amount: number
-  }[],
+  chartData: any[],
   chartTitle?: string,
   chartDescription?: string,
   footerTitle?: string,
   footerDescription?: string,
+  xAxisDataKey: string,
+  barDataKey: string
 }
 
-export function ChartBarDefault({chartData, chartTitle, chartDescription, footerTitle, footerDescription}: IBarChartProps) {
+export function ChartBarDefault({chartData, chartTitle, chartDescription, footerTitle, footerDescription, barDataKey, xAxisDataKey}: IBarChartProps) {
 
   return (
     <Card>
@@ -51,17 +50,17 @@ export function ChartBarDefault({chartData, chartTitle, chartDescription, footer
           <BarChart accessibilityLayer data={chartData ? chartData : []}>
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="type"
+              dataKey={xAxisDataKey}
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickFormatter={(value) => value}
             />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="amount" fill="var(--color-desktop)" radius={8} />
+            <Bar dataKey={barDataKey} fill="var(--color-desktop)" radius={8} />
           </BarChart>
         </ChartContainer>
       </CardContent>

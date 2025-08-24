@@ -91,13 +91,12 @@ export default function Navbar() {
 
   // Navigation items configuration
   const navItems = [
+    { name: 'Home', slug: '/' },
     {
       name: 'Dashboard',
       slug: role === 'ADMIN' ? '/admin' : role === 'AGENT' ? '/agent' : role === 'USER' ? '/user': '/' 
     },
     { name: 'About', slug: '/about' },
-    { name: 'Login', slug: '/login' },
-    { name: 'Sign Up', slug: '/signup' },
   ];
 
   return (
@@ -151,8 +150,8 @@ export default function Navbar() {
 
               {/* Right side: Search, Notifications, and User Profile */}
               <div className="flex items-center space-x-2 sm:space-x-4">
-                <p className='font-medium'>{userWallet?.data?.balance} Taka</p>
-
+                {userWallet?.data && <p className='font-medium'>{userWallet?.data?.balance} Taka</p>}
+                
                 {/* User Profile Dropdown */}
                 <div className="relative" ref={dropdownRef}>
                   <div
@@ -204,7 +203,15 @@ export default function Navbar() {
                             </p>
                           </div>
                         </div>
-
+                        
+                        {data?.data && 
+                          <Link to={`${role === 'ADMIN' ? '/admin' : role === 'AGENT' ? '/agent' : role === 'USER' ? '/user': '/'}`}>
+                            <Button className='mt-5 w-full cursor-pointer'>Dashboard</Button>
+                        </Link>
+                        }
+                        <Link to={'/signup'}>
+                            <Button className='mt-5 w-full cursor-pointer'>Create Account</Button>
+                        </Link>
                         {email ?
                           <Button onClick={handleLogout} className='mt-5 w-full cursor-pointer'>Logout</Button>
                           :

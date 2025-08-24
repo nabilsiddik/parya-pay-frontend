@@ -28,11 +28,11 @@ export default function DashboardLayout() {
               orientation="vertical"
               className="mr-2 data-[orientation=vertical]:h-4"
             />
-            <h1 className="font-bold text-2xl">Admin Dashboard</h1>
+            <h1 className="font-bold text-2xl">Dashboard</h1>
           </div>
 
           <div className="flex items-center gap-3">
-            {user?.data?.role === Role.AGENT || Role.USER && <div className="font-medium">{`Balance ${wallet?.data?.balance} Taka`}</div>}
+            {user?.data?.role === Role.AGENT || user?.data?.role === Role.USER && <div className="font-medium">{`Balance ${wallet?.data?.balance} Taka`}</div>}
             <ModeToggle/>
           </div>
         </header>

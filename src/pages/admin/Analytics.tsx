@@ -1,5 +1,4 @@
 import { ChartBarDefault } from "@/components/charts/BarChart"
-import { ChartPieLabelList } from "@/components/charts/PieChart"
 import { Card } from "@/components/ui/card"
 import { useGetAllTransactionsQuery } from "@/redux/features/transaction/transaction.api"
 import { useGetAllAgentsQuery, useGetAllUsersQuery } from "@/redux/features/user/user.api"
@@ -17,6 +16,8 @@ const Analytics = () => {
   // Total Profit amount for payra pay
   const totalProfitAmount = allTransactions?.data.reduce((sum: number, transaction: any) => sum + Number(transaction?.payraPayGot || 0), 0)
 
+
+  // create bar chart data for transaction types
   const totalsByType: Record<string, number> = {};
   allTransactions?.data.forEach((transaction: any) => {
     if (!totalsByType[transaction.type]) {
@@ -30,6 +31,28 @@ const Analytics = () => {
     amount: total,
     fill: `var(--chart-${index + 1})`
   }));
+
+
+  // create bar chart data for user registration
+  const totalsByDate: Record<string, number> = {};
+
+  allUsers?.data?.forEach((user: any) => {
+    const date = new Date(user.createdAt).toISOString().split("T")[0];
+
+    if (!totalsByDate[date]) {
+      totalsByDate[date] = 0;
+    }
+    totalsByDate[date] += 1; // count users
+  });
+
+  const usersByDateChartData = Object.entries(totalsByDate).map(([date, count], index) => ({
+    date,
+    count,
+    fill: `var(--chart-${index + 1})`
+  }));
+
+
+  console.log('reg data', usersByDateChartData)
 
   return (
     <div>
@@ -77,10 +100,10 @@ const Analytics = () => {
           <ChartPieLabelList chartData = {tranAmountByTypeChartData}/>
         </div> */}
         <div>
-          <ChartBarDefault chartData = {tranAmountByTypeChartData} chartTitle='Transactions by Types' chartDescription="All the transaction type and their total amount transacted for each type." />
+          <ChartBarDefault xAxisDataKey='type' barDataKey='amount' chartData={tranAmountByTypeChartData} chartTitle='Transactions by Types' chartDescription="All the transaction type and their total amount transacted for each type." />
         </div>
         <div>
-          <ChartBarDefault chartData = {tranAmountByTypeChartData} chartTitle='User Registration' chartDescription="Number of user registered per date." />
+          <ChartBarDefault xAxisDataKey='date' barDataKey='count' chartData={usersByDateChartData} chartTitle='User Registration' chartDescription="Number of user registered per date." />
         </div>
       </div>
     </div>

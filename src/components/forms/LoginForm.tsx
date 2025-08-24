@@ -3,9 +3,9 @@ import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { useUserSignInMutation } from '@/redux/features/auth/auth.api';
+import { useGetCurrentUserQuery, useUserSignInMutation } from '@/redux/features/auth/auth.api';
 import { toast } from 'sonner';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const UserIcon = () => (
     <svg
@@ -115,7 +115,9 @@ export default function LoginForm() {
     const [userSignIn] = useUserSignInMutation()
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const navigate = useNavigate()
+    const { data: logedInUser } = useGetCurrentUserQuery(undefined)
 
+    console.log('ami', logedInUser?.data?.role)
     // React hook form
     const form = useForm({
         defaultValues: {
@@ -140,8 +142,11 @@ export default function LoginForm() {
         try {
             const res = await userSignIn(loginInfo).unwrap()
 
+            console.log('my res', res?.data?.user?.role)
+
             if (res?.success) {
                 toast.success('User successfully loged in.', { id: signInId })
+                // const role = res?.data?.user?.role
                 navigate('/')
             }
 
@@ -169,7 +174,7 @@ export default function LoginForm() {
                     </div>
 
                     {/* Social login buttons - More compact shadcn style */}
-                    <div className="grid grid-cols-3 gap-2">
+                    {/* <div className="grid grid-cols-3 gap-2">
                         {[{ icon: <AppleIcon /> }, { icon: <GoogleIcon /> }, { icon: <XIcon /> }].map((item, index) => (
                             <button
                                 key={index}
@@ -178,10 +183,10 @@ export default function LoginForm() {
                                 {item.icon}
                             </button>
                         ))}
-                    </div>
+                    </div> */}
 
                     {/* OR Divider - More subtle */}
-                    <div className="relative">
+                    {/* <div className="relative">
                         <div className="absolute inset-0 flex items-center">
                             <span className="w-full border-t border-zinc-200 dark:border-zinc-800" />
                         </div>
@@ -190,7 +195,7 @@ export default function LoginForm() {
                                 Or continue with
                             </span>
                         </div>
-                    </div>
+                    </div> */}
 
                     <Form {...form}>
                         {/* Form - Shadcn style */}
@@ -263,9 +268,9 @@ export default function LoginForm() {
                     <div className="text-center space-y-2">
                         <p className="text-sm text-zinc-600 dark:text-zinc-400">
                             Don&apos;t have an account?{' '}
-                            <a href="#" className="font-medium text-zinc-900 dark:text-zinc-50 underline underline-offset-4 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors">
+                            <Link className='underline' to='/signup'>
                                 Sign up
-                            </a>
+                            </Link>
                         </p>
                         <a href="#" className="text-sm font-medium text-zinc-900 dark:text-zinc-50 underline underline-offset-4 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors">
                             Forgot your password?

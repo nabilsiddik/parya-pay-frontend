@@ -8,6 +8,7 @@ import { Input } from '../ui/input';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUserSignUpMutation } from '@/redux/features/auth/auth.api';
 import { toast } from 'sonner';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 
 const UserIcon: React.FC = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -78,7 +79,8 @@ export const createUserZodSchema = z.object({
         .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/, { message: 'Password must contain at least 1 uppercase letter, 1 lowercase letter, one special character and one number.' }),
 
     phone: z.string()
-        .regex(/^(?:\+88|88)?01[3-9]\d{8}$/, { message: 'Invalid Phone Number.' })
+        .regex(/^(?:\+88|88)?01[3-9]\d{8}$/, { message: 'Invalid Phone Number.' }),
+    role: z.enum(['USER', 'AGENT'])
 }).refine((data) => data.password === data.confirmPassword, {
     path: ['confirmPassword'],
     message: 'Password do not match.'
@@ -99,6 +101,7 @@ const SignUpForm: React.FC = () => {
             name: '',
             email: '',
             phone: '',
+            role: 'USER',
             password: '',
             confirmPassword: ''
         }
@@ -113,6 +116,7 @@ const SignUpForm: React.FC = () => {
         setShowConfirmPassword(!showConfirmPassword);
     };
 
+
     // Register New User
     const handleUserRegistration = async (data: z.infer<typeof createUserZodSchema>) => {
         const toastId = toast.loading('Creating user...')
@@ -120,8 +124,11 @@ const SignUpForm: React.FC = () => {
             name: data.name,
             email: data.email,
             phone: data.phone,
+            role: data.role,
             password: data.password
         }
+
+        console.log('hudai', userInfo)
 
         // Create user in database
         try {
@@ -130,13 +137,13 @@ const SignUpForm: React.FC = () => {
             console.log('actual res', res)
 
             if (res?.success) {
-                toast.success('User successfully registered.', {id: toastId})
+                toast.success('User successfully registered.', { id: toastId })
                 navigate('/login')
-            } 
+            }
 
         } catch (error: any) {
-            console.log( 'ac error',error)
-            toast.error(error?.data?.message, {id: toastId})
+            console.log('ac error', error)
+            toast.error(error?.data?.message, { id: toastId })
         }
     }
 
@@ -210,6 +217,31 @@ const SignUpForm: React.FC = () => {
                                                         <Input className='flex h-10 w-full rounded-md border border-gray-200 dark:border-gray-800 bg-white dark:bg-black px-3 py-2 pl-10 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-950 dark:focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black disabled:cursor-not-allowed disabled:opacity-50' placeholder="Valid Phone Number" {...field} />
                                                     </div>
                                                 </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+
+                                {/* Select role */}
+                                <div className="space-y-2">
+                                    <FormField
+                                        control={form.control}
+                                        name="role"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Role</FormLabel>
+                                                <Select onValueChange={field.onChange} value={field.value}>
+                                                    <FormControl>
+                                                        <SelectTrigger>
+                                                            <SelectValue placeholder="Select Role" />
+                                                        </SelectTrigger>
+                                                    </FormControl>
+                                                    <SelectContent>
+                                                        <SelectItem value="USER">USER</SelectItem>
+                                                        <SelectItem value="AGENT">AGENT</SelectItem>
+                                                    </SelectContent>
+                                                </Select>
                                                 <FormMessage />
                                             </FormItem>
                                         )}
