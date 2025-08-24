@@ -1,13 +1,13 @@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../components/ui/form';
-import { useAddMoneyMutation, useWithdrawMoneyMutation } from "@/redux/features/transaction/transaction.api"
+import { useWithdrawMoneyMutation } from "@/redux/features/transaction/transaction.api"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { Wallet } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import addMoneyIcon from '../../assets/images/add-money.png'
 import { Button } from '@/components/ui/button';
 import z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import withDrawMoneyIcon from '../../assets/images/atm.png'
 
 // withdraw Money payload zod schema
 export const withdrawMoneyZodSchema = z.object({
@@ -57,7 +57,7 @@ const WithdrawMoney = () => {
     return (
         <div className="container mx-auto px-5 py-10">
             <div className='flex items-center gap-3 justify-center'>
-                <img className='w-20' src={addMoneyIcon} alt="add money icon" />
+                <img className='w-20' src={withDrawMoneyIcon} alt="add money icon" />
                 <h1 className='text-center font-bold text-3xl'>Withdraw Money</h1>
             </div>
             <div className='max-w-2xl mx-auto'>

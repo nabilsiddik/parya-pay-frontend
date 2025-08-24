@@ -1,3 +1,4 @@
+import TransactionTypeCard from "@/components/TransactionTypeCard";
 import { Card } from "@/components/ui/card"
 import { useGetAllTransactionsQuery, useGetUserTransactionHistoryQuery } from "@/redux/features/transaction/transaction.api"
 import { useGetAllAgentsQuery, useGetAllUsersQuery } from "@/redux/features/user/user.api"
@@ -6,22 +7,27 @@ import { TransactionTypes } from "@/types/transaction.types";
 import { Coins, UserIcon, WalletIcon } from "lucide-react"
 import { TbMoneybag } from "react-icons/tb";
 
+import addMoney from '../../assets/images/add-money.png'
+import sendMoney from '../../assets/images/send-money.png'
+import cashIn from '../../assets/images/cash-in.png'
+import withdrawMoney from '../../assets/images/atm.png'
+
 const UserAnalytics = () => {
 
     const { data: allTransactions } = useGetAllTransactionsQuery(undefined)
     const { data: userWallet } = useGetSingleWalletQuery(undefined)
     const { data: transactions } = useGetUserTransactionHistoryQuery(undefined)
 
-    console.log('my tra',transactions?.data.transactions)
+    console.log('my tra', transactions?.data.transactions)
     const totalTransactedAmount = transactions?.data.transactions.reduce((sum: number, acc: any) => sum + acc.amount, 0)
 
     const totalMoneyWithdraw = transactions?.data.transactions.reduce((sum: number, acc: any) => {
-        if(acc.type === TransactionTypes.WITHDRAW_MONEY || acc.type === TransactionTypes.CASH_OUT){
+        if (acc.type === TransactionTypes.WITHDRAW_MONEY || acc.type === TransactionTypes.CASH_OUT) {
             return sum + acc.amount
         }
         return sum
     }, 0)
-    
+
 
     console.log('total', totalMoneyWithdraw)
 
@@ -31,6 +37,32 @@ const UserAnalytics = () => {
     // Total Profit amount for payra pay
     const totalProfitAmount = allTransactions?.data.reduce((sum: number, transaction: any) => sum + Number(transaction?.payraPayGot || 0), 0)
 
+    const transactionTypes = [
+        {
+            id: 1,
+            title: 'Add Money',
+            link: '/user/add-money',
+            icon: addMoney
+        },
+        {
+            id: 2,
+            title: 'Withdraw Money',
+            link: '/user/withdraw-money',
+            icon: withdrawMoney
+        },
+        {
+            id: 3,
+            title: 'Send Money',
+            link: '/user/send-money',
+            icon: sendMoney
+        },
+        {
+            id: 4,
+            title: 'Cash Out',
+            link: '/user/cash-out',
+            icon: cashIn
+        }
+    ]
 
     return (
         <div>
@@ -71,6 +103,15 @@ const UserAnalytics = () => {
                         </div>
                     </div>
                 </Card>
+            </div>
+
+
+            <div className="mt-20">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-5">
+                    {transactionTypes.length > 0 && transactionTypes.map((type) => {
+                        return <TransactionTypeCard key={type.id} transactionType={type} />
+                    })}
+                </div>
             </div>
         </div>
     )

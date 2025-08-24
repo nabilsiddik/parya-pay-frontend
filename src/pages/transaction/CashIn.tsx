@@ -75,7 +75,7 @@ const CashIn = () => {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className='text-lg'>Number</FormLabel>
+                    <FormLabel className='text-lg'>User Number</FormLabel>
                     <FormControl>
                       <div className='relative'>
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">

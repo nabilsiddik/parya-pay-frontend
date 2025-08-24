@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card"
+import { useGetCurrentUserQuery } from "@/redux/features/auth/auth.api";
 import { useGetAllTransactionsQuery, useGetUserTransactionHistoryQuery } from "@/redux/features/transaction/transaction.api"
 import { useGetSingleWalletQuery } from "@/redux/features/wallet/wallet.api";
 import { TransactionTypes } from "@/types/transaction.types";
@@ -10,25 +11,35 @@ const AgentAnalytics = () => {
     const { data: allTransactions } = useGetAllTransactionsQuery(undefined)
     const { data: userWallet } = useGetSingleWalletQuery(undefined)
     const { data: transactions } = useGetUserTransactionHistoryQuery(undefined)
+    const { data: logedInUser } = useGetCurrentUserQuery(undefined)
 
-    console.log('my tra',transactions?.data.transactions)
     const totalTransactedAmount = transactions?.data.transactions.reduce((sum: number, acc: any) => sum + acc.amount, 0)
 
     const totalMoneyWithdraw = transactions?.data.transactions.reduce((sum: number, acc: any) => {
-        if(acc.type === TransactionTypes.WITHDRAW_MONEY || acc.type === TransactionTypes.CASH_OUT){
+        if (acc.type === TransactionTypes.WITHDRAW_MONEY || acc.type === TransactionTypes.CASH_OUT) {
             return sum + acc.amount
         }
         return sum
     }, 0)
-    
 
-    console.log('total', totalMoneyWithdraw)
+    const totalCashIn = transactions?.data?.transactions
+        ?.filter((tran: any) => tran.user._id === logedInUser?.data._id && tran.type === "CASH_IN")
+        ?.reduce((sum: number, cashInItem: any) => sum + cashInItem.amount, 0);
 
-    // Total transaction amount
-    const totalTransactionAmount = allTransactions?.data.reduce((sum: number, transaction: any) => sum + Number(transaction?.totalAmountWithCharge || 0), 0)
 
-    // Total Profit amount for payra pay
-    const totalProfitAmount = allTransactions?.data.reduce((sum: number, transaction: any) => sum + Number(transaction?.payraPayGot || 0), 0)
+    const totalCashOut = transactions?.data?.transactions
+        ?.filter((tran: any) => {
+            return tran?.agent &&
+           tran.type === "CASH_OUT" &&
+           tran.agent.toString() === logedInUser?.data._id.toString();
+        })
+        ?.reduce((sum: number, cashOutItem: any) => sum + cashOutItem.amount, 0);
+        
+
+        console.log(totalCashOut)
+
+
+
 
 
     return (
@@ -56,8 +67,8 @@ const AgentAnalytics = () => {
                     <div className="flex items-center gap-5 md:flex-col xl:flex-row">
                         <WalletIcon size={50} />
                         <div className="flex flex-col md:text-center xl:text-left">
-                            <span className="font-bold text-2xl">Transacted Amount</span>
-                            <span className="text-xl font-medium">{totalTransactedAmount} Taka</span>
+                            <span className="font-bold text-2xl">Total Cash In</span>
+                            <span className="text-xl font-medium">{totalCashIn} Taka</span>
                         </div>
                     </div>
                 </Card>
@@ -65,8 +76,8 @@ const AgentAnalytics = () => {
                     <div className="flex items-center gap-5 md:flex-col xl:flex-row">
                         <Coins size={50} />
                         <div className="flex flex-col md:text-center xl:text-left">
-                            <span className="font-bold text-2xl">Total Withdraw</span>
-                            <span className="text-xl font-medium">{totalMoneyWithdraw} Taka</span>
+                            <span className="font-bold text-2xl">Total Cashout</span>
+                            <span className="text-xl font-medium">{totalCashOut} Taka</span>
                         </div>
                     </div>
                 </Card>

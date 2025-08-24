@@ -4,6 +4,7 @@ import AgentAnalytics from "@/pages/agent/AgentAnalytics";
 import Profile from "@/pages/Profile";
 import AddMoney from "@/pages/transaction/AddMoney";
 import CashIn from "@/pages/transaction/CashIn";
+import MyTransactions from "@/pages/user/MyTransactions";
 import { SquareTerminal } from "lucide-react";
 
 export const agentSidebarRoutes = [
@@ -29,6 +30,11 @@ export const agentSidebarRoutes = [
         icon: SquareTerminal,
         isActive: true,
         items: [
+            {
+                title: "All Transactions",
+                url: "/agent/all-transactions",
+                component: MyTransactions
+            },
             {
                 title: "Add Money",
                 url: "/agent/add-money",

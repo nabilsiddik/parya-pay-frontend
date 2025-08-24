@@ -21,7 +21,7 @@ const TransactionTypeCard = ({transactionType}: any) => {
                     <img className="w-24 mx-auto" src={transactionType?.icon} alt="icon" />
                 </CardHeader>
                 <CardContent>
-                    <CardTitle className="text-center font-bold text-xl">{transactionType?.title}</CardTitle>
+                    <CardTitle className="text-center font-bold text-lg md:text-xl">{transactionType?.title}</CardTitle>
                 </CardContent>
             </Card>
         </Link>
