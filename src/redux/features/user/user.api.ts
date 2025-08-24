@@ -4,7 +4,7 @@ export const userApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getAllUsers: builder.query({
             query: () => ({
-                url: '/user/',
+                url: '/user',
                 method: 'GET',
             }),
             providesTags: ['USER']
@@ -22,9 +22,17 @@ export const userApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ['USER']
         }),
+        updateUser: builder.mutation({
+            query: (updatedData) => ({
+                url: `/user`,
+                method: 'PATCH',
+                data: updatedData
+            }),
+            invalidatesTags: ['AUTH']
+        }),
         becomeAgent: builder.mutation({
             query: (data) => ({
-                url: `user/agents/become-agent`,
+                url: `/user/agents/become-agent`,
                 method: 'POST',
                 data
             }),
@@ -38,7 +46,14 @@ export const userApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ['USER']
         }),
+        changePassword: builder.mutation({
+            query: (passwordInfo) => ({
+                url: `/user/change-password`,
+                method: 'PATCH',
+                data: passwordInfo
+            }),
+        }),
     })
 })
 
-export const {useGetAllUsersQuery, useGetAllAgentsQuery, useDeleteUserMutation, useBecomeAgentMutation, useUpdateUserStatusMutation} = userApi
+export const {useGetAllUsersQuery, useGetAllAgentsQuery, useDeleteUserMutation, useBecomeAgentMutation, useUpdateUserStatusMutation, useUpdateUserMutation, useChangePasswordMutation} = userApi
