@@ -17,6 +17,7 @@ import { adminSidebarRoutes } from "./adminSidebarRoutes";
 import { agentSidebarRoutes } from "./agentSidebarRoutes";
 import { userSidebarRoutes } from "./userSidebarRoutes";
 import About from "@/pages/About";
+import Profile from "@/pages/Profile";
 
 
 const router = createBrowserRouter([

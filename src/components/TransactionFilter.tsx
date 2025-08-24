@@ -8,6 +8,7 @@ import {
 import { useSearchParams } from "react-router-dom"
 import { Input } from "./ui/input"
 import { useEffect, useState } from "react"
+import { Button } from "./ui/button"
 
 const TransactionFilter = () => {
     const [searchParams, setSearchParams] = useSearchParams()
@@ -39,10 +40,22 @@ const TransactionFilter = () => {
     }
 
     useEffect(() => {
-        const params = new URLSearchParams(searchParams)
-        params.set('searchTerm', searchTerm)
-        setSearchParams(params)
+        if (searchTerm) {
+            const params = new URLSearchParams(searchParams)
+            params.set('searchTerm', searchTerm)
+            setSearchParams(params)
+        } else {
+            const params = new URLSearchParams(searchParams);
+            params.delete('searchTerm')
+            setSearchParams(params)
+        }
     }, [searchTerm])
+
+
+    // clear filter
+    const handleClearFilter = async() => {
+        setSearchParams(undefined)
+    }
 
     return (
         <div className="flex items-center justify-between gap-3">
@@ -76,7 +89,9 @@ const TransactionFilter = () => {
 
                 <Input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search" />
             </div>
-            <div></div>
+            <div>
+                <Button onClick={handleClearFilter}>Clear Filter</Button>
+            </div>
         </div>
     )
 }

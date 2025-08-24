@@ -1,7 +1,6 @@
-import AllUsers from "@/pages/admin/AllUsers";
 import Analytics from "@/pages/admin/Analytics";
+import Profile from "@/pages/Profile";
 import AddMoney from "@/pages/transaction/AddMoney";
-import CashIn from "@/pages/transaction/CashIn";
 import CashOut from "@/pages/transaction/CashOut";
 import SendMoney from "@/pages/transaction/SendMoney";
 import WithdrawMoney from "@/pages/transaction/WithdrawMoney";
@@ -19,6 +18,11 @@ export const userSidebarRoutes = [
                 title: "Analytics",
                 url: "/user/analytics",
                 component: Analytics
+            },
+            {
+                title: "Profile",
+                url: "/user/profiile",
+                component: Profile
             }
         ],
     },
