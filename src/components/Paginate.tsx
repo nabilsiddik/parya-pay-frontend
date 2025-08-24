@@ -18,7 +18,6 @@ const Paginate = ({page, setPage, totalPage}: IPaginateProps) => {
 
     const pagesArray = Array.from({length: totalPage}).map((_, index) => index+1)
 
-    // console.log('tla',totalPage)
 
     return (
         <div>

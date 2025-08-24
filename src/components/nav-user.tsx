@@ -10,11 +10,7 @@ import {
   UserIcon,
 } from "lucide-react"
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,6 +30,7 @@ import { authApi, useUserLogoutMutation } from "@/redux/features/auth/auth.api"
 import { toast } from "sonner"
 import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 
 export function NavUser({
   user,
