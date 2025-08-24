@@ -88,7 +88,6 @@ export default function Navbar() {
     setIsUserDropdownOpen(!isUserDropdownOpen);
   };
 
-  console.log(role)
 
   // Navigation items configuration
   const navItems = [

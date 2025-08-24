@@ -1,4 +1,3 @@
-import Analytics from "@/pages/admin/Analytics";
 import Profile from "@/pages/Profile";
 import AddMoney from "@/pages/transaction/AddMoney";
 import CashOut from "@/pages/transaction/CashOut";
@@ -6,6 +5,7 @@ import SendMoney from "@/pages/transaction/SendMoney";
 import WithdrawMoney from "@/pages/transaction/WithdrawMoney";
 import BecomeAgent from "@/pages/user/BecomeAgent";
 import MyTransactions from "@/pages/user/MyTransactions";
+import UserAnalytics from "@/pages/user/UserAnalytics";
 import { SquareTerminal } from "lucide-react";
 
 export const userSidebarRoutes = [
@@ -17,7 +17,7 @@ export const userSidebarRoutes = [
             {
                 title: "Analytics",
                 url: "/user/analytics",
-                component: Analytics
+                component: UserAnalytics
             },
             {
                 title: "Profile",

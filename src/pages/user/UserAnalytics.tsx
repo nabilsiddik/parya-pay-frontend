@@ -1,0 +1,79 @@
+import { Card } from "@/components/ui/card"
+import { useGetAllTransactionsQuery, useGetUserTransactionHistoryQuery } from "@/redux/features/transaction/transaction.api"
+import { useGetAllAgentsQuery, useGetAllUsersQuery } from "@/redux/features/user/user.api"
+import { useGetSingleWalletQuery } from "@/redux/features/wallet/wallet.api";
+import { TransactionTypes } from "@/types/transaction.types";
+import { Coins, UserIcon, WalletIcon } from "lucide-react"
+import { TbMoneybag } from "react-icons/tb";
+
+const UserAnalytics = () => {
+
+    const { data: allTransactions } = useGetAllTransactionsQuery(undefined)
+    const { data: userWallet } = useGetSingleWalletQuery(undefined)
+    const { data: transactions } = useGetUserTransactionHistoryQuery(undefined)
+
+    console.log('my tra',transactions?.data.transactions)
+    const totalTransactedAmount = transactions?.data.transactions.reduce((sum: number, acc: any) => sum + acc.amount, 0)
+
+    const totalMoneyWithdraw = transactions?.data.transactions.reduce((sum: number, acc: any) => {
+        if(acc.type === TransactionTypes.WITHDRAW_MONEY || acc.type === TransactionTypes.CASH_OUT){
+            return sum + acc.amount
+        }
+        return sum
+    }, 0)
+    
+
+    console.log('total', totalMoneyWithdraw)
+
+    // Total transaction amount
+    const totalTransactionAmount = allTransactions?.data.reduce((sum: number, transaction: any) => sum + Number(transaction?.totalAmountWithCharge || 0), 0)
+
+    // Total Profit amount for payra pay
+    const totalProfitAmount = allTransactions?.data.reduce((sum: number, transaction: any) => sum + Number(transaction?.payraPayGot || 0), 0)
+
+
+    return (
+        <div>
+            <div className="grid gap-5 md:grid-cols-2 2xl:grid-cols-4">
+                <Card className="px-10">
+                    <div className="flex items-center gap-5 md:flex-col xl:flex-row">
+                        <TbMoneybag className="text-5xl" />
+                        <div className="flex flex-col md:text-center xl:text-left">
+                            <span className="font-bold text-2xl">Balance</span>
+                            <span className="text-xl font-medium">{userWallet?.data?.balance} Taka</span>
+                        </div>
+                    </div>
+                </Card>
+                <Card className="px-10">
+                    <div className="flex items-center gap-5 md:flex-col xl:flex-row">
+                        <UserIcon size={50} />
+                        <div className="flex flex-col md:text-center xl:text-left">
+                            <span className="font-bold text-2xl">Total Transactions</span>
+                            <span className="text-xl font-medium">{transactions?.data?.transactions?.length}</span>
+                        </div>
+                    </div>
+                </Card>
+                <Card className="px-10">
+                    <div className="flex items-center gap-5 md:flex-col xl:flex-row">
+                        <WalletIcon size={50} />
+                        <div className="flex flex-col md:text-center xl:text-left">
+                            <span className="font-bold text-2xl">Transacted Amount</span>
+                            <span className="text-xl font-medium">{totalTransactedAmount} Taka</span>
+                        </div>
+                    </div>
+                </Card>
+                <Card className="px-10">
+                    <div className="flex items-center gap-5 md:flex-col xl:flex-row">
+                        <Coins size={50} />
+                        <div className="flex flex-col md:text-center xl:text-left">
+                            <span className="font-bold text-2xl">Total Withdraw</span>
+                            <span className="text-xl font-medium">{totalMoneyWithdraw} Taka</span>
+                        </div>
+                    </div>
+                </Card>
+            </div>
+        </div>
+    )
+}
+
+export default UserAnalytics

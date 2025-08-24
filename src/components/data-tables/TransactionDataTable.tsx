@@ -40,9 +40,9 @@ export default function TransactionDataTable({ transactions }: any) {
               <TableHead>Date</TableHead>
               <TableHead>Number From</TableHead>
               <TableHead>Number To</TableHead>
-              {logedInUser?.data?.role !== Role.USER && logedInUser?.data?.role !== Role.AGENT &&
+              {/* {logedInUser?.data?.role !== Role.USER && logedInUser?.data?.role !== Role.AGENT &&
                 <TableHead>Action</TableHead>
-              }
+              } */}
             </TableRow>
           </TableHeader>
 
@@ -93,12 +93,13 @@ export default function TransactionDataTable({ transactions }: any) {
                 <TableCell>
                   {transaction?.numberTo ? transaction?.numberTo : 'Unavailable'}
                 </TableCell>
-                {logedInUser?.data?.role !== Role.USER && logedInUser?.data?.role !== Role.AGENT &&
+
+                {/* {logedInUser?.data?.role !== Role.USER && logedInUser?.data?.role !== Role.AGENT &&
                   <TableCell>
-                    {/* <TableDataAction /> */}
                     action
                   </TableCell>
-                }
+                } */}
+
               </TableRow>
             })}
           </TableBody>
