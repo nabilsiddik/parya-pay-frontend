@@ -91,6 +91,8 @@ export default function Navbar() {
   const navItems = [
     { name: 'Home', slug: '/' },
     { name: 'Transactions', slug: '/transactions' },
+    { name: 'Pricing', slug: '/pricing' },
+    { name: 'Contact', slug: '/contact' },
     ...(isSuccess && role ? [
       {
         name: 'Dashboard',

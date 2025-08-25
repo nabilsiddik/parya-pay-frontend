@@ -1,4 +1,5 @@
 import HeroSection from "@/modules/HeroSection"
+import FAQSection from "@/modules/home/FAQSection"
 import PricingSection from "@/modules/home/PricingSection"
 import TransactionsSection from "@/modules/TransactionsSection"
 
@@ -8,6 +9,7 @@ const Home = () => {
       <HeroSection/>
       <TransactionsSection/>
       <PricingSection/>
+      <FAQSection/>
     </div>
   )
 }
