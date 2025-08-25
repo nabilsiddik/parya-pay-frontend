@@ -1,3 +1,4 @@
+import FeaturesSection from "@/modules/FeaturesSection"
 import HeroSection from "@/modules/HeroSection"
 import FAQSection from "@/modules/home/FAQSection"
 import PricingSection from "@/modules/home/PricingSection"
@@ -8,6 +9,7 @@ const Home = () => {
     <div className="container mx-auto px-5">
       <HeroSection/>
       <TransactionsSection/>
+      <FeaturesSection/>
       <PricingSection/>
       <FAQSection/>
     </div>
