@@ -25,6 +25,7 @@ import { toast } from "sonner"
 import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
+import { restartTour } from "@/pages/user/UserAnalytics"
 
 export function NavUser() {
   const { isMobile } = useSidebar()
@@ -99,6 +100,13 @@ export function NavUser() {
                   Profile
                 </DropdownMenuItem>
               </Link>
+            </DropdownMenuGroup>
+            {/* restart tour  */}
+            <DropdownMenuGroup>
+              <DropdownMenuItem onClick={restartTour}>
+                <UserIcon />
+                Restart Tour
+              </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleUserLogout} className="cursor-pointer">

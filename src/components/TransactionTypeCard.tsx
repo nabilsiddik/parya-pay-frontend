@@ -10,7 +10,7 @@ import { Link } from "react-router-dom"
 const TransactionTypeCard = ({transactionType}: any) => {
     return (
         <Link to={transactionType?.link}>
-            <Card>
+            <Card className="add-money">
                 <CardHeader>
                     <img className="w-24 mx-auto" src={transactionType?.icon} alt="icon" />
                 </CardHeader>

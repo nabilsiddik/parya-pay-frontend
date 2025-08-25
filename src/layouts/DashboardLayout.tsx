@@ -1,4 +1,5 @@
 import { AppSidebar } from "@/components/app-sidebar"
+import DashboardLoader from "@/components/DashboardLoader"
 import { ModeToggle } from "@/components/ModeToggle"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -13,8 +14,8 @@ import { Outlet } from "react-router-dom"
 
 export default function DashboardLayout() {
 
-  const {data: user} = useGetCurrentUserQuery(undefined)
-  const {data: wallet} = useGetSingleWalletQuery(undefined)
+  const { data: user, isLoading: userLoading } = useGetCurrentUserQuery(undefined)
+  const { data: wallet } = useGetSingleWalletQuery(undefined)
 
   return (
     <SidebarProvider>
@@ -32,11 +33,15 @@ export default function DashboardLayout() {
 
           <div className="flex items-center gap-3">
             {user?.data?.role === Role.AGENT || user?.data?.role === Role.USER && <div className="font-medium">{`Balance ${wallet?.data?.balance} Taka`}</div>}
-            <ModeToggle/>
+            <ModeToggle />
           </div>
         </header>
         <div className="p-5">
-          <Outlet />
+          {userLoading ?
+            <DashboardLoader />
+            :
+            <Outlet />
+          }
         </div>
       </SidebarInset>
     </SidebarProvider>

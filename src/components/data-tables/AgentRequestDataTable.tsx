@@ -13,7 +13,6 @@ import AgentRequestActionModal from "./AgentRequestActionModal"
 
 export default function AgentRequestDataTable({ agentRequests }: any) {
 
-    console.log('sdfsdf', agentRequests)
 
     return (
         <div className="w-full">

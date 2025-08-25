@@ -101,7 +101,7 @@ export default function LoginForm() {
 
             console.log('my res', res?.data?.user?.role)
 
-            if (res?.success) {
+            if (res?.success && res?.data?.user) {
                 toast.success('User successfully loged in.', { id: signInId })
                 // const role = res?.data?.user?.role
                 navigate('/')
