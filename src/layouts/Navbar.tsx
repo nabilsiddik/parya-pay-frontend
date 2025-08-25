@@ -18,7 +18,7 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [userLogout] = useUserLogoutMutation()
-  const { data } = useGetCurrentUserQuery(undefined)
+  const { data, isSuccess } = useGetCurrentUserQuery(undefined)
   const { data: userWallet } = useGetSingleWalletQuery(undefined)
   const dispatch = useAppDispatch()
 
@@ -90,10 +90,14 @@ export default function Navbar() {
   // Navigation items configuration
   const navItems = [
     { name: 'Home', slug: '/' },
-    {
-      name: 'Dashboard',
-      slug: role === 'ADMIN' ? '/admin' : role === 'AGENT' ? '/agent' : role === 'USER' ? '/user': '/' 
-    },
+    ...(isSuccess && role ? [
+      {
+        name: 'Dashboard',
+        slug: role === 'ADMIN' ? '/admin' :
+          role === 'AGENT' ? '/agent' :
+            role === 'USER' ? '/user' : '/'
+      }
+    ] : []),
     { name: 'About', slug: '/about' },
   ];
 
@@ -107,9 +111,9 @@ export default function Navbar() {
               <div className="flex items-center space-x-2 sm:space-x-8">
                 <Link to='/'>
                   <div className='flex items-center gap-1'>
-                  <img src={logo} className='w-[60px]' alt="payra pay logo" />
-                  <h2 className='font-bold text-2xl mb-3'>Payra Pay</h2>
-                </div>
+                    <img src={logo} className='w-[60px]' alt="payra pay logo" />
+                    <h2 className='font-bold text-2xl mb-3'>Payra Pay</h2>
+                  </div>
                 </Link>
 
                 <nav className="hidden lg:flex space-x-1">
@@ -149,7 +153,7 @@ export default function Navbar() {
               {/* Right side: Search, Notifications, and User Profile */}
               <div className="flex items-center space-x-2 sm:space-x-4">
                 {userWallet?.data && <p className='font-medium'>{userWallet?.data?.balance} Taka</p>}
-                
+
                 {/* User Profile Dropdown */}
                 <div className="relative" ref={dropdownRef}>
                   <div
@@ -201,14 +205,14 @@ export default function Navbar() {
                             </p>
                           </div>
                         </div>
-                        
-                        {data?.data && 
-                          <Link to={`${role === 'ADMIN' ? '/admin' : role === 'AGENT' ? '/agent' : role === 'USER' ? '/user': '/'}`}>
+
+                        {isSuccess && role &&
+                          <Link to={`${role === 'ADMIN' ? '/admin' : role === 'AGENT' ? '/agent' : role === 'USER' ? '/user' : '/'}`}>
                             <Button className='mt-5 w-full cursor-pointer'>Dashboard</Button>
-                        </Link>
+                          </Link>
                         }
                         <Link to={'/signup'}>
-                            <Button className='mt-5 w-full cursor-pointer'>Create Account</Button>
+                          <Button className='mt-5 w-full cursor-pointer'>Create Account</Button>
                         </Link>
                         {email ?
                           <Button onClick={handleLogout} className='mt-5 w-full cursor-pointer'>Logout</Button>
