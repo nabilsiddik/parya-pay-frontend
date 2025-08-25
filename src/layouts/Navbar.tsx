@@ -90,6 +90,7 @@ export default function Navbar() {
   // Navigation items configuration
   const navItems = [
     { name: 'Home', slug: '/' },
+    { name: 'Transactions', slug: '/transactions' },
     ...(isSuccess && role ? [
       {
         name: 'Dashboard',
@@ -102,9 +103,9 @@ export default function Navbar() {
   ];
 
   return (
-    <div className="mx-4 sm:mx-6 mt-2 font-sans">
+    <div className="font-sans fixed w-full block z-[9999]">
       <header className="relative">
-        <div className="bg-primary border border-primary rounded-2xl shadow-2xl p-4 text-white dark:text-foreground dark:bg-gray-900 dark:border-none">
+        <div className="bg-primary border border-primary p-4 text-white dark:text-foreground dark:bg-gray-900 dark:border-none">
           <div className="container mx-auto">
             <div className="flex items-center justify-between gap-4">
               {/* Logo and Desktop Navigation */}

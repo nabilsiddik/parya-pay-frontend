@@ -3,9 +3,9 @@ import { Link } from "react-router-dom"
 
 const Footer = () => {
   return (
-    <footer className="bg-primary dark:bg-gray-900 text-white dark:text-foreground mx-4 sm:mx-6 rounded-t-lg">
+    <footer className="bg-primary dark:bg-gray-900 text-white dark:text-foreground rounded-t-lg">
       <div className="container mx-auto space-y-8 px-4 py-16 sm:px-6 lg:space-y-16 lg:px-8">
-        <div className="sm:flex sm:items-center sm:justify-between">
+        <div className="flex items-center justify-between flex-col md:flex-row sm:gap-10 border-b pb-10">
           <div>
             <Logo />
           </div>
@@ -61,117 +61,23 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div
-          className="grid grid-cols-1 gap-8 border-t border-gray-100 pt-8 sm:grid-cols-2 lg:grid-cols-4 lg:pt-16 dark:border-gray-800"
-        >
-          <div>
-            <p className="font-medium dark:text-foreground">Services</p>
-
-            <ul className="mt-6 space-y-4 text-sm">
-              <li>
-                <Link to='/'>
-                  1on1 Coaching
-                </Link>
-              </li>
-              <li>
-                <Link to='/'>
-                  1on1 Coaching
-                </Link>
-              </li>
-              <li>
-                <Link to='/'>
-                  1on1 Coaching
-                </Link>
-              </li>
-              <li>
-                <Link to='/'>
-                  1on1 Coaching
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="font-medium dark:text-foreground">Company</p>
-
-            <ul className="mt-6 space-y-4 text-sm">
-              <li>
-                <Link to='/'>
-                  1on1 Coaching
-                </Link>
-              </li>
-              <li>
-                <Link to='/'>
-                  1on1 Coaching
-                </Link>
-              </li>
-              <li>
-                <Link to='/'>
-                  1on1 Coaching
-                </Link>
-              </li>
-              <li>
-                <Link to='/'>
-                  1on1 Coaching
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="font-medium dark:text-foreground">Helpful Links</p>
-
-            <ul className="mt-6 space-y-4 text-sm">
-              <li>
-                <Link to='/'>
-                  1on1 Coaching
-                </Link>
-              </li>
-              <li>
-                <Link to='/'>
-                  1on1 Coaching
-                </Link>
-              </li>
-              <li>
-                <Link to='/'>
-                  1on1 Coaching
-                </Link>
-              </li>
-              <li>
-                <Link to='/'>
-                  1on1 Coaching
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="font-medium dark:text-foreground">Legal</p>
-
-            <ul className="mt-6 space-y-4 text-sm">
-              <li>
-                <Link to='/'>
-                  1on1 Coaching
-                </Link>
-              </li>
-              <li>
-                <Link to='/'>
-                  1on1 Coaching
-                </Link>
-              </li>
-              <li>
-                <Link to='/'>
-                  1on1 Coaching
-                </Link>
-              </li>
-              <li>
-                <Link to='/'>
-                  1on1 Coaching
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <ul className="flex items-center justify-center gap-5">
+          <li className="hover:underline">
+            <Link to='/'>
+              Terms & Condition
+            </Link>
+          </li>
+          <li className="hover:underline">
+            <Link to='/'>
+              Privacy Policy
+            </Link>
+          </li>
+          <li className="hover:underline">
+            <Link to='/contact'>
+              Contact
+            </Link>
+          </li>
+        </ul>
 
         <p className="text-center dark:text-foreground">
           &copy; 2025. Payra Pay. All rights reserved.

@@ -1,4 +1,5 @@
 import HeroSection from "@/modules/HeroSection"
+import PricingSection from "@/modules/home/PricingSection"
 import TransactionsSection from "@/modules/TransactionsSection"
 
 const Home = () => {
@@ -6,6 +7,7 @@ const Home = () => {
     <div className="container mx-auto px-5">
       <HeroSection/>
       <TransactionsSection/>
+      <PricingSection/>
     </div>
   )
 }

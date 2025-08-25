@@ -17,6 +17,7 @@ import { adminSidebarRoutes } from "./adminSidebarRoutes";
 import { agentSidebarRoutes } from "./agentSidebarRoutes";
 import { userSidebarRoutes } from "./userSidebarRoutes";
 import About from "@/pages/About";
+import Transactions from "@/pages/Transactions";
 
 
 const router = createBrowserRouter([
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
             {
                 path: '/about',
                 Component: About
+            },
+            {
+                path: '/transactions',
+                Component: Transactions
             },
             {
                 path: 'add-money',

@@ -42,7 +42,7 @@ const Analytics = () => {
     if (!totalsByDate[date]) {
       totalsByDate[date] = 0;
     }
-    totalsByDate[date] += 1; // count users
+    totalsByDate[date] += 1;
   });
 
   const usersByDateChartData = Object.entries(totalsByDate).map(([date, count], index) => ({

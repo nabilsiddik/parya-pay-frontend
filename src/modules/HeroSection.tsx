@@ -1,5 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import heroImage from '../assets/images/payra-pay.png'
 
 interface Hero47Props {
   heading?: string;
@@ -25,11 +26,11 @@ const HeroSection = ({
   buttons = {
     primary: {
       text: "Get Started",
-      url: "#",
+      url: "/transactions",
     },
     secondary: {
-      text: "Read the docs",
-      url: "#",
+      text: "Saved Numbers",
+      url: "/",
     },
   },
   image = {
@@ -38,15 +39,16 @@ const HeroSection = ({
   },
 }: Hero47Props) => {
   return (
-    <section className="bg-background py-20 lg:py-32">
+    <section className="bg-background py-20 lg:py-32 mt-[60px] lg:mt-0">
       <div className="container flex flex-col items-center gap-10 lg:my-0 lg:flex-row">
         <div className="flex flex-col gap-7 lg:w-2/3">
-          <h2 className="text-5xl font-semibold text-foreground md:text-5xl lg:text-8xl">
-            <span>Payra Pay,</span>
-            <span className="text-muted-foreground">Trusted & Secure Digital Wallet in Bangladesh</span>
+          <h2 className="text-5xl font-semibold text-foreground md:text-5xl xl:text-7xl xl:pr-30">
+            <span>Payra Pay, </span>
+            <span className="text-muted-foreground">
+              Your Money, Your Freedom</span>
           </h2>
-          <p className="text-base text-muted-foreground md:text-lg lg:text-xl">
-            Add Money, Send Money, Cash Out, Cash In, One Platform for all Financial Solutions
+          <p className="text-base text-muted-foreground md:text-lg lg:text-xl xl:pr-30">
+            "Experience the fastest, most secure, and hassle-free way to manage your money. With our digital wallet, you can add, send, receive, and withdraw funds anytime, anywhere — all from one simple app."
           </p>
           <div className="flex flex-wrap items-start gap-5 lg:gap-7">
             <Button asChild>
@@ -74,7 +76,7 @@ const HeroSection = ({
           </div>
           <img
             className="relative z-10"
-            src="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/mockups/phone-2.png"
+            src={heroImage}
             width={450}
             height={889}
             alt="iphone"
