@@ -4,7 +4,6 @@ import {
   UserIcon,
 } from "lucide-react"
 
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,18 +24,18 @@ import { toast } from "sonner"
 import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
-import { restartTour } from "@/pages/user/UserAnalytics"
+import { useRestartTour } from "@/hooks/useRestertTour"
 
 export function NavUser() {
   const { isMobile } = useSidebar()
   const [userLogout] = useUserLogoutMutation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const restartTour = useRestartTour()
   const { data: logedInUser } = useGetCurrentUserQuery(undefined)
 
   const { name, email, role } = logedInUser?.data || {}
 
-  console.log(name)
 
   // User logout
   const handleUserLogout = async () => {

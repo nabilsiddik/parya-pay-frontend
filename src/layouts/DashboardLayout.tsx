@@ -19,7 +19,7 @@ export default function DashboardLayout() {
 
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar variant="sidebar" />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center justify-between gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 pr-5">
           <div className="flex items-center gap-2 px-4">
@@ -32,7 +32,7 @@ export default function DashboardLayout() {
           </div>
 
           <div className="flex items-center gap-3">
-            {user?.data?.role === Role.AGENT || user?.data?.role === Role.USER && <div className="font-medium">{`Balance ${wallet?.data?.balance} Taka`}</div>}
+            <span className="hidden md:block">{user?.data?.role === Role.AGENT || user?.data?.role === Role.USER && <div className="font-medium">{`Balance ${wallet?.data?.balance} Taka`}</div>}</span>
             <ModeToggle />
           </div>
         </header>

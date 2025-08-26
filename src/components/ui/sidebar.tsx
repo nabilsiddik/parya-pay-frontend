@@ -65,10 +65,11 @@ function SidebarProvider({
 }: React.ComponentProps<"div"> & {
   defaultOpen?: boolean
   open?: boolean
-  onOpenChange?: (open: boolean) => void
+  onOpenChange?: (open: boolean) => void,
 }) {
   const isMobile = useIsMobile()
   const [openMobile, setOpenMobile] = React.useState(false)
+
 
   // This is the internal state of the sidebar.
   // We use openProp and setOpenProp for control from outside the component.
@@ -88,6 +89,8 @@ function SidebarProvider({
     },
     [setOpenProp, open]
   )
+
+
 
   // Helper to toggle the sidebar.
   const toggleSidebar = React.useCallback(() => {
@@ -154,7 +157,7 @@ function SidebarProvider({
 
 function Sidebar({
   side = "left",
-  variant = "sidebar",
+  variant = "inset",
   collapsible = "offcanvas",
   className,
   children,
@@ -180,6 +183,7 @@ function Sidebar({
       </div>
     )
   }
+
 
   if (isMobile) {
     return (
@@ -260,6 +264,7 @@ function SidebarTrigger({
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { toggleSidebar } = useSidebar()
+
 
   return (
     <Button

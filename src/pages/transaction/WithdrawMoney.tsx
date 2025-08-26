@@ -56,7 +56,7 @@ const WithdrawMoney = () => {
 
     return (
         <div className="container mx-auto px-5 py-10">
-            <div className='flex items-center gap-3 justify-center'>
+            <div className='flex items-center gap-3 justify-center m-5'>
                 <img className='w-20' src={withDrawMoneyIcon} alt="add money icon" />
                 <h1 className='text-center font-bold text-3xl'>Withdraw Money</h1>
             </div>

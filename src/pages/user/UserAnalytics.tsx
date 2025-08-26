@@ -15,8 +15,11 @@ import { driver } from 'driver.js'
 import "driver.js/dist/driver.css";
 import { useGetCurrentUserQuery } from "@/redux/features/auth/auth.api";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const restartTour = () => {
+    const navigate = useNavigate()
+    navigate('/user/analytics')
     localStorage.removeItem('tourSeen')
     const driverObj = driver({
         showProgress: true,
@@ -86,47 +89,7 @@ export const restartTour = () => {
                         `,
                     side: "left",
                 },
-            },
-            // {
-            //     element: ".add-money",
-            //     popover: {
-            //         title: "Add Money",
-            //         description: `
-            //                 You can do add money to your wallet.
-            //             `,
-            //         side: "top",
-            //     },
-            // },
-            // {
-            //     element: ".withdraw-money",
-            //     popover: {
-            //         title: "Withdraw Money",
-            //         description: `
-            //                 You can do withdraw money from your wallet.
-            //             `,
-            //         side: "bottom",
-            //     },
-            // },
-            // {
-            //     element: ".cash-in",
-            //     popover: {
-            //         title: "Cash In",
-            //         description: `
-            //                 You can do add cash in to your wallet.
-            //             `,
-            //         side: "left",
-            //     },
-            // },
-            // {
-            //     element: ".cash-out",
-            //     popover: {
-            //         title: "Cash Out",
-            //         description: `
-            //                 You can do cash out from your wallet.
-            //             `,
-            //         side: "top",
-            //     },
-            // }
+            }
         ]
     });
 
@@ -316,7 +279,7 @@ const UserAnalytics = () => {
                     <div className="flex items-center gap-5 md:flex-col xl:flex-row">
                         <TbMoneybag className="text-5xl" />
                         <div className="flex flex-col md:text-center xl:text-left">
-                            <span className="font-bold text-2xl">Balance</span>
+                            <span className="font-bold text-xl md:text-2xl">Balance</span>
                             <span className="text-xl font-medium">{userWallet?.data?.balance} Taka</span>
                         </div>
                     </div>
@@ -325,7 +288,7 @@ const UserAnalytics = () => {
                     <div className="flex items-center gap-5 md:flex-col xl:flex-row">
                         <UserIcon size={50} />
                         <div className="flex flex-col md:text-center xl:text-left">
-                            <span className="font-bold text-2xl">Total Transactions</span>
+                            <span className="font-bold text-xl md:text-2xl">Total Transactions</span>
                             <span className="text-xl font-medium">{transactions?.data?.transactions?.length}</span>
                         </div>
                     </div>
@@ -334,7 +297,7 @@ const UserAnalytics = () => {
                     <div className="flex items-center gap-5 md:flex-col xl:flex-row">
                         <WalletIcon size={50} />
                         <div className="flex flex-col md:text-center xl:text-left">
-                            <span className="font-bold text-2xl">Transacted Amount</span>
+                            <span className="font-bold text-xl md:text-2xl">Transacted Amount</span>
                             <span className="text-xl font-medium">{totalTransactedAmount} Taka</span>
                         </div>
                     </div>
@@ -343,7 +306,7 @@ const UserAnalytics = () => {
                     <div className="flex items-center gap-5 md:flex-col xl:flex-row">
                         <Coins size={50} />
                         <div className="flex flex-col md:text-center xl:text-left">
-                            <span className="font-bold text-2xl">Total Withdraw</span>
+                            <span className="font-bold text-xl md:text-2xl">Total Withdraw</span>
                             <span className="text-xl font-medium">{totalMoneyWithdraw} Taka</span>
                         </div>
                     </div>

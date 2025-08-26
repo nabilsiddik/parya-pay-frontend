@@ -2,7 +2,7 @@ import FeaturesSection from "@/modules/FeaturesSection"
 
 const Features = () => {
   return (
-    <div>
+    <div className="py-10">
       <FeaturesSection/>
     </div>
   )

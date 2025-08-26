@@ -42,9 +42,6 @@ export default function Accordion() {
 
   return (
     <div className="w-full max-w-2xl mx-auto">
-      <h1 className="text-4xl font-bold text-gray-900 dark:text-white text-center mb-10">
-        FAQ
-      </h1>
       <div className="space-y-4">
         {faqData.map((item, index) => (
           <AccordionItem

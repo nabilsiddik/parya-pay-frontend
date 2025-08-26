@@ -9,14 +9,13 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import Logo from "./Logo"
+import logo from '../assets/images/logo/logo.png'
 import { useGetCurrentUserQuery } from "@/redux/features/auth/auth.api"
 import { Link } from "react-router-dom"
 import { getSidebarItem } from "@/utils/getSidebarItems"
 
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-
   const { data } = useGetCurrentUserQuery(undefined)
 
   // This is sample data.
@@ -28,8 +27,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="p-5">
-        <Link to='/'>
-          <Logo />
+        <Link className="group-data-[collapsible=icon]:hidden " to='/'>
+          <div className='flex items-center gap-1'>
+            <img src={logo} className='w-[40px] md:w-[60px]' alt="payra pay logo" />
+            <h2 className='font-bold text-xl md:text-2xl mb-3 '>Payra Pay</h2>
+          </div>
         </Link>
       </SidebarHeader>
       <SidebarContent>

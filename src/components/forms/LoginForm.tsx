@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Button } from '../ui/button';
@@ -6,6 +6,7 @@ import { Input } from '../ui/input';
 import { useGetCurrentUserQuery, useUserSignInMutation } from '@/redux/features/auth/auth.api';
 import { toast } from 'sonner';
 import { Link, useNavigate } from 'react-router-dom';
+import { getDynamicDashboardUrl } from '@/utils/getDynamicDashboardUrl';
 
 const UserIcon = () => (
     <svg
@@ -72,9 +73,7 @@ export default function LoginForm() {
     const [userSignIn] = useUserSignInMutation()
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const navigate = useNavigate()
-    const { data: logedInUser } = useGetCurrentUserQuery(undefined)
 
-    console.log('ami', logedInUser?.data?.role)
     // React hook form
     const form = useForm({
         defaultValues: {
@@ -98,12 +97,15 @@ export default function LoginForm() {
 
         try {
             const res = await userSignIn(loginInfo).unwrap()
+            // console.log(res?.data?.user?.role, "my role")
+            // console.log(res?.data, 'my res data')
 
-            console.log('my res', res?.data?.user?.role)
+            // const user = res?.data?.user
 
-            if (res?.success && res?.data?.user) {
+
+            if (res?.success) {
+                // const dashboardUrl = getDynamicDashboardUrl(user)
                 toast.success('User successfully loged in.', { id: signInId })
-                // const role = res?.data?.user?.role
                 navigate('/')
             }
 
@@ -113,7 +115,7 @@ export default function LoginForm() {
     }
 
     return (
-        <div>
+        <div className='container mx-auto px-5'>
             <div className="relative w-full flex items-center justify-center font-sans overflow-hidden">
 
                 {/* Login Card - More compact and shadcn-like */}
@@ -229,9 +231,9 @@ export default function LoginForm() {
                                 Sign up
                             </Link>
                         </p>
-                        <a href="#" className="text-sm font-medium text-zinc-900 dark:text-zinc-50 underline underline-offset-4 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors">
+                        {/* <a href="#" className="text-sm font-medium text-zinc-900 dark:text-zinc-50 underline underline-offset-4 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors">
                             Forgot your password?
-                        </a>
+                        </a> */}
                     </div>
 
                 </div>

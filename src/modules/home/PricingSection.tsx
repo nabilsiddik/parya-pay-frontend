@@ -96,7 +96,7 @@ const Header = () => (
       <Tag text="OVER 1,000,000 USERS" />
     </div> */}
 
-    <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 dark:text-white leading-tight tracking-tighter animate-fade-in-down">
+    <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 dark:text-white leading-tight tracking-tighter animate-fade-in-down">
       All Charges of <br />
       <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-primary">Payra Pay</span>
     </h1>

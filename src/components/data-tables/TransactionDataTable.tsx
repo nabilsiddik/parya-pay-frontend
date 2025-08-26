@@ -1,7 +1,12 @@
 import { IoCloseSharp } from "react-icons/io5";
 import { PiArrowBendDoubleUpRightBold } from "react-icons/pi";
 import { AiOutlineReload } from "react-icons/ai";
-import { CheckIcon } from "lucide-react"
+import { CheckIcon, Filter } from "lucide-react"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 import {
   Table,
@@ -19,8 +24,17 @@ export default function TransactionDataTable({ transactions }: any) {
 
   return (
     <div className="w-full">
-      <div className="mb-5">
+      <div className="hidden md:block mb-5">
         <TransactionFilter />
+      </div>
+      <div className="mb-5 flex justify-between items-center md:hidden">
+        <h3 className="font-medium">Filter</h3>
+        <DropdownMenu>
+          <DropdownMenuTrigger><Filter /></DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <TransactionFilter />
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
       <div className="overflow-hidden rounded-md border">
         <Table>
@@ -50,7 +64,7 @@ export default function TransactionDataTable({ transactions }: any) {
                   {transaction.amount} Taka
                 </TableCell>
                 <TableCell>
-                  {transaction.charge? `${transaction.charge} Taka` : 'No Charge'}
+                  {transaction.charge ? `${transaction.charge} Taka` : 'No Charge'}
                 </TableCell>
                 <TableCell>
                   <Badge variant="outline" className="gap-1 px-2 py-1">

@@ -58,8 +58,8 @@ const UserFilter = () => {
     }
 
     return (
-        <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between gap-3 flex-col md:flex-row p-3 md:p-0">
+            <div className="flex items-center gap-3 flex-col md:flex-row">
                 <Select value={selectedUserRole ? selectedUserRole : ''} onValueChange={(value) => handleRoleChange(value)}>
                     <SelectTrigger>
                         <SelectValue placeholder="Role" />
@@ -86,8 +86,8 @@ const UserFilter = () => {
 
                 <Input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search" />
             </div>
-            <div>
-                <Button onClick={handleClearFilter}>Clear Filter</Button>
+            <div className="w-full md:w-auto">
+                <Button className="w-full" onClick={handleClearFilter}>Clear Filter</Button>
             </div>
         </div>
     )

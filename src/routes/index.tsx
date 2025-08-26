@@ -20,6 +20,8 @@ import About from "@/pages/About";
 import Transactions from "@/pages/Transactions";
 import Pricing from "@/pages/Pricing";
 import Contact from "@/pages/Contact";
+import Features from "@/pages/Features";
+import FAQ from "@/pages/FAQ";
 
 
 const router = createBrowserRouter([
@@ -42,6 +44,14 @@ const router = createBrowserRouter([
             {
                 path: '/pricing',
                 Component: Pricing
+            },
+            {
+                path: '/features',
+                Component: Features
+            },
+            {
+                path: '/faq',
+                Component: FAQ
             },
             {
                 path: '/contact',
