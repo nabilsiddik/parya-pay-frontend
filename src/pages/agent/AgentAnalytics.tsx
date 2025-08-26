@@ -2,8 +2,7 @@ import dayjs from "dayjs"
 import { AgentCashInAreaChart } from "@/components/charts/AgentCashInAreaChart";
 import { Card } from "@/components/ui/card"
 import { useGetCurrentUserQuery } from "@/redux/features/auth/auth.api";
-import { useGetAllTransactionsQuery, useGetUserTransactionHistoryQuery } from "@/redux/features/transaction/transaction.api"
-import { useGetAllUsersQuery } from "@/redux/features/user/user.api";
+import { useGetUserTransactionHistoryQuery } from "@/redux/features/transaction/transaction.api"
 import { useGetSingleWalletQuery } from "@/redux/features/wallet/wallet.api";
 import { Coins, UserIcon, WalletIcon } from "lucide-react"
 import { TbMoneybag } from "react-icons/tb";
