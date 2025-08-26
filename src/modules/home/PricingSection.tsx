@@ -38,17 +38,6 @@ const ProPlanIcon = ({ className = 'w-5 h-5' }: ProPlanIconProps) => (
 
 // --- Reusable Components ---
 
-interface TagProps {
-  text: string;
-}
-
-const Tag = ({ text }: TagProps) => (
-  <div className="inline-flex items-center gap-2 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 text-xs font-bold px-3 py-1 rounded-full tracking-wider">
-    <span className="w-2 h-2 bg-orange-500 dark:bg-orange-400 rounded-full"></span>
-    {text}
-  </div>
-);
-
 interface GetStartedButtonProps {
   isFeatured: boolean;
   label?: string;

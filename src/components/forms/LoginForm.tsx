@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { useGetCurrentUserQuery, useUserSignInMutation } from '@/redux/features/auth/auth.api';
+import { useUserSignInMutation } from '@/redux/features/auth/auth.api';
 import { toast } from 'sonner';
 import { Link, useNavigate } from 'react-router-dom';
-import { getDynamicDashboardUrl } from '@/utils/getDynamicDashboardUrl';
 
 const UserIcon = () => (
     <svg
