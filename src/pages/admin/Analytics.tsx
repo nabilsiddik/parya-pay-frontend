@@ -52,7 +52,6 @@ const Analytics = () => {
   }));
 
 
-  console.log('reg data', usersByDateChartData)
 
   return (
     <div>

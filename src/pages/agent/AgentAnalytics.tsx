@@ -1,11 +1,17 @@
+    import dayjs from "dayjs"
+import { AgentCashInAreaChart } from "@/components/charts/AgentCashInAreaChart";
 import { Card } from "@/components/ui/card"
 import { useGetCurrentUserQuery } from "@/redux/features/auth/auth.api";
-import { useGetUserTransactionHistoryQuery } from "@/redux/features/transaction/transaction.api"
+import { useGetAllTransactionsQuery, useGetUserTransactionHistoryQuery } from "@/redux/features/transaction/transaction.api"
+import { useGetAllUsersQuery } from "@/redux/features/user/user.api";
 import { useGetSingleWalletQuery } from "@/redux/features/wallet/wallet.api";
 import { Coins, UserIcon, WalletIcon } from "lucide-react"
 import { TbMoneybag } from "react-icons/tb";
 
 const AgentAnalytics = () => {
+    const { data: allUsers } = useGetAllUsersQuery(undefined)
+    const { data: allTransactions } = useGetAllTransactionsQuery(undefined)
+
 
     const { data: userWallet } = useGetSingleWalletQuery(undefined)
     const { data: transactions } = useGetUserTransactionHistoryQuery(undefined)
@@ -14,21 +20,63 @@ const AgentAnalytics = () => {
 
     const totalCashIn = transactions?.data?.transactions
         ?.filter((tran: any) => tran.user._id === logedInUser?.data._id && tran.type === "CASH_IN")
-        ?.reduce((sum: number, cashInItem: any) => sum + cashInItem.amount, 0);
+        ?.reduce((sum: number, cashInItem: any) => sum + cashInItem.amount, 0)
 
 
     const totalCashOut = transactions?.data?.transactions
         ?.filter((tran: any) => {
             return tran?.agent &&
-           tran.type === "CASH_OUT" &&
-           tran.agent.toString() === logedInUser?.data._id.toString();
+                tran.type === "CASH_OUT" &&
+                tran.agent.toString() === logedInUser?.data._id.toString();
         })
-        ?.reduce((sum: number, cashOutItem: any) => sum + cashOutItem.amount, 0);
-        
-
-        console.log(totalCashOut)
+        ?.reduce((sum: number, cashOutItem: any) => sum + cashOutItem.amount, 0)
 
 
+
+
+
+    // All cash in array
+    const allCashIn = transactions?.data?.transactions
+        ?.filter((tran: any) => tran.user._id === logedInUser?.data._id && tran.type === "CASH_IN")
+
+    // All cash out array
+    const allCashOut = transactions?.data?.transactions
+        ?.filter((tran: any) => tran.user._id === logedInUser?.data._id && tran.type === "CASH_OUT")
+
+
+    // Step 2: Group helper function
+    const groupByDate = (arr: any[], type: "cashIn" | "cashOut") => {
+        return arr.reduce((acc: any, curr: any) => {
+            const date = dayjs(curr.createdAt).format("YYYY-MM-DD"); // normalize date
+            if (!acc[date]) acc[date] = { date, cashIn: 0, cashOut: 0 };
+            acc[date][type] += curr.amount;
+            return acc;
+        }, {});
+    };
+
+    // Step 3: Group separately
+    const cashInGrouped = groupByDate(allCashIn || [], "cashIn");
+    const cashOutGrouped = groupByDate(allCashOut || [], "cashOut");
+
+    // Step 4: Merge results
+    const merged: Record<string, { date: string; cashIn: number; cashOut: number }> = {
+        ...cashInGrouped,
+        ...cashOutGrouped,
+    };
+
+    // If a date exists in both, merge values
+    Object.keys(cashOutGrouped).forEach(date => {
+        if (merged[date]) {
+            merged[date].cashOut = cashOutGrouped[date].cashOut;
+        } else {
+            merged[date] = cashOutGrouped[date];
+        }
+    });
+
+    // Step 5: Convert to array & sort by date
+    const agentCashInOutChartData = Object.values(merged).sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    )
 
 
 
@@ -71,6 +119,10 @@ const AgentAnalytics = () => {
                         </div>
                     </div>
                 </Card>
+            </div>
+
+            <div className="mt-20">
+                <AgentCashInAreaChart chartData = {agentCashInOutChartData} />
             </div>
         </div>
     )
