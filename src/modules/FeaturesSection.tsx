@@ -15,16 +15,16 @@ const FeaturesSection = () => {
                 </p>
             </div>
 
-            <div className="flex gap-10 flex-col lg:flex-row items-stretch">
+            <div className="flex gap-5 flex-col lg:flex-row items-stretch">
                 <div className='flex-1 flex flex-col justify-evenly gap-10 lg:gap-0'>
                     <div>
-                        <FeatureItem title='Instant Money Transfer' description='Send and receive money anytime, anywhere, in just seconds.' alignmentClasses='text-center lg:text-right' />
+                        <FeatureItem title='Instant Money Transfer' description='Send and receive money anytime, anywhere, in just seconds.' alignmentClasses='text-center lg:text-right lg:dark:pr-10' />
                     </div>
                     <div>
-                        <FeatureItem title='Secure QR Payments' description='Pay merchants, agents, and peers by simply scanning QR codes securely.' alignmentClasses='text-center lg:text-right' />
+                        <FeatureItem title='Secure QR Payments' description='Pay merchants, agents, and peers by simply scanning QR codes securely.' alignmentClasses='text-center lg:text-right lg:dark:pr-10' />
                     </div>
                     <div>
-                        <FeatureItem title='Easy Bill Payments' description='Easily pay electricity, water, internet, and other utility bills from your wallet.' alignmentClasses='text-center lg:text-right' />
+                        <FeatureItem title='Easy Bill Payments' description='Easily pay electricity, water, internet, and other utility bills from your wallet.' alignmentClasses='text-center lg:text-right lg:dark:pr-10' />
                     </div>
                 </div>
                 <div className='mx-auto flex-1'>
@@ -32,13 +32,13 @@ const FeaturesSection = () => {
                 </div>
                 <div className='flex-1 flex flex-col justify-evenly gap-10 lg:gap-0'>
                     <div>
-                        <FeatureItem title='Mobile Recharge' description='Recharge your phone instantly for any operator, anytime you need.' alignmentClasses='text-center lg:text-left' />
+                        <FeatureItem title='Mobile Recharge' description='Recharge your phone instantly for any operator, anytime you need.' alignmentClasses='text-center lg:text-left lg:dark:pl-10' />
                     </div>
                     <div>
-                        <FeatureItem title='Robust Security' description='Your transactions are protected with PIN, verification codes, and top-grade encryption.' alignmentClasses='text-center lg:text-left' />
+                        <FeatureItem title='Robust Security' description='Your transactions are protected with PIN, verification codes, and top-grade encryption.' alignmentClasses='text-center lg:text-left lg:dark:pl-10' />
                     </div>
                     <div>
-                        <FeatureItem title='Card & Bank Integration' description='Link your debit/credit card or bank account for seamless add money and withdrawals.' alignmentClasses='text-center lg:text-left' />
+                        <FeatureItem title='Card & Bank Integration' description='Link your debit/credit card or bank account for seamless add money and withdrawals.' alignmentClasses='text-center lg:text-left lg:dark:pl-10' />
                     </div>
                 </div>
             </div>

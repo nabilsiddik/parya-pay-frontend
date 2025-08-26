@@ -109,7 +109,7 @@ const PricingCard = ({ plan, price, description, features, isFeatured = false }:
     className={`relative p-6 md:p-8 rounded-2xl transition-all duration-300 ease-in-out transform hover:-translate-y-2 ${
       isFeatured
         ? 'bg-gradient-to-b from-secondary to-primary text-white shadow-2xl lg:scale-105'
-        : 'bg-white dark:bg-black text-gray-900 dark:text-white shadow-lg dark:shadow-gray-800/50'
+        : 'bg-white dark:bg-card text-gray-900 dark:text-white shadow-lg border dark:shadow-gray-800/50'
     }`}
     aria-label={`${plan} plan`}
   >

@@ -4,8 +4,8 @@ import { Link } from "react-router-dom"
 const Footer = () => {
   return (
     <footer className="bg-primary dark:bg-gray-900 text-white dark:text-foreground rounded-t-lg">
-      <div className="container mx-auto space-y-8 px-4 py-16 sm:px-6 lg:space-y-16 lg:px-8">
-        <div className="flex items-center justify-between flex-col md:flex-row sm:gap-10 border-b pb-10">
+      <div className="container mx-auto px-4 py-16 sm:px-6 lg:space-y-16 lg:px-8">
+        <div className="flex items-center justify-between flex-col md:flex-row sm:gap-10 border-b pb-10 mb-10">
           <div>
             <Logo />
           </div>
@@ -61,7 +61,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        <ul className="flex items-center justify-center gap-5">
+        <ul className="flex items-center justify-center gap-5 mb-3">
           <li className="hover:underline">
             <Link to='/'>
               Terms & Condition

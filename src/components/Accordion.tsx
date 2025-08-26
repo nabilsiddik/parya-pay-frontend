@@ -59,7 +59,7 @@ function AccordionItem({ question, answer }: AccordionItemProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
-    <div className="p-0.5 rounded-lg bg-gradient-to-r from-primary to-secondary dark:from-cyan-500 dark:to-pink-600">
+    <div className="p-0.5 rounded-lg bg-gradient-to-r from-primary to-secondary dark:from-primary dark:to-secondary">
       <div className="bg-gray-50 dark:bg-gray-800 rounded-md">
         <button
           onClick={() => setIsOpen(!isOpen)}

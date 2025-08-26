@@ -56,26 +56,6 @@ const router = createBrowserRouter([
             {
                 path: '/contact',
                 Component: Contact
-            },
-            {
-                path: 'add-money',
-                Component: AddMoney
-            },
-            {
-                path: 'withdraw-money',
-                Component: WithdrawMoney
-            },
-            {
-                path: 'send-money',
-                Component: SendMoney
-            },
-            {
-                path: 'cash-in',
-                Component: CashIn
-            },
-            {
-                path: 'cash-out',
-                Component: CashOut
             }
         ]
     },
