@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { useUserSignInMutation } from '@/redux/features/auth/auth.api';
+import { useGetCurrentUserQuery, useUserSignInMutation } from '@/redux/features/auth/auth.api';
 import { toast } from 'sonner';
 import { Link, useNavigate } from 'react-router-dom';
+import { getDynamicDashboardUrl } from '@/utils/getDynamicDashboardUrl';
 
 const UserIcon = () => (
     <svg
@@ -69,9 +70,16 @@ const EyeIcon: React.FC = () => (
 
 
 export default function LoginForm() {
+    // const { data } = useGetCurrentUserQuery(undefined)
+    // const [dashboardUrl, setDashboardUrl] = useState('/')
     const [userSignIn] = useUserSignInMutation()
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const navigate = useNavigate()
+
+    // useEffect(() => {
+    //     if (!data?.data?.role) return;
+    //     setDashboardUrl(getDynamicDashboardUrl(data?.data))
+    // }, [data?.data?.role]);
 
     // React hook form
     const form = useForm({
@@ -96,20 +104,23 @@ export default function LoginForm() {
 
         try {
             const res = await userSignIn(loginInfo).unwrap()
-            // console.log(res?.data?.user?.role, "my role")
-            // console.log(res?.data, 'my res data')
+            const user = res?.data?.user
 
-            // const user = res?.data?.user
-
-
-            if (res?.success) {
-                // const dashboardUrl = getDynamicDashboardUrl(user)
+            if (res?.success && user) {
                 toast.success('User successfully loged in.', { id: signInId })
-                navigate('/')
+                navigate(user?.role === 'ADMIN' ? '/admin' 
+                    : user?.role === 'USER' ? '/user'
+                    : user?.role === 'AGENT' ? '/agent' 
+                    : '/'
+                )
+
             }
 
+
+
+
         } catch (error: any) {
-            toast.error(error?.data?.message, { id: signInId })
+            toast.error('Something went wrong, Please check the credentials.', { id: signInId })
         }
     }
 

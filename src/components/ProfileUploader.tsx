@@ -26,6 +26,7 @@ export default function ProfileUploader() {
       <div className="relative inline-flex">
         {/* Drop area */}
         <button
+          type="button"
           className="border-input hover:bg-accent/50 data-[dragging=true]:bg-accent/50 focus-visible:border-ring focus-visible:ring-ring/50 relative flex size-30 items-center justify-center overflow-hidden rounded-full border border-dashed transition-colors outline-none focus-visible:ring-[3px] has-disabled:pointer-events-none has-disabled:opacity-50 has-[img]:border-none"
           onClick={openFileDialog}
           onDragEnter={handleDragEnter}
@@ -52,6 +53,7 @@ export default function ProfileUploader() {
         </button>
         {previewUrl && (
           <Button
+            type='button'
             onClick={() => removeFile(files[0]?.id)}
             size="icon"
             className="border-background focus-visible:border-background absolute -top-1 -right-1 size-6 rounded-full border-2 shadow-none"

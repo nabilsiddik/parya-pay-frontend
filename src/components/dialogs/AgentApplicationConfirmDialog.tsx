@@ -24,7 +24,7 @@ export function AgentApplicationConfirmDialog({children}: {children: React.React
         }
         console.log(res)
     }catch(error: any){
-        toast.error(error?.data?.message)
+        toast.error('Something went wrong.')
     }
   }
 

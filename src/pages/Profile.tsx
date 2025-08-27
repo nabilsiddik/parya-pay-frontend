@@ -144,7 +144,7 @@ const Profile = () => {
 
   return (
     <div className='flex gap-5 flex-col lg:flex-row'>
-      <div className='flex-2 bg-card text-card-foreground p-5 rounded-lg'>
+      <div className='flex-2 bg-card text-card-foreground p-5 rounded-lg border'>
         <div className='flex justify-center flex-col gap-3'>
           <img className='w-56 mx-auto' src={profile} alt="profile" />
           <div className='flex items-center flex-col gap-1'>
@@ -157,7 +157,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <div className='flex-5 rounded-lg bg-card text-card-foreground p-5'>
+      <div className='flex-5 rounded-lg bg-card text-card-foreground p-5 border'>
         <div className='flex items-center justify-between'>
           <h3 className=' text-2xl font-bold'>My Profile</h3>
           <Edit onClick={() => setEdit(!edit)} className='cursor-pointer' />
@@ -380,15 +380,15 @@ const Profile = () => {
           <div>
             <div className='grid md:grid-cols-2 gap-8'>
               <div>
-                <Label className='text-lg text-gray-300 mb-2'><User /> Full Name</Label>
+                <Label className='text-lg text-gray-500 mb-2'><User /> Full Name</Label>
                 <p className='text-lg font-bold'>{logedInUser?.data?.name}</p>
               </div>
               <div>
-                <Label className='text-lg text-gray-300 mb-2'><MailIcon /> Email</Label>
+                <Label className='text-lg text-gray-500 mb-2'><MailIcon /> Email</Label>
                 <p className='text-lg font-bold'>{logedInUser?.data?.email}</p>
               </div>
               <div>
-                <Label className='text-lg text-gray-300 mb-2'><PhoneCall /> Number</Label>
+                <Label className='text-lg text-gray-500 mb-2'><PhoneCall /> Number</Label>
                 <p className='text-lg font-bold'>{logedInUser?.data?.phone}</p>
               </div>
               {logedInUser?.data?.address &&

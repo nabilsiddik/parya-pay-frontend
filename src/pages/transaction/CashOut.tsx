@@ -53,7 +53,7 @@ const CashOut = () => {
       }
 
     } catch (error: any) {
-      toast.error(error?.data?.message, { id: toastId })
+      toast.error('Something went wrong. Please input a valid agent number', { id: toastId })
     }
   }
 

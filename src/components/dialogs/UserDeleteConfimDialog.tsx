@@ -30,7 +30,7 @@ const UserDeleteConfimDialog = ({children, userId}: {children: React.ReactNode, 
 
         }catch(error: any){
             console.error('my error', error)
-            toast.error(error?.data?.message, {id: loadingId})
+            toast.error('Something went wrong.', {id: loadingId})
         }
     }
 

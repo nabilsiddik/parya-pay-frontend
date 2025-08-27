@@ -38,7 +38,7 @@ const SendMoney = () => {
   // Add money to own wallet
   const handleSendMoney = async (data: z.infer<typeof sendMoneyZodSchema>) => {
 
-    const toastId = toast.loading('Creating user...')
+    const toastId = toast.loading('Sending...')
     const sendMoneyInfo = {
       numberTo: data.numberTo,
       amount: Number(data.amount)
@@ -53,7 +53,7 @@ const SendMoney = () => {
       }
 
     } catch (error: any) {
-      toast.error(error?.data?.message, { id: toastId })
+      toast.error('Something went wrong. Please input a valid user number', { id: toastId })
     }
   }
 

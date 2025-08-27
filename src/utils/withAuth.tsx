@@ -7,15 +7,19 @@ const withAuth = (Component: ComponentType, requiredRole?: TRole) => {
     return function authWrapper() {
         const { data, isLoading } = useGetCurrentUserQuery(undefined)
 
+        if (isLoading) {
+            return <div>Loading...</div> 
+        }
+
         if (!isLoading && !data?.data?.email) {
             return <Navigate to='/login' />
         }
 
-        if(requiredRole && !isLoading && requiredRole !== data?.data?.role){
-            return <Navigate to='/unauthorize'/>
+        if (requiredRole && !isLoading && requiredRole !== data?.data?.role) {
+            return <Navigate to='/unauthorize' />
         }
 
-        return <Component/>
+        return <Component />
     }
 }
 

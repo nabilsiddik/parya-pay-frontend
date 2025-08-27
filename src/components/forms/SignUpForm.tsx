@@ -143,7 +143,7 @@ const SignUpForm: React.FC = () => {
 
         } catch (error: any) {
             console.log('ac error', error)
-            toast.error(error?.data?.message, { id: toastId })
+            toast.error('Something went wrong. Please fillout the info carefully.', { id: toastId })
         }
     }
 
