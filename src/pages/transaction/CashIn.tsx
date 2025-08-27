@@ -51,7 +51,7 @@ const CashIn = () => {
       }
 
     } catch (error: any) {
-      toast.error(error?.data?.message, { id: toastId })
+      toast.error('Something Went Wrong while Cash In.', { id: toastId })
     }
   }
 

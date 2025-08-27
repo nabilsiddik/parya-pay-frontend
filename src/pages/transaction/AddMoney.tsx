@@ -47,7 +47,7 @@ const AddMoney = () => {
             }
 
         } catch (error: any) {
-            toast.error(error?.data?.message, { id: toastId })
+            toast.error('Something Went Wrong while add money.', { id: toastId })
         }
     }
 

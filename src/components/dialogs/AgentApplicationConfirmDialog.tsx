@@ -12,18 +12,18 @@ import {
 import { useBecomeAgentMutation } from "@/redux/features/user/user.api"
 import { toast } from "sonner"
 
-export function AgentApplicationConfirmDialog({children}: {children: React.ReactNode}) {
+export function AgentApplicationConfirmDialog({ children }: { children: React.ReactNode }) {
   const [becomeAgent] = useBecomeAgentMutation()
 
   // Agent application
-  const handleAgentApplication = async() => {
-    try{
-        const res = await becomeAgent(undefined).unwrap()
-        if(res?.success){
-            toast.success('Application submitted.')
-        }
-    }catch(error: any){
-        toast.error('Something went wrong.')
+  const handleAgentApplication = async () => {
+    try {
+      const res = await becomeAgent(undefined).unwrap()
+      if (res?.success) {
+        toast.success('Application submitted.')
+      }
+    } catch (error: any) {
+      toast.error('Something went wrong.')
     }
   }
 

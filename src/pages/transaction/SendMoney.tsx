@@ -53,7 +53,7 @@ const SendMoney = () => {
       }
 
     } catch (error: any) {
-      toast.error(error?.data?.message, { id: toastId })
+      toast.error('Something Went Wrong while Send money.', { id: toastId })
     }
   }
 

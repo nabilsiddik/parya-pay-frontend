@@ -48,7 +48,7 @@ const WithdrawMoney = () => {
             }
 
         } catch (error: any) {
-            toast.error(error?.data?.message, { id: toastId })
+            toast.error('Something Went Wrong while withdraw money.', { id: toastId })
         }
     }
 

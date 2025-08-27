@@ -41,8 +41,7 @@ const UserStatusUpdateDialog = ({ children, userId }: { children: React.ReactNod
                 <AlertDialogTrigger>{children}</AlertDialogTrigger>
                 <AlertDialogContent>
                     <AlertDialogHeader>
-                        <AlertDialogTitle>Update User Status</AlertDialogTitle>
-                        <AlertDialogTitle className="text-center mb-4">Update Agent Application</AlertDialogTitle>
+                        <AlertDialogTitle className="text-center mb-4">Update User Status</AlertDialogTitle>
                         <div>
                             <Select value={currentStatus || ''} onValueChange={(value) => setCurrentStatus(value)}>
                                 <SelectTrigger>
