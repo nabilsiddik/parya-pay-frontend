@@ -16,7 +16,7 @@ import { getDynamicDashboardUrl } from '@/utils/getDynamicDashboardUrl';
 // Standalone Navigation Header Component (Static Logged-In View)
 export default function Navbar() {
   const [dashboardUrl, setDashboardUrl] = useState('/')
-  const [activeTab, setActiveTab] = useState('Dashboard');
+  const [activeTab, setActiveTab] = useState('Home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [userLogout] = useUserLogoutMutation()
