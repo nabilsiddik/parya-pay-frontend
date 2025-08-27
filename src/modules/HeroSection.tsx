@@ -20,7 +20,7 @@ const HeroSection = () => {
     <section className="bg-background py-20 lg:py-32 mt-[60px] lg:mt-0">
       <div className="container flex flex-col items-center gap-10 lg:my-0 lg:flex-row">
         <div className="flex flex-col gap-7 lg:w-2/3  text-center lg:text-left">
-          <h2 className="text-4xl font-semibold text-foreground md:text-5xl xl:text-7xl xl:pr-30 leading-16 xl:leading-24">
+          <h2 className="text-4xl font-semibold text-foreground md:text-5xl xl:text-7xl xl:pr-30 leading-13 xl:leading-24">
             <span>Payra Pay | </span>
             <span className="text-muted-foreground">
               Your Money, Your Freedom</span>
