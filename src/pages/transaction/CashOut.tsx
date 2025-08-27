@@ -53,7 +53,7 @@ const CashOut = () => {
       }
 
     } catch (error: any) {
-      toast.error('Something went wrong. Please input a valid agent number', { id: toastId })
+      toast.error(error?.data?.message, { id: toastId })
     }
   }
 
@@ -63,7 +63,7 @@ const CashOut = () => {
     <div className="container mx-auto px-5 py-10">
       <div className='flex items-center gap-3 justify-center mb-5'>
         <img className='w-20' src={cashInIcon} alt="add money icon" />
-        <h1 className='text-center font-bold text-3xl'>Cash Out</h1>
+        <h1 className='text-center font-bold text-2xl md:text-3xl'>Cash Out</h1>
       </div>
       <div className='max-w-2xl mx-auto'>
         <Form {...form}>

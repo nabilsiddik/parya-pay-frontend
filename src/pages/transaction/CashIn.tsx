@@ -61,7 +61,7 @@ const CashIn = () => {
     <div className="container mx-auto px-5 py-10">
       <div className='flex items-center gap-3 justify-center'>
         <img className='w-20' src={cashInIcon} alt="add money icon" />
-        <h1 className='text-center font-bold text-3xl'>Cash In</h1>
+        <h1 className='text-center font-bold text-2xl md:text-3xl'>Cash In</h1>
       </div>
       <div className='max-w-2xl mx-auto'>
         <Form {...form}>
