@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { useGetCurrentUserQuery, useUserSignInMutation } from '@/redux/features/auth/auth.api';
+import { useUserSignInMutation } from '@/redux/features/auth/auth.api';
 import { toast } from 'sonner';
 import { Link, useNavigate } from 'react-router-dom';
-import { getDynamicDashboardUrl } from '@/utils/getDynamicDashboardUrl';
 
 const UserIcon = () => (
     <svg
@@ -70,16 +69,9 @@ const EyeIcon: React.FC = () => (
 
 
 export default function LoginForm() {
-    // const { data } = useGetCurrentUserQuery(undefined)
-    // const [dashboardUrl, setDashboardUrl] = useState('/')
     const [userSignIn] = useUserSignInMutation()
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const navigate = useNavigate()
-
-    // useEffect(() => {
-    //     if (!data?.data?.role) return;
-    //     setDashboardUrl(getDynamicDashboardUrl(data?.data))
-    // }, [data?.data?.role]);
 
     // React hook form
     const form = useForm({
@@ -141,30 +133,6 @@ export default function LoginForm() {
                             <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1">Enter your credentials to sign in</p>
                         </div>
                     </div>
-
-                    {/* Social login buttons - More compact shadcn style */}
-                    {/* <div className="grid grid-cols-3 gap-2">
-                        {[{ icon: <AppleIcon /> }, { icon: <GoogleIcon /> }, { icon: <XIcon /> }].map((item, index) => (
-                            <button
-                                key={index}
-                                className="flex items-center justify-center h-9 px-3 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black hover:bg-zinc-50 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-zinc-50 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300"
-                            >
-                                {item.icon}
-                            </button>
-                        ))}
-                    </div> */}
-
-                    {/* OR Divider - More subtle */}
-                    {/* <div className="relative">
-                        <div className="absolute inset-0 flex items-center">
-                            <span className="w-full border-t border-zinc-200 dark:border-zinc-800" />
-                        </div>
-                        <div className="relative flex justify-center text-xs uppercase">
-                            <span className="bg-white dark:bg-zinc-900 px-2 text-zinc-500 dark:text-zinc-400">
-                                Or continue with
-                            </span>
-                        </div>
-                    </div> */}
 
                     <Form {...form}>
                         {/* Form - Shadcn style */}
@@ -241,9 +209,6 @@ export default function LoginForm() {
                                 Sign up
                             </Link>
                         </p>
-                        {/* <a href="#" className="text-sm font-medium text-zinc-900 dark:text-zinc-50 underline underline-offset-4 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors">
-                            Forgot your password?
-                        </a> */}
                     </div>
 
                 </div>

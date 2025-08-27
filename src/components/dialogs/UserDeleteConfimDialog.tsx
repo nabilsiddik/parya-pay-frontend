@@ -22,8 +22,6 @@ const UserDeleteConfimDialog = ({children, userId}: {children: React.ReactNode, 
         try{
             const res = await deleteUser(userId).unwrap()
 
-            console.log('response', res)
-
             if(res?.success){
                 toast.success('User Deleted.', {id: loadingId})
             }

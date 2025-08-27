@@ -15,7 +15,6 @@ const BecomeAgent = () => {
     }
 
     const isAlreadyRequested = agentRequests?.data.find((request: any) => request.user === user?.data?._id)
-    console.log('ddf', isAlreadyRequested)
 
     return (
         <div>

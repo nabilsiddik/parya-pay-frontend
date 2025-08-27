@@ -128,13 +128,9 @@ const SignUpForm: React.FC = () => {
             password: data.password
         }
 
-        console.log('hudai', userInfo)
-
         // Create user in database
         try {
             const res = await userSignUp(userInfo).unwrap()
-
-            console.log('actual res', res)
 
             if (res?.success) {
                 toast.success('User successfully registered.', { id: toastId })
@@ -142,7 +138,6 @@ const SignUpForm: React.FC = () => {
             }
 
         } catch (error: any) {
-            console.log('ac error', error)
             toast.error('Something went wrong. Please fillout the info carefully.', { id: toastId })
         }
     }

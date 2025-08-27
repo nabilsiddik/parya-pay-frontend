@@ -22,7 +22,6 @@ export function AgentApplicationConfirmDialog({children}: {children: React.React
         if(res?.success){
             toast.success('Application submitted.')
         }
-        console.log(res)
     }catch(error: any){
         toast.error('Something went wrong.')
     }

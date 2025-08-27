@@ -107,7 +107,6 @@ const UserAnalytics = () => {
     const { data } = useGetCurrentUserQuery(undefined)
     const user = data?.data
 
-    console.log('my tra', transactions?.data.transactions)
     const totalTransactedAmount = transactions?.data.transactions.reduce((sum: number, acc: any) => sum + acc.amount, 0)
 
     const totalMoneyWithdraw = transactions?.data.transactions.reduce((sum: number, acc: any) => {

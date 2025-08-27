@@ -29,7 +29,6 @@ const AgentRequestActionModal = ({ children, status, requestId }: { children: Re
 
     // Update status
     const handleUpdateStatus = async () => {
-        console.log(currentStatus, requestId)
         
         try {
             const res = await handleAgentRequest({requestId, status: currentStatus}).unwrap()

@@ -47,7 +47,6 @@ const AddMoney = () => {
             }
 
         } catch (error: any) {
-            console.log(error)
             toast.error(error?.data?.message, { id: toastId })
         }
     }

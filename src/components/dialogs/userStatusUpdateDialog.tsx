@@ -25,8 +25,6 @@ const UserStatusUpdateDialog = ({ children, userId }: { children: React.ReactNod
         try {
             const res = await updateUserStatus({userId, status: currentStatus}).unwrap()
 
-            console.log('response', res)
-
             if (res?.success) {
                 toast.success('User Status Updated.', { id: loadingId })
             }

@@ -27,6 +27,7 @@ Payra Pay enables **Users, Agents, and Admins** to perform seamless financial op
 
 ### Authentication
 - JWT-based **Login & Registration**
+- Role Based Redirection After successful login
 - Credential Based **Passport.js Authentication**
 
 ### Admin Dashboard

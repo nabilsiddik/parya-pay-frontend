@@ -8,9 +8,6 @@ import { Coins, UserIcon, WalletIcon } from "lucide-react"
 import { TbMoneybag } from "react-icons/tb";
 
 const AgentAnalytics = () => {
-    // const { data: allUsers } = useGetAllUsersQuery(undefined)
-    // const { data: allTransactions } = useGetAllTransactionsQuery(undefined)
-
 
     const { data: userWallet } = useGetSingleWalletQuery(undefined)
     const { data: transactions } = useGetUserTransactionHistoryQuery(undefined)
@@ -32,8 +29,6 @@ const AgentAnalytics = () => {
 
 
 
-
-
     // All cash in array
     const allCashIn = transactions?.data?.transactions
         ?.filter((tran: any) => tran.type === "CASH_IN")
@@ -41,11 +36,6 @@ const AgentAnalytics = () => {
     // All cash out array
     const allCashOut = transactions?.data?.transactions
         ?.filter((tran: any) => tran.type === "CASH_OUT")
-
-
-    console.log('all cash in', allCashIn)
-    console.log('all cash out', allCashOut)
-
 
 
     const groupByDate = (arr: any[], type: "cashIn" | "cashOut") => {

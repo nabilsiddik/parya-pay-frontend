@@ -19,8 +19,6 @@ const MyTransactions = () => {
 
   const totalPage = transactions?.data?.meta?.totalPage
 
-  console.log(transactions?.data?.meta)
-
   if (isLoading) {
     return <DashboardLoader />
   }
