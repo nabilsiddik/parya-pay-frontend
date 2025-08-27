@@ -12,7 +12,7 @@ Payra Pay enables **Users, Agents, and Admins** to perform seamless financial op
 [View Backend Github Repo](https://github.com/nabilsiddik/payra-pay-backend)
 
 ## Project Explaination Video
-[View Explaination Video](https://www.youtube.com/@Code-With-Nabil)
+[View Explaination Video](https://www.youtube.com/watch?v=GFhkaTpDVOA)
 
 
 ## Features
