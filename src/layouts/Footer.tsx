@@ -42,7 +42,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div className="flex flex-3 justify-between">
+        <div className="flex flex-3 justify-between gap-10 md:gap-0">
           <div className="flex md:justify-center flex-1">
             <div className="flx-1">
               <p className="font-medium text-white dark:text-white text-xl">Menu</p>
