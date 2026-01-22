@@ -88,22 +88,29 @@ export default function LoginForm() {
 
     // Handle user login
     const handleUserLogin = async (data: any) => {
+
         const loginInfo = {
             email: data.email,
             password: data.password
         }
+
+        console.log({
+            email: data.email,
+            password: data.password
+        });
         const signInId = toast.loading('Loading...')
 
         try {
             const res = await userSignIn(loginInfo).unwrap()
+            console.log(res, 'my res');
             const user = res?.data?.user
 
             if (res?.success && user) {
                 toast.success('User successfully loged in.', { id: signInId })
-                navigate(user?.role === 'ADMIN' ? '/admin' 
+                navigate(user?.role === 'ADMIN' ? '/admin'
                     : user?.role === 'USER' ? '/user'
-                    : user?.role === 'AGENT' ? '/agent' 
-                    : '/'
+                        : user?.role === 'AGENT' ? '/agent'
+                            : '/'
                 )
 
             }
@@ -196,6 +203,17 @@ export default function LoginForm() {
                                 className="cursor-pointer inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 disabled:pointer-events-none disabled:opacity-50 bg-primary text-zinc-50 shadow hover:bg-primary dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-50/90 h-9 px-4 py-2 w-full"
                             >
                                 Sign In
+                            </Button>
+
+                            <Button
+                                onClick={() => handleUserLogin({
+                                    email: 'userdemo@gmail.com',
+                                    password: 'UserDemo@123456'
+                                })}
+                                type="button"
+                                className="cursor-pointer inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 disabled:pointer-events-none disabled:opacity-50 bg-primary text-zinc-50 shadow hover:bg-primary dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-50/90 h-9 px-4 py-2 w-full"
+                            >
+                                Demo Login
                             </Button>
                         </form>
                     </Form>
