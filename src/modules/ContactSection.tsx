@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Contact2Props {
   title?: string;
@@ -22,9 +22,26 @@ const ContactSection = ({
 }: Contact2Props) => {
 
   const [isSubmited, setIsSubmited] = useState(false)
+  const [disable, setDisable] = useState(true)
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [yourEmail, setYourEmail] = useState('')
+  const [subject, setSubject] = useState('')
+  const [message, setMessage] = useState('')
 
-  const handleSendMessage = (e: any) => {
+  useEffect(() => {
+    if(firstName === '' || lastName === '' || yourEmail === '' || subject === '' || message === ''){
+      setDisable(true)
+    }else{
+      setDisable(false)
+    }
+  }, [firstName, lastName, yourEmail, subject, message])
+
+  const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    
+    console.log(firstName, lastName, email, subject, message);
     setIsSubmited(true)
   }
 
@@ -77,26 +94,26 @@ const ContactSection = ({
               <div className="flex gap-4">
                 <div className="grid w-full items-center gap-1.5">
                   <Label htmlFor="firstname">First Name</Label>
-                  <Input type="text" id="firstname" placeholder="First Name" />
+                  <Input onChange={(e) => setFirstName(e.target.value)} name='firstName' type="text" id="firstname" placeholder="First Name" />
                 </div>
                 <div className="grid w-full items-center gap-1.5">
                   <Label htmlFor="lastname">Last Name</Label>
-                  <Input type="text" id="lastname" placeholder="Last Name" />
+                  <Input onChange={(e) => setLastName(e.target.value)} name='lastName' type="text" id="lastname" placeholder="Last Name" />
                 </div>
               </div>
               <div className="grid w-full items-center gap-1.5">
                 <Label htmlFor="email">Email</Label>
-                <Input type="email" id="email" placeholder="Email" />
+                <Input onChange={(e) => setYourEmail(e.target.value)} name='email' type="email" id="email" placeholder="Email" />
               </div>
               <div className="grid w-full items-center gap-1.5">
                 <Label htmlFor="subject">Subject</Label>
-                <Input type="text" id="subject" placeholder="Subject" />
+                <Input onChange={(e) => setSubject(e.target.value)} name='subject' type="text" id="subject" placeholder="Subject" />
               </div>
               <div className="grid w-full gap-1.5">
                 <Label htmlFor="message">Message</Label>
-                <Textarea placeholder="Type your message here." id="message" />
+                <Textarea onChange={(e) => setMessage(e.target.value)} name='message' placeholder="Type your message here." id="message" />
               </div>
-              <Button type="submit" className="w-full">Send Message</Button>
+              <Button disabled={disable} type="submit" className="w-full">Send Message</Button>
             </form>
 
           }

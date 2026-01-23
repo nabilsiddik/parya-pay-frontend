@@ -5,6 +5,7 @@ import { useGetCurrentUserQuery } from "@/redux/features/auth/auth.api";
 import { useEffect, useState } from "react";
 import { getDynamicDashboardUrl } from "@/utils/getDynamicDashboardUrl";
 import { Link } from "react-router-dom";
+import SlideInUp from "@/animation/slide/SlideInUp";
 
 const HeroSection = () => {
   const { data } = useGetCurrentUserQuery(undefined)
@@ -19,7 +20,8 @@ const HeroSection = () => {
   return (
     <section className="bg-background py-20 lg:py-32 mt-[60px] lg:mt-0">
       <div className="container flex flex-col items-center gap-10 lg:my-0 lg:flex-row">
-        <div className="flex flex-col gap-7 lg:w-2/3  text-center lg:text-left">
+        <SlideInUp className="flex flex-col gap-7 lg:w-2/3  text-center lg:text-left">
+          <div>
           <h2 className="text-4xl font-semibold text-foreground md:text-5xl xl:text-7xl xl:pr-30 leading-13 xl:leading-24">
             <span>Payra Pay | </span>
             <span className="text-muted-foreground">
@@ -44,14 +46,17 @@ const HeroSection = () => {
             </Button> */}
           </div>
         </div>
+        </SlideInUp>
         <div className="relative z-10">
-          <img
+          <SlideInUp>
+            <img
             className="relative z-10"
             src={heroImage}
             width={450}
             height={889}
             alt="iphone"
           />
+          </SlideInUp>
         </div>
       </div>
     </section>

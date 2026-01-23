@@ -1,3 +1,4 @@
+import SlideInUp from "@/animation/slide/SlideInUp"
 import {
     Card,
     CardContent,
@@ -8,15 +9,16 @@ import {
 
 const TransactionTypeCard = ({ transactionType }: any) => {
     return (
-        <Card className="add-money">
-            <CardHeader>
-                <img className="w-24 mx-auto" src={transactionType?.icon} alt="icon" />
-            </CardHeader>
-            <CardContent>
-                <CardTitle className="text-center font-bold text-lg md:text-xl">{transactionType?.title}</CardTitle>
-            </CardContent>
-        </Card>
+        <SlideInUp>
+            <Card className="add-money">
+                <CardHeader>
+                    <img className="w-24 mx-auto" src={transactionType?.icon} alt="icon" />
+                </CardHeader>
+                <CardContent>
+                    <CardTitle className="text-center font-bold text-lg md:text-xl">{transactionType?.title}</CardTitle>
+                </CardContent>
+            </Card>
+        </SlideInUp>
     )
 }
-
 export default TransactionTypeCard

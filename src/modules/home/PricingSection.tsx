@@ -1,4 +1,5 @@
 'use client';
+import SlideInUp from '@/animation/slide/SlideInUp';
 import React from 'react';
 
 interface CheckIconProps {
@@ -47,11 +48,10 @@ const GetStartedButton = ({ isFeatured, label = 'Get Started' }: GetStartedButto
   <button
     type="button"
     aria-label={label}
-    className={`w-full text-center py-3.5 rounded-lg font-semibold text-md transition-all duration-300 ease-in-out transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
-      isFeatured
+    className={`w-full text-center py-3.5 rounded-lg font-semibold text-md transition-all duration-300 ease-in-out transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${isFeatured
         ? 'bg-white dark:bg-gray-900 text-orange-700 dark:text-orange-300 hover:text-orange-800 dark:hover:text-orange-200 ring-orange-500 ring-offset-orange-500/20'
         : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 ring-gray-300 dark:ring-gray-600 ring-offset-white dark:ring-offset-black'
-    }`}
+      }`}
   >
     {label}
   </button>
@@ -65,9 +65,8 @@ interface FeatureListItemProps {
 const FeatureListItem = ({ children, isFeatured }: FeatureListItemProps) => (
   <li className="flex items-start gap-3">
     <div
-      className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5 ${
-        isFeatured ? 'bg-white/25' : 'bg-gray-200 dark:bg-gray-700'
-      }`}
+      className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5 ${isFeatured ? 'bg-white/25' : 'bg-gray-200 dark:bg-gray-700'
+        }`}
     >
       <CheckIcon className={`${isFeatured ? 'text-white' : 'text-gray-700 dark:text-gray-300'} w-3.5 h-3.5`} />
     </div>
@@ -90,8 +89,8 @@ const Header = () => (
       <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-primary">Payra Pay</span>
     </h1>
 
-    <p className="text-gray-600 dark:text-gray-300 mt-6 text-base sm:text-lg max-w-2xl mx-auto animate-fade-in-down" style={{animationDelay: '0.4s'}}>
-        Want to know about all the charges of payra pay? Here is it.
+    <p className="text-gray-600 dark:text-gray-300 mt-6 text-base sm:text-lg max-w-2xl mx-auto animate-fade-in-down" style={{ animationDelay: '0.4s' }}>
+      Want to know about all the charges of payra pay? Here is it.
     </p>
   </header>
 );
@@ -105,60 +104,60 @@ interface PricingCardProps {
 }
 
 const PricingCard = ({ plan, price, description, features, isFeatured = false }: PricingCardProps) => (
-  <article
-    className={`relative p-6 md:p-8 rounded-2xl transition-all duration-300 ease-in-out transform hover:-translate-y-2 ${
-      isFeatured
-        ? 'bg-gradient-to-b from-secondary to-primary text-white shadow-2xl lg:scale-105'
-        : 'bg-white dark:bg-card text-gray-900 dark:text-white shadow-lg border dark:shadow-gray-800/50'
-    }`}
-    aria-label={`${plan} plan`}
-  >
-    {isFeatured && (
-      <div className="absolute -top-3 right-6">
-        <span className="inline-flex items-center rounded-full bg-white/20 text-white/90 text-xs font-semibold px-3 py-1 backdrop-blur">
-          MOST USED
-        </span>
-      </div>
-    )}
-    <div className="flex items-center gap-3 mb-6">
-      <ProPlanIcon className={`w-5 h-5 ${isFeatured ? 'text-white/80' : 'text-gray-400 dark:text-gray-500'}`} />
-      <h3
-        className={`text-xs font-bold tracking-widest uppercase ${
-          isFeatured ? 'text-white/80' : 'text-gray-400 dark:text-gray-500'
+  <SlideInUp>
+    <article
+      className={`relative p-6 md:p-8 rounded-2xl transition-all duration-300 ease-in-out transform hover:-translate-y-2 ${isFeatured
+          ? 'bg-gradient-to-b from-secondary to-primary text-white shadow-2xl lg:scale-105'
+          : 'bg-white dark:bg-card text-gray-900 dark:text-white shadow-lg border dark:shadow-gray-800/50'
         }`}
-      >
-        {plan}
-      </h3>
-    </div>
-
-    <div className="mb-6 flex items-baseline gap-1.5">
-      {price === 0 ? (
-        <>
-          <span className={`text-4xl sm:text-5xl font-bold ${isFeatured ? 'text-white' : 'text-gray-900 dark:text-white'}`}>Free</span>
-          <span className={`${isFeatured ? 'text-white/70' : 'text-gray-400 dark:text-gray-500'} text-sm`}>&nbsp;Forever</span>
-        </>
-      ) : (
-        <>
-          <span className={`text-4xl sm:text-5xl font-bold ${isFeatured ? 'text-white' : 'text-gray-900 dark:text-white'}`}>BDT {price}</span>
-          <span className={`${isFeatured ? 'text-white/70' : 'text-gray-400 dark:text-gray-500'} text-sm`}>&nbsp;/ Thousand</span>
-        </>
+      aria-label={`${plan} plan`}
+    >
+      {isFeatured && (
+        <div className="absolute -top-3 right-6">
+          <span className="inline-flex items-center rounded-full bg-white/20 text-white/90 text-xs font-semibold px-3 py-1 backdrop-blur">
+            MOST USED
+          </span>
+        </div>
       )}
-    </div>
+      <div className="flex items-center gap-3 mb-6">
+        <ProPlanIcon className={`w-5 h-5 ${isFeatured ? 'text-white/80' : 'text-gray-400 dark:text-gray-500'}`} />
+        <h3
+          className={`text-xs font-bold tracking-widest uppercase ${isFeatured ? 'text-white/80' : 'text-gray-400 dark:text-gray-500'
+            }`}
+        >
+          {plan}
+        </h3>
+      </div>
 
-    <p className={`mb-8 min-h-[4.5rem] text-sm ${isFeatured ? 'text-white/85' : 'text-gray-600 dark:text-gray-300'}`}>{description}</p>
+      <div className="mb-6 flex items-baseline gap-1.5">
+        {price === 0 ? (
+          <>
+            <span className={`text-4xl sm:text-5xl font-bold ${isFeatured ? 'text-white' : 'text-gray-900 dark:text-white'}`}>Free</span>
+            <span className={`${isFeatured ? 'text-white/70' : 'text-gray-400 dark:text-gray-500'} text-sm`}>&nbsp;Forever</span>
+          </>
+        ) : (
+          <>
+            <span className={`text-4xl sm:text-5xl font-bold ${isFeatured ? 'text-white' : 'text-gray-900 dark:text-white'}`}>BDT {price}</span>
+            <span className={`${isFeatured ? 'text-white/70' : 'text-gray-400 dark:text-gray-500'} text-sm`}>&nbsp;/ Thousand</span>
+          </>
+        )}
+      </div>
 
-    <div className="mb-8">
-      <GetStartedButton isFeatured={isFeatured} label={price === 0 ? 'Proccess' : 'Processes'} />
-    </div>
+      <p className={`mb-8 min-h-[4.5rem] text-sm ${isFeatured ? 'text-white/85' : 'text-gray-600 dark:text-gray-300'}`}>{description}</p>
 
-    <ul className="space-y-4">
-      {features.map((feature, index) => (
-        <FeatureListItem key={`${plan}-${index}`} isFeatured={isFeatured}>
-          {feature}
-        </FeatureListItem>
-      ))}
-    </ul>
-  </article>
+      <div className="mb-8">
+        <GetStartedButton isFeatured={isFeatured} label={price === 0 ? 'Proccess' : 'Processes'} />
+      </div>
+
+      <ul className="space-y-4">
+        {features.map((feature, index) => (
+          <FeatureListItem key={`${plan}-${index}`} isFeatured={isFeatured}>
+            {feature}
+          </FeatureListItem>
+        ))}
+      </ul>
+    </article>
+  </SlideInUp>
 );
 
 
@@ -220,7 +219,9 @@ export default function PricingSection() {
       `}</style>
       <div className="relative font-sans flex flex-col items-center justify-center overflow-x-hidden bg-white dark:bg-black min-h-screen">
         <div className="container mx-auto px-4 py-16 md:py-24">
-          <Header />
+          <SlideInUp>
+            <Header />
+          </SlideInUp>
           <main className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10 items-stretch max-w-6xl mx-auto">
             {pricingPlans.map((plan, index) => (
               <PricingCard key={`${plan.plan}-${index}`} {...plan} />
